@@ -1,0 +1,13 @@
+{
+  "title": "ULX Module for Custom Roles for TTT",
+  "type": "ServerContent",
+  "ignore": [
+    ".git*",
+    "*.iml",
+    ".idea*",
+    "*.psd",
+    "*.vcproj",
+    "*.svn*",
+    "LICENSE"
+  ]
+}
