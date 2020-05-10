@@ -6,18 +6,18 @@ local function init()
 		ULib.replicatedWritableCvar("ttt_preptime_seconds", "rep_ttt_preptime_seconds", GetConVarNumber("ttt_preptime_seconds"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_firstpreptime", "rep_ttt_firstpreptime", GetConVarNumber("ttt_firstpreptime"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_posttime_seconds", "rep_ttt_posttime_seconds", GetConVarNumber("ttt_posttime_seconds"), false, false, "xgui_gmsettings")
-		
+
 		--Round length
 		ULib.replicatedWritableCvar("ttt_haste", "rep_ttt_haste", GetConVarNumber("ttt_haste"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_haste_starting_minutes", "rep_ttt_haste_starting_minutes", GetConVarNumber("ttt_haste_starting_minutes"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_haste_minutes_per_death", "rep_ttt_haste_minutes_per_death", GetConVarNumber("ttt_haste_minutes_per_death"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_roundtime_minutes", "rep_ttt_roundtime_minutes", GetConVarNumber("ttt_roundtime_minutes"), false, false, "xgui_gmsettings")
-		
+
 		--map switching and voting
 		ULib.replicatedWritableCvar("ttt_round_limit", "rep_ttt_round_limit", GetConVarNumber("ttt_round_limit"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_time_limit_minutes", "rep_ttt_time_limit_minutes", GetConVarNumber("ttt_time_limit_minutes"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_always_use_mapcycle", "rep_ttt_always_use_mapcycle", GetConVarNumber("ttt_always_use_mapcycle"), false, false, "xgui_gmsettings")
-		
+
 		--traitor and detective counts
 		ULib.replicatedWritableCvar("ttt_traitor_pct", "rep_ttt_traitor_pct", GetConVarNumber("ttt_traitor_pct"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_traitor_max", "rep_ttt_traitor_max", GetConVarNumber("ttt_traitor_max"), false, false, "xgui_gmsettings")
@@ -25,24 +25,24 @@ local function init()
 		ULib.replicatedWritableCvar("ttt_detective_max", "rep_ttt_detective_max", GetConVarNumber("ttt_detective_max"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_detective_min_players", "rep_ttt_detective_min_players", GetConVarNumber("ttt_detective_min_players"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_detective_karma_min", "rep_ttt_detective_karma_min", GetConVarNumber("ttt_detective_karma_min"), false, false, "xgui_gmsettings")
-		
+
 		--custom roles
 		ULib.replicatedWritableCvar("ttt_mercenary_enabled", "rep_ttt_mercenary_enabled", GetConVarNumber("ttt_mercenary_enabled"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_hypnotist_enabled", "rep_ttt_hypnotist_enabled", GetConVarNumber("ttt_hypnotist_enabled"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_glitch_enabled", "rep_ttt_glitch_enabled", GetConVarNumber("ttt_glitch_enabled"), false, false, "xgui_gmsettings")
-		ULib.replicatedWritableCvar("ttt_jetser_enabled", "rep_ttt_jetser_enabled", GetConVarNumber("ttt_jetser_enabled"), false, false, "xgui_gmsettings")
+		ULib.replicatedWritableCvar("ttt_jester_enabled", "rep_ttt_jester_enabled", GetConVarNumber("ttt_jester_enabled"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_phantom_enabled", "rep_ttt_phantom_enabled", GetConVarNumber("ttt_phantom_enabled"), false, false, "xgui_gmsettings")
-		
+
 		--dna
 		ULib.replicatedWritableCvar("ttt_killer_dna_range", "rep_ttt_killer_dna_range", GetConVarNumber("ttt_killer_dna_range"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_killer_dna_basetime", "rep_ttt_killer_dna_basetime", GetConVarNumber("ttt_killer_dna_basetime"), false, false, "xgui_gmsettings")
-		
+
 		--voicechat battery
 		ULib.replicatedWritableCvar("ttt_voice_drain", "rep_ttt_voice_drain", GetConVarNumber("ttt_voice_drain"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_voice_drain_normal", "rep_ttt_voice_drain_normal", GetConVarNumber("ttt_voice_drain_normal"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_voice_drain_admin", "rep_ttt_voice_drain_admin", GetConVarNumber("ttt_voice_drain_admin"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_voice_drain_recharge", "rep_ttt_voice_drain_recharge", GetConVarNumber("ttt_voice_drain_recharge"), false, false, "xgui_gmsettings")
-		
+
 		--other gameplay settings
 		ULib.replicatedWritableCvar("ttt_minimum_players", "rep_ttt_minimum_players", GetConVarNumber("ttt_minimum_players"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_postround_dm", "rep_ttt_postround_dm", GetConVarNumber("ttt_postround_dm"), false, false, "xgui_gmsettings")
@@ -53,7 +53,7 @@ local function init()
 		ULib.replicatedWritableCvar("ttt_teleport_telefrags", "rep_ttt_teleport_telefrags", GetConVarNumber("ttt_teleport_telefrags"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_ragdoll_pinning", "rep_ttt_ragdoll_pinning", GetConVarNumber("ttt_ragdoll_pinning"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_ragdoll_pinning_innocents", "rep_ttt_ragdoll_pinning_innocents", GetConVarNumber("ttt_ragdoll_pinning_innocents"), false, false, "xgui_gmsettings")
-		
+
 		--karma
 		ULib.replicatedWritableCvar("ttt_karma", "rep_ttt_karma", GetConVarNumber("ttt_karma"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_karma_strict", "rep_ttt_karma_strict", GetConVarNumber("ttt_karma_strict"), false, false, "xgui_gmsettings")
@@ -72,22 +72,22 @@ local function init()
 		ULib.replicatedWritableCvar("ttt_karma_persist", "rep_ttt_karma_persist", GetConVarNumber("ttt_karma_persist"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_karma_debugspam", "rep_ttt_karma_debugspam", GetConVarNumber("ttt_karma_debugspam"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_karma_clean_half", "rep_ttt_karma_clean_half", GetConVarNumber("ttt_karma_clean_half"), false, false, "xgui_gmsettings")
-		
+
 		--map related
 		ULib.replicatedWritableCvar("ttt_use_weapon_spawn_scripts", "rep_ttt_use_weapon_spawn_scripts", GetConVarNumber("ttt_use_weapon_spawn_scripts"), false, false, "xgui_gmsettings")
-		
+
 		--traitor credits
 		ULib.replicatedWritableCvar("ttt_credits_starting", "rep_ttt_credits_starting", GetConVarNumber("ttt_credits_starting"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_credits_award_pct", "rep_ttt_credits_award_pct", GetConVarNumber("ttt_credits_award_pct"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_credits_award_size", "rep_ttt_credits_award_size", GetConVarNumber("ttt_credits_award_size"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_credits_award_repeat", "rep_ttt_credits_award_repeat", GetConVarNumber("ttt_credits_award_repeat"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_credits_detectivekill", "rep_ttt_credits_detectivekill", GetConVarNumber("ttt_credits_detectivekill"), false, false, "xgui_gmsettings")
-		
+
 		--detective credits
 		ULib.replicatedWritableCvar("ttt_det_credits_starting", "rep_ttt_det_credits_starting", GetConVarNumber("ttt_det_credits_starting"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_det_credits_traitorkill", "rep_ttt_det_credits_traitorkill", GetConVarNumber("ttt_det_credits_traitorkill"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_det_credits_traitordead", "rep_ttt_det_credits_traitordead", GetConVarNumber("ttt_det_credits_traitordead"), false, false, "xgui_gmsettings")
-		
+
 		--prop possession
 		ULib.replicatedWritableCvar("ttt_spec_prop_control", "rep_ttt_spec_prop_control", GetConVarNumber("ttt_spec_prop_control"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_spec_prop_base", "rep_ttt_spec_prop_base", GetConVarNumber("ttt_spec_prop_base"), false, false, "xgui_gmsettings")
@@ -95,12 +95,12 @@ local function init()
 		ULib.replicatedWritableCvar("ttt_spec_prop_maxbonus", "rep_ttt_spec_prop_maxbonus", GetConVarNumber("ttt_spec_prop_maxbonus"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_spec_prop_force", "rep_ttt_spec_prop_force", GetConVarNumber("ttt_spec_prop_force"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_spec_prop_rechargetime", "rep_ttt_spec_prop_rechargetime", GetConVarNumber("ttt_spec_prop_rechargetime"), false, false, "xgui_gmsettings")
-		
+
 		--admin related
 		ULib.replicatedWritableCvar("ttt_idle_limit", "rep_ttt_idle_limit", GetConVarNumber("ttt_idle_limit"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_namechange_kick", "rep_ttt_namechange_kick", GetConVarNumber("ttt_namechange_kick"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_namechange_bantime", "rep_ttt_namechange_bantime", GetConVarNumber("ttt_namechange_bantime"), false, false, "xgui_gmsettings")
-		
+
 		--misc
 		ULib.replicatedWritableCvar("ttt_detective_hats", "rep_ttt_detective_hats", GetConVarNumber("ttt_detective_hats"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_playercolor_mode", "rep_ttt_playercolor_mode", GetConVarNumber("ttt_playercolor_mode"), false, false, "xgui_gmsettings")
