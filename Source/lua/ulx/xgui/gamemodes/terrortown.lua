@@ -142,16 +142,19 @@ xgui.addSubModule("Round structure", rspnl, nil, "terrortown_settings")
 -------------------- Gameplay Module--------------------
 local gppnl = xlib.makelistlayout { w = 415, h = 318, parent = xgui.null }
 
---Traitor and Detective counts
+--Role counts
 local gptdcclp = vgui.Create("DCollapsibleCategory", gppnl)
-gptdcclp:SetSize(390, 100)
+gptdcclp:SetSize(390, 375)
 gptdcclp:SetExpanded(1)
-gptdcclp:SetLabel("Traitor and Detective counts")
+gptdcclp:SetLabel("Role counts")
 
 local gptdlst = vgui.Create("DPanelList", gptdcclp)
 gptdlst:SetPos(5, 25)
-gptdlst:SetSize(390, 100)
+gptdlst:SetSize(390, 375)
 gptdlst:SetSpacing(5)
+
+local mpercet = xlib.makeslider { label = "ttt_monster_pct (def. 0.33)", min = 0.01, max = 2, decimal = 2, repconvar = "rep_ttt_monster_pct", parent = gptdlst }
+gptdlst:AddItem(mpercet)
 
 local tpercet = xlib.makeslider { label = "ttt_traitor_pct (def. 0.25)", min = 0.01, max = 2, decimal = 2, repconvar = "rep_ttt_traitor_pct", parent = gptdlst }
 gptdlst:AddItem(tpercet)
@@ -186,15 +189,30 @@ gptdlst:AddItem(hasjes)
 local haspha = xlib.makecheckbox { label = "ttt_phantom_enabled (def. 1)", repconvar = "rep_ttt_phantom_enabled", parent = gptdlst }
 gptdlst:AddItem(haspha)
 
---DNA
+local haszom = xlib.makecheckbox { label = "ttt_zombie_enabled (def. 1)", repconvar = "rep_ttt_zombie_enabled", parent = gptdlst }
+gptdlst:AddItem(haszom)
+
+local hasvam = xlib.makecheckbox { label = "ttt_vampire_enabled (def. 1)", repconvar = "rep_ttt_vampire_enabled", parent = gptdlst }
+gptdlst:AddItem(hasvam)
+
+local hasswa = xlib.makecheckbox { label = "ttt_swapper_enabled (def. 1)", repconvar = "rep_ttt_swapper_enabled", parent = gptdlst }
+gptdlst:AddItem(hasswa)
+
+local hasas = xlib.makecheckbox { label = "ttt_assassin_enabled (def. 1)", repconvar = "rep_ttt_assassin_enabled", parent = gptdlst }
+gptdlst:AddItem(hasas)
+
+local askil = xlib.makecheckbox { label = "ttt_killer_enabled (def. 1)", repconvar = "rep_ttt_killer_enabled", parent = gptdlst }
+gptdlst:AddItem(askil)
+
+--Killer
 local gpdnaclp = vgui.Create("DCollapsibleCategory", gppnl)
-gpdnaclp:SetSize(390, 45)
+gpdnaclp:SetSize(390, 75)
 gpdnaclp:SetExpanded(0)
-gpdnaclp:SetLabel("DNA")
+gpdnaclp:SetLabel("Killer")
 
 local gpdnalst = vgui.Create("DPanelList", gpdnaclp)
 gpdnalst:SetPos(5, 25)
-gpdnalst:SetSize(390, 45)
+gpdnalst:SetSize(390, 75)
 gpdnalst:SetSpacing(5)
 
 local dnarange = xlib.makeslider { label = "ttt_killer_dna_range (def. 550)", min = 100, max = 1000, repconvar = "rep_ttt_killer_dna_range", parent = gpdnalst }
@@ -202,6 +220,9 @@ gpdnalst:AddItem(dnarange)
 
 local dnakbt = xlib.makeslider { label = "ttt_killer_dna_basetime (def. 100)", min = 10, max = 200, repconvar = "rep_ttt_killer_dna_basetime", parent = gpdnalst }
 gpdnalst:AddItem(dnakbt)
+
+local ksmoke = xlib.makeslider { label = "ttt_killer_smoke_timer (def. 60)", min = 10, max = 200, repconvar = "rep_ttt_killer_smoke_timer", parent = gpdnalst }
+gpdnalst:AddItem(ksmoke)
 
 --Voicechat battery
 local gpvcbclp = vgui.Create("DCollapsibleCategory", gppnl)

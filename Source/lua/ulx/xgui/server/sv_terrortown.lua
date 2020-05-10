@@ -19,6 +19,7 @@ local function init()
 		ULib.replicatedWritableCvar("ttt_always_use_mapcycle", "rep_ttt_always_use_mapcycle", GetConVarNumber("ttt_always_use_mapcycle"), false, false, "xgui_gmsettings")
 
 		--traitor and detective counts
+		ULib.replicatedWritableCvar("ttt_monster_pct", "rep_ttt_monster_pct", GetConVarNumber("ttt_monster_pct"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_traitor_pct", "rep_ttt_traitor_pct", GetConVarNumber("ttt_traitor_pct"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_traitor_max", "rep_ttt_traitor_max", GetConVarNumber("ttt_traitor_max"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_detective_pct", "rep_ttt_detective_pct", GetConVarNumber("ttt_detective_pct"), false, false, "xgui_gmsettings")
@@ -32,10 +33,16 @@ local function init()
 		ULib.replicatedWritableCvar("ttt_glitch_enabled", "rep_ttt_glitch_enabled", GetConVarNumber("ttt_glitch_enabled"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_jester_enabled", "rep_ttt_jester_enabled", GetConVarNumber("ttt_jester_enabled"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_phantom_enabled", "rep_ttt_phantom_enabled", GetConVarNumber("ttt_phantom_enabled"), false, false, "xgui_gmsettings")
+		ULib.replicatedWritableCvar("ttt_zombie_enabled", "rep_ttt_zombie_enabled", GetConVarNumber("ttt_zombie_enabled"), false, false, "xgui_gmsettings")
+		ULib.replicatedWritableCvar("ttt_vampire_enabled", "rep_ttt_vampire_enabled", GetConVarNumber("ttt_vampire_enabled"), false, false, "xgui_gmsettings")
+		ULib.replicatedWritableCvar("ttt_swapper_enabled", "rep_ttt_swapper_enabled", GetConVarNumber("ttt_swapper_enabled"), false, false, "xgui_gmsettings")
+		ULib.replicatedWritableCvar("ttt_assassin_enabled", "rep_ttt_assassin_enabled", GetConVarNumber("ttt_assassin_enabled"), false, false, "xgui_gmsettings")
+		ULib.replicatedWritableCvar("ttt_killer_enabled", "rep_ttt_killer_enabled", GetConVarNumber("ttt_killer_enabled"), false, false, "xgui_gmsettings")
 
 		--dna
 		ULib.replicatedWritableCvar("ttt_killer_dna_range", "rep_ttt_killer_dna_range", GetConVarNumber("ttt_killer_dna_range"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_killer_dna_basetime", "rep_ttt_killer_dna_basetime", GetConVarNumber("ttt_killer_dna_basetime"), false, false, "xgui_gmsettings")
+		ULib.replicatedWritableCvar("ttt_killer_smoke_timer", "rep_ttt_killer_smoke_timer", GetConVarNumber("ttt_killer_smoke_timer"), false, false, "xgui_gmsettings")
 
 		--voicechat battery
 		ULib.replicatedWritableCvar("ttt_voice_drain", "rep_ttt_voice_drain", GetConVarNumber("ttt_voice_drain"), false, false, "xgui_gmsettings")
