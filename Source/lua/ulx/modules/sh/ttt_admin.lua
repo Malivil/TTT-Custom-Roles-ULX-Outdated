@@ -1,6 +1,10 @@
 local CATEGORY_NAME = "TTT"
 local gamemode_error = "The current gamemode is not trouble in terrorist town!"
 
+if SERVER then
+    util.AddNetworkString("TTT_RoleChanged")
+end
+
 --[Ulx Completes]------------------------------------------------------------------------------
 ulx.target_role = {}
 function updateRoles()
@@ -40,6 +44,17 @@ ulx.modifiers = {
 @param  {[PlayerObject]} v       [The player(s) to send the message to.]
 @param  {[String]}       message [The message that will be sent.]
 --]]
+
+function SetRole(ply, role)
+    ply:SetRole(role)
+
+    if SERVER then
+        net.Start("TTT_RoleChanged")
+        net.WriteInt(ply:UserID(), 8)
+        net.WriteInt(role, 8)
+        net.Broadcast()
+    end
+end
 
 function send_messages(v, message)
 	if type(v) == "Players" then
@@ -443,7 +458,7 @@ function ulx.force(calling_ply, target_plys, target_role, should_silent)
 				RemoveLoadoutWeapons(v)
 				RemoveBoughtWeapons(v)
 
-				v:SetRole(role)
+				SetRole(v, role)
 				v:SetCredits(role_credits)
 				SendFullStateUpdate()
 
