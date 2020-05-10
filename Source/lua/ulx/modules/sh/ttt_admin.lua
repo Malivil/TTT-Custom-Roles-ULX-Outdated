@@ -5,7 +5,7 @@ local gamemode_error = "The current gamemode is not trouble in terrorist town!"
 ulx.target_role = {}
 function updateRoles()
 	table.Empty(ulx.target_role)
-	
+
 	table.insert(ulx.target_role, "innocent") -- Add "innocent" to the table.
 	table.insert(ulx.target_role, "traitor") -- Add "traitor" to the table.
 	table.insert(ulx.target_role, "detective") -- Add "detective" to the table.
@@ -98,7 +98,7 @@ end
 --]]
 function ulx.roundmodifier(calling_ply, modifier)
 	if not GetConVarString("gamemode") == "terrortown" then ULib.tsayError(calling_ply, gamemode_error, true) else
-		
+
 		if modifier == "Team Deathmatch" then
 			hook.Add("TTTSelectRoles", "Round_Modifier_Deathmatch", function()
 				local tdmChoices = {}
@@ -149,19 +149,19 @@ function ulx.roundmodifier(calling_ply, modifier)
 					table.insert(carnivalChoices, v)
 					v:SetRole(ROLE_SWAPPER)
 				end
-				
+
 				local trapick = math.random(1, #carnivalChoices)
 				local traply = carnivalChoices[trapick]
 				traply:SetRole(ROLE_TRAITOR)
 				table.remove(carnivalChoices, trapick)
 				traply:SetDefaultCredits()
-				
+
 				local detpick = math.random(1, #carnivalChoices)
 				local detply = carnivalChoices[detpick]
 				detply:SetRole(ROLE_DETECTIVE)
 				table.remove(carnivalChoices, detpick)
 				detply:SetDefaultCredits()
-				
+
 				SendFullStateUpdate()
 			end)
 		elseif modifier == "Zombie Apocalypse" then
@@ -193,14 +193,14 @@ function ulx.roundmodifier(calling_ply, modifier)
 					v:SetDefaultCredits()
 					plyCount = plyCount + 1
 				end
-				
+
 				local jugpick = math.random(1, #juggernautChoices)
 				local jugply = juggernautChoices[jugpick]
 				jugply:SetRole(ROLE_DETECTIVE)
 				table.remove(juggernautChoices, jugpick)
 				jugply:SetDefaultCredits()
 				jugply:SetHealth((plyCount - 1) * 100)
-				
+
 				SendFullStateUpdate()
 			end)
 		elseif modifier == "Remove All" then
@@ -238,8 +238,8 @@ function ulx.slaynr(calling_ply, target_ply, num_slay, should_slaynr)
 		local slays_left = tonumber(target_ply:GetPData("slaynr_slays")) or 0
 		local current_slay
 		local new_slay
-		
-		
+
+
 		if ulx.getExclusive(target_ply, calling_ply) then
 			ULib.tsayError(calling_ply, ulx.getExclusive(target_ply, calling_ply), true)
 		elseif num_slay < 0 then
@@ -251,12 +251,12 @@ function ulx.slaynr(calling_ply, target_ply, num_slay, should_slaynr)
 			else
 				new_slay = current_slay - num_slay
 			end
-			
+
 			--local slay_reason = reason
 			--if slay_reason == "reason" then
 			--	slay_reason = false
 			--end
-			
+
 			if new_slay > 0 then
 				target_ply:SetPData("slaynr_slays", new_slay)
 				--target_ply:SetPData("slaynr_reason", slay_reason)
@@ -264,10 +264,10 @@ function ulx.slaynr(calling_ply, target_ply, num_slay, should_slaynr)
 				target_ply:RemovePData("slaynr_slays")
 				--target_ply:RemovePData("slaynr_reason")
 			end
-			
+
 			local slays_left = tonumber(target_ply:GetPData("slaynr_slays")) or 0
 			local slays_removed = (current_slay - slays_left) or 0
-			
+
 			if slays_removed == 0 then
 				chat_message = ("#T will not be slain next round.")
 			elseif slays_removed > 0 then
@@ -293,46 +293,46 @@ slaynr:setOpposite("ulx rslaynr", { _, _, _, true }, "!rslaynr")
 --[Helper Functions]---------------------------------------------------------------------------
 hook.Add("TTTBeginRound", "SlayPlayersNextRound", function()
 	local affected_plys = {}
-	
+
 	for _, v in pairs(player.GetAll()) do
 		local slays_left = tonumber(v:GetPData("slaynr_slays")) or 0
-		
+
 		if v:Alive() and slays_left > 0 then
 			local slays_left = slays_left - 1
-			
+
 			if slays_left == 0 then
 				v:RemovePData("slaynr_slays")
 				v:RemovePData("slaynr_reason")
 			else
 				v:SetPData("slaynr_slays", slays_left)
 			end
-			
+
 			v:StripWeapons()
-			
+
 			table.insert(affected_plys, v)
-			
-			timer.Create("check" .. v:SteamID(), 0.1, 0, function() --workaround for issue with tommys damage log 
-				
+
+			timer.Create("check" .. v:SteamID(), 0.1, 0, function() --workaround for issue with tommys damage log
+
 				v:Kill()
-				
+
 				GAMEMODE:PlayerSilentDeath(v)
-				
+
 				local corpse = corpse_find(v)
 				if corpse then
 					v:SetNWBool("body_found", true)
 					SendFullStateUpdate()
-					
+
 					if string.find(corpse:GetModel(), "zm_", 6, true) then
 						corpse:Remove()
 					elseif corpse.player_ragdoll then
 						corpse:Remove()
 					end
 				end
-				
+
 				v:SetTeam(TEAM_SPEC)
 				if v:IsSpec() then timer.Destroy("check" .. v:SteamID()) return end
 			end)
-			
+
 			timer.Create("traitorcheck" .. v:SteamID(), 1, 0, function() --have to wait for gamemode before doing this
 				if v:GetRole() == ROLE_TRAITOR then
 					SendConfirmedTraitors(GetInnocentFilter(false)) -- Update innocent's list of traitors.
@@ -341,23 +341,23 @@ hook.Add("TTTBeginRound", "SlayPlayersNextRound", function()
 			end)
 		end
 	end
-	
+
 	local slay_message
 	for i = 1, #affected_plys do
 		local v = affected_plys[i]
 		local string_inbetween
-		
+
 		if i > 1 and #affected_plys == i then
 			string_inbetween = " and "
 		elseif i > 1 then
 			string_inbetween = ", "
 		end
-		
+
 		string_inbetween = string_inbetween or ""
 		slay_message = ((slay_message or "") .. string_inbetween)
 		slay_message = ((slay_message or "") .. v:Nick())
 	end
-	
+
 	local slay_message_context
 	if #affected_plys == 1 then slay_message_context = "was" else slay_message_context = "were" end
 	if #affected_plys ~= 0 then
@@ -368,10 +368,10 @@ end)
 hook.Add("PlayerSpawn", "Inform", function(ply)
 	local slays_left = tonumber(ply:GetPData("slaynr_slays")) or 0
 	local slay_reason = false
-	
+
 	if ply:Alive() and slays_left > 0 then
 		local chat_message = ""
-		
+
 		if slays_left > 0 then
 			chat_message = (chat_message .. "You will be slain this round")
 		end
@@ -398,18 +398,18 @@ end)
 --]]
 function ulx.force(calling_ply, target_plys, target_role, should_silent)
 	if not GetConVarString("gamemode") == "terrortown" then ULib.tsayError(calling_ply, gamemode_error, true) else
-		
+
 		local affected_plys = {}
 		local starting_credits = GetConVarNumber("ttt_credits_starting")
 		local det_starting_credits = GetConVarNumber("ttt_det_credits_starting")
 		local mer_starting_credits = GetConVarNumber("ttt_mer_credits_starting")
 		local kil_starting_credits = GetConVarNumber("ttt_kil_credits_starting")
-		
+
 		local role
 		local role_grammar
 		local role_string
 		local role_credits
-		
+
 		if target_role == "traitor" or target_role == "t" then role, role_grammar, role_string, role_credits = ROLE_TRAITOR, "a ", "traitor", starting_credits end
 		if target_role == "detective" or target_role == "d" then role, role_grammar, role_string, role_credits = ROLE_DETECTIVE, "a ", "detective", det_starting_credits end
 		if target_role == "mercenary" or target_role == "m" then role, role_grammar, role_string, role_credits = ROLE_MERCENARY, "a ", "mercenary", mer_starting_credits end
@@ -423,11 +423,11 @@ function ulx.force(calling_ply, target_plys, target_role, should_silent)
 		if target_role == "assassin" or target_role == "a" then role, role_grammar, role_string, role_credits = ROLE_ASSASSIN, "an ", "assassin", 0 end
 		if target_role == "killer" or target_role == "k" then role, role_grammar, role_string, role_credits = ROLE_KILLER, "a ", "killer", kil_starting_credits end
 		if target_role == "innocent" or target_role == "i" then role, role_grammar, role_string, role_credits = ROLE_INNOCENT, "an ", "innocent", 0 end
-		
+
 		for i = 1, #target_plys do
 			local v = target_plys[i]
 			local current_role = v:GetRole()
-			
+
 			if ulx.getExclusive(v, calling_ply) then
 				ULib.tsayError(calling_ply, ulx.getExclusive(v, calling_ply), true)
 			elseif GetRoundState() == 1 or GetRoundState() == 2 then
@@ -442,23 +442,18 @@ function ulx.force(calling_ply, target_plys, target_role, should_silent)
 				v:ResetEquipment()
 				RemoveLoadoutWeapons(v)
 				RemoveBoughtWeapons(v)
-				
+
 				v:SetRole(role)
 				v:SetCredits(role_credits)
 				SendFullStateUpdate()
-				
+
 				GiveLoadoutItems(v)
 				GiveLoadoutWeapons(v)
-				
+
 				table.insert(affected_plys, v)
-				
-				if target_role == "killer" or target_role == "k" then
-					v:SetMaxHealth(150)
-					v:SetHealth(150)
-				else
-					v:SetMaxHealth(100)
-					v:SetHealth(100)
-				end
+
+                v:SetMaxHealth(100)
+                v:SetHealth(100)
 			end
 		end
 		ulx.fancyLogAdmin(calling_ply, should_silent, "#A forced #T to become the role of " .. role_grammar .. "#s.", affected_plys, role_string)
@@ -495,7 +490,7 @@ function GetLoadoutWeapons(r)
 		[ROLE_KILLER] = {},
 		[ROLE_DETECTIVE] = {}
 	};
-	
+
 	for k, w in pairs(weapons.GetList()) do
 		if w and type(w.InLoadoutFor) == "table" then
 			for _, wrole in pairs(w.InLoadoutFor) do
@@ -541,7 +536,7 @@ function GiveLoadoutWeapons(ply)
 	local r = GetRoundState() == ROUND_PREP and ROLE_INNOCENT or ply:GetRole()
 	local weps = GetLoadoutWeapons(r)
 	if not weps then return end
-	
+
 	for _, cls in pairs(weps) do
 		if not ply:HasWeapon(cls) then
 			ply:Give(cls)
@@ -576,43 +571,43 @@ end
 function ulx.respawn(calling_ply, target_plys, should_silent)
 	if not GetConVarString("gamemode") == "terrortown" then ULib.tsayError(calling_ply, gamemode_error, true) else
 		local affected_plys = {}
-		
+
 		for i = 1, #target_plys do
 			local v = target_plys[i]
-			
+
 			if ulx.getExclusive(v, calling_ply) then
 				ULib.tsayError(calling_ply, ulx.getExclusive(v, calling_ply), true)
 			elseif GetRoundState() == 1 then
 				ULib.tsayError(calling_ply, "Waiting for players!", true)
-			
+
 			elseif v:Alive() and v:IsSpec() then -- players arent really dead when they are spectating, we need to handle that correctly
 				timer.Destroy("traitorcheck" .. v:SteamID())
 				v:ConCommand("ttt_spectator_mode 0") -- just incase they are in spectator mode take them out of it
 				timer.Create("respawndelay", 0.1, 0, function() --seems to be a slight delay from when you leave spec and when you can spawn this should get us around that
 					local corpse = corpse_find(v) -- run the normal respawn code now
 					if corpse then corpse_remove(corpse) end
-					
+
 					v:SpawnForRound(true)
 					v:SetCredits(((v:GetRole() == ROLE_INNOCENT) and 0) or GetConVarNumber("ttt_credits_starting"))
-					
+
 					table.insert(affected_plys, v)
-					
+
 					ulx.fancyLogAdmin(calling_ply, should_silent, "#A respawned #T!", affected_plys)
 					send_messages(affected_plys, "You have been respawned.")
-					
+
 					if v:Alive() then timer.Destroy("respawndelay") return end
 				end)
-			
+
 			elseif v:Alive() then
 				ULib.tsayError(calling_ply, v:Nick() .. " is already alive!", true)
 			else
 				timer.Destroy("traitorcheck" .. v:SteamID())
 				local corpse = corpse_find(v)
 				if corpse then corpse_remove(corpse) end
-				
+
 				v:SpawnForRound(true)
 				v:SetCredits(((v:GetRole() == ROLE_INNOCENT) and 0) or GetConVarNumber("ttt_credits_starting"))
-				
+
 				table.insert(affected_plys, v)
 			end
 		end
@@ -639,7 +634,7 @@ respawn:help("Respawns <target(s)>.")
 --]]
 function ulx.respawntp(calling_ply, target_ply, should_silent)
 	if not GetConVarString("gamemode") == "terrortown" then ULib.tsayError(calling_ply, gamemode_error, true) else
-		
+
 		local affected_ply = {}
 		if not calling_ply:IsValid() then
 			Msg("You are the console, you can't teleport or teleport others since you can't see the world!\n")
@@ -648,7 +643,7 @@ function ulx.respawntp(calling_ply, target_ply, should_silent)
 			ULib.tsayError(calling_ply, ulx.getExclusive(target_ply, calling_ply), true)
 		elseif GetRoundState() == 1 then
 			ULib.tsayError(calling_ply, "Waiting for players!", true)
-		
+
 		elseif target_ply:Alive() and target_ply:IsSpec() then
 			timer.Destroy("traitorcheck" .. target_ply:SteamID())
 			target_ply:ConCommand("ttt_spectator_mode 0")
@@ -661,24 +656,24 @@ function ulx.respawntp(calling_ply, target_ply, should_silent)
 					t.filter = { target_ply, calling_ply }
 				end
 				local tr = util.TraceEntity(t, target_ply)
-				
+
 				local pos = tr.HitPos
-				
+
 				local corpse = corpse_find(target_ply)
 				if corpse then corpse_remove(corpse) end
-				
+
 				target_ply:SpawnForRound(true)
 				target_ply:SetCredits(((target_ply:GetRole() == ROLE_INNOCENT) and 0) or GetConVarNumber("ttt_credits_starting"))
-				
+
 				target_ply:SetPos(pos)
 				table.insert(affected_ply, target_ply)
-				
+
 				ulx.fancyLogAdmin(calling_ply, should_silent, "#A respawned and teleported #T!", affected_ply)
 				send_messages(target_ply, "You have been respawned and teleported.")
-				
+
 				if target_ply:Alive() then timer.Destroy("respawntpdelay") return end
 			end)
-		
+
 		elseif target_ply:Alive() then
 			ULib.tsayError(calling_ply, target_ply:Nick() .. " is already alive!", true)
 		else
@@ -691,15 +686,15 @@ function ulx.respawntp(calling_ply, target_ply, should_silent)
 				t.filter = { target_ply, calling_ply }
 			end
 			local tr = util.TraceEntity(t, target_ply)
-			
+
 			local pos = tr.HitPos
-			
+
 			local corpse = corpse_find(target_ply)
 			if corpse then corpse_remove(corpse) end
-			
+
 			target_ply:SpawnForRound(true)
 			target_ply:SetCredits(((target_ply:GetRole() == ROLE_INNOCENT) and 0) or GetConVarNumber("ttt_credits_starting"))
-			
+
 			target_ply:SetPos(pos)
 			table.insert(affected_ply, target_ply)
 		end
@@ -777,10 +772,9 @@ drinks:help("Changes the <target(s)> drinks.")
 --]]
 function ulx.tttspec(calling_ply, target_plys, should_unspec)
 	if not GetConVarString("gamemode") == "terrortown" then ULib.tsayError(calling_ply, gamemode_error, true) else
-		
 		for i = 1, #target_plys do
 			local v = target_plys[i]
-			
+
 			if should_unspec then
 				v:ConCommand("ttt_spectator_mode 0")
 			else
@@ -811,7 +805,7 @@ tttspec:help("Forces the <target(s)> to/from spectator.")
 ulx.next_round = {}
 local function updateNextround()
 	table.Empty(ulx.next_round) -- Don't reassign so we don't lose our refs
-	
+
 	table.insert(ulx.next_round, "innocent") -- Add "innocent" to the table.
 	table.insert(ulx.next_round, "traitor") -- Add "traitor" to the table.
 	table.insert(ulx.next_round, "detective") -- Add "detective" to the table.
@@ -848,11 +842,10 @@ local PlysMarkedForInnocent = {}
 function ulx.nextround(calling_ply, target_plys, next_round)
 	if not GetConVarString("gamemode") == "terrortown" then ULib.tsayError(calling_ply, gamemode_error, true) else
 		local affected_plys = {}
-		local unaffected_plys = {}
 		for i = 1, #target_plys do
 			local v = target_plys[i]
 			local ID = v:UniqueID()
-			
+
 			if next_round == "traitor" then
 				if PlysMarkedForTraitor[ID] == true or PlysMarkedForDetective[ID] == true or PlysMarkedForMercenary[ID] == true or PlysMarkedForHypnotist[ID] == true or PlysMarkedForGlitch[ID] == true or PlysMarkedForJester[ID] == true or PlysMarkedForPhantom[ID] == true or PlysMarkedForZombie[ID] == true or PlysMarkedForVampire[ID] == true or PlysMarkedForSwapper[ID] == true or PlysMarkedForAssassin[ID] == true or PlysMarkedForKiller[ID] == true or PlysMarkedForInnocent[ID] == true then
 					ULib.tsayError(calling_ply, "that player is already marked for the next round", true)
@@ -1012,7 +1005,7 @@ function ulx.nextround(calling_ply, target_plys, next_round)
 				end
 			end
 		end
-		
+
 		if next_round == "unmark" then
 			ulx.fancyLogAdmin(calling_ply, true, "#A has unmarked #T ", affected_plys)
 		else
@@ -1030,7 +1023,7 @@ nxtr:help("Forces the target to be a role in the following round.")
 local function TraitorMarkedPlayers()
 	for k, v in pairs(PlysMarkedForTraitor) do
 		if v then
-			ply = player.GetByUniqueID(k)
+			local ply = player.GetByUniqueID(k)
 			ply:SetRole(ROLE_TRAITOR)
 			ply:AddCredits(GetConVarNumber("ttt_credits_starting"))
 			PlysMarkedForTraitor[k] = false
@@ -1043,6 +1036,9 @@ local function TraitorMarkedPlayers()
 			if ply:HasWeapon("weapon_zom_claws") then
 				ply:StripWeapon("weapon_zom_claws")
 			end
+			if ply:HasWeapon("weapon_kil_knife") then
+				ply:StripWeapon("weapon_kil_knife")
+			end
 		end
 	end
 end
@@ -1052,7 +1048,7 @@ hook.Add("TTTSelectRoles", "Admin_Round_Traitor", TraitorMarkedPlayers)
 local function DetectiveMarkedPlayers()
 	for k, v in pairs(PlysMarkedForDetective) do
 		if v then
-			ply = player.GetByUniqueID(k)
+			local ply = player.GetByUniqueID(k)
 			ply:SetRole(ROLE_DETECTIVE)
 			ply:AddCredits(GetConVarNumber("ttt_det_credits_starting"))
 			PlysMarkedForDetective[k] = false
@@ -1065,6 +1061,9 @@ local function DetectiveMarkedPlayers()
 			if ply:HasWeapon("weapon_zom_claws") then
 				ply:StripWeapon("weapon_zom_claws")
 			end
+			if ply:HasWeapon("weapon_kil_knife") then
+				ply:StripWeapon("weapon_kil_knife")
+			end
 		end
 	end
 end
@@ -1074,7 +1073,7 @@ hook.Add("TTTSelectRoles", "Admin_Round_Detective", DetectiveMarkedPlayers)
 local function MercenaryMarkedPlayers()
 	for k, v in pairs(PlysMarkedForMercenary) do
 		if v then
-			ply = player.GetByUniqueID(k)
+			local ply = player.GetByUniqueID(k)
 			ply:SetRole(ROLE_MERCENARY)
 			ply:AddCredits(GetConVarNumber("ttt_det_credits_starting"))
 			PlysMarkedForMercenary[k] = false
@@ -1087,6 +1086,9 @@ local function MercenaryMarkedPlayers()
 			if ply:HasWeapon("weapon_zom_claws") then
 				ply:StripWeapon("weapon_zom_claws")
 			end
+			if ply:HasWeapon("weapon_kil_knife") then
+				ply:StripWeapon("weapon_kil_knife")
+			end
 		end
 	end
 end
@@ -1096,7 +1098,7 @@ hook.Add("TTTSelectRoles", "Admin_Round_Mercenary", MercenaryMarkedPlayers)
 local function HypnotistMarkedPlayers()
 	for k, v in pairs(PlysMarkedForHypnotist) do
 		if v then
-			ply = player.GetByUniqueID(k)
+			local ply = player.GetByUniqueID(k)
 			ply:SetRole(ROLE_HYPNOTIST)
 			PlysMarkedForHypnotist[k] = false
 			if ply:HasWeapon("weapon_hyp_brainwash") then
@@ -1108,6 +1110,9 @@ local function HypnotistMarkedPlayers()
 			if ply:HasWeapon("weapon_zom_claws") then
 				ply:StripWeapon("weapon_zom_claws")
 			end
+			if ply:HasWeapon("weapon_kil_knife") then
+				ply:StripWeapon("weapon_kil_knife")
+			end
 			ply:Give("weapon_hyp_brainwash")
 		end
 	end
@@ -1118,7 +1123,7 @@ hook.Add("TTTSelectRoles", "Admin_Round_Hypnotist", HypnotistMarkedPlayers)
 local function GlitchMarkedPlayers()
 	for k, v in pairs(PlysMarkedForGlitch) do
 		if v then
-			ply = player.GetByUniqueID(k)
+			local ply = player.GetByUniqueID(k)
 			ply:SetRole(ROLE_GLITCH)
 			PlysMarkedForGlitch[k] = false
 			if ply:HasWeapon("weapon_hyp_brainwash") then
@@ -1130,6 +1135,9 @@ local function GlitchMarkedPlayers()
 			if ply:HasWeapon("weapon_zom_claws") then
 				ply:StripWeapon("weapon_zom_claws")
 			end
+			if ply:HasWeapon("weapon_kil_knife") then
+				ply:StripWeapon("weapon_kil_knife")
+			end
 		end
 	end
 end
@@ -1139,7 +1147,7 @@ hook.Add("TTTSelectRoles", "Admin_Round_Glitch", GlitchMarkedPlayers)
 local function JesterMarkedPlayers()
 	for k, v in pairs(PlysMarkedForJester) do
 		if v then
-			ply = player.GetByUniqueID(k)
+			local ply = player.GetByUniqueID(k)
 			ply:SetRole(ROLE_JESTER)
 			PlysMarkedForJester[k] = false
 			if ply:HasWeapon("weapon_hyp_brainwash") then
@@ -1151,6 +1159,9 @@ local function JesterMarkedPlayers()
 			if ply:HasWeapon("weapon_zom_claws") then
 				ply:StripWeapon("weapon_zom_claws")
 			end
+			if ply:HasWeapon("weapon_kil_knife") then
+				ply:StripWeapon("weapon_kil_knife")
+			end
 		end
 	end
 end
@@ -1160,7 +1171,7 @@ hook.Add("TTTSelectRoles", "Admin_Round_Jester", JesterMarkedPlayers)
 local function PhantomMarkedPlayers()
 	for k, v in pairs(PlysMarkedForPhantom) do
 		if v then
-			ply = player.GetByUniqueID(k)
+			local ply = player.GetByUniqueID(k)
 			ply:SetRole(ROLE_PHANTOM)
 			PlysMarkedForPhantom[k] = false
 			if ply:HasWeapon("weapon_hyp_brainwash") then
@@ -1172,6 +1183,9 @@ local function PhantomMarkedPlayers()
 			if ply:HasWeapon("weapon_zom_claws") then
 				ply:StripWeapon("weapon_zom_claws")
 			end
+			if ply:HasWeapon("weapon_kil_knife") then
+				ply:StripWeapon("weapon_kil_knife")
+			end
 		end
 	end
 end
@@ -1181,7 +1195,7 @@ hook.Add("TTTSelectRoles", "Admin_Round_Phantom", PhantomMarkedPlayers)
 local function ZombieMarkedPlayers()
 	for k, v in pairs(PlysMarkedForZombie) do
 		if v then
-			ply = player.GetByUniqueID(k)
+			local ply = player.GetByUniqueID(k)
 			ply:SetRole(ROLE_ZOMBIE)
 			PlysMarkedForZombie[k] = false
 			if ply:HasWeapon("weapon_hyp_brainwash") then
@@ -1193,6 +1207,9 @@ local function ZombieMarkedPlayers()
 			if ply:HasWeapon("weapon_zom_claws") then
 				ply:StripWeapon("weapon_zom_claws")
 			end
+			if ply:HasWeapon("weapon_kil_knife") then
+				ply:StripWeapon("weapon_kil_knife")
+			end
 			ply:Give("weapon_zom_claws")
 		end
 	end
@@ -1203,7 +1220,7 @@ hook.Add("TTTSelectRoles", "Admin_Round_Zombie", ZombieMarkedPlayers)
 local function VampireMarkedPlayers()
 	for k, v in pairs(PlysMarkedForVampire) do
 		if v then
-			ply = player.GetByUniqueID(k)
+			local ply = player.GetByUniqueID(k)
 			ply:SetRole(ROLE_VAMPIRE)
 			PlysMarkedForVampire[k] = false
 			if ply:HasWeapon("weapon_hyp_brainwash") then
@@ -1215,6 +1232,9 @@ local function VampireMarkedPlayers()
 			if ply:HasWeapon("weapon_zom_claws") then
 				ply:StripWeapon("weapon_zom_claws")
 			end
+			if ply:HasWeapon("weapon_kil_knife") then
+				ply:StripWeapon("weapon_kil_knife")
+			end
 			ply:Give("weapon_vam_fangs")
 		end
 	end
@@ -1225,7 +1245,7 @@ hook.Add("TTTSelectRoles", "Admin_Round_Vampire", VampireMarkedPlayers)
 local function SwapperMarkedPlayers()
 	for k, v in pairs(PlysMarkedForSwapper) do
 		if v then
-			ply = player.GetByUniqueID(k)
+			local ply = player.GetByUniqueID(k)
 			ply:SetRole(ROLE_SWAPPER)
 			PlysMarkedForSwapper[k] = false
 			if ply:HasWeapon("weapon_hyp_brainwash") then
@@ -1237,6 +1257,9 @@ local function SwapperMarkedPlayers()
 			if ply:HasWeapon("weapon_zom_claws") then
 				ply:StripWeapon("weapon_zom_claws")
 			end
+			if ply:HasWeapon("weapon_kil_knife") then
+				ply:StripWeapon("weapon_kil_knife")
+			end
 		end
 	end
 end
@@ -1246,7 +1269,7 @@ hook.Add("TTTSelectRoles", "Admin_Round_Swapper", SwapperMarkedPlayers)
 local function AssassinMarkedPlayers()
 	for k, v in pairs(PlysMarkedForAssassin) do
 		if v then
-			ply = player.GetByUniqueID(k)
+			local ply = player.GetByUniqueID(k)
 			ply:SetRole(ROLE_ASSASSIN)
 			PlysMarkedForAssassin[k] = false
 			if ply:HasWeapon("weapon_hyp_brainwash") then
@@ -1258,6 +1281,9 @@ local function AssassinMarkedPlayers()
 			if ply:HasWeapon("weapon_zom_claws") then
 				ply:StripWeapon("weapon_zom_claws")
 			end
+			if ply:HasWeapon("weapon_kil_knife") then
+				ply:StripWeapon("weapon_kil_knife")
+			end
 		end
 	end
 end
@@ -1267,10 +1293,8 @@ hook.Add("TTTSelectRoles", "Admin_Round_Assassin", AssassinMarkedPlayers)
 local function KillerMarkedPlayers()
 	for k, v in pairs(PlysMarkedForKiller) do
 		if v then
-			ply = player.GetByUniqueID(k)
+			local ply = player.GetByUniqueID(k)
 			ply:SetRole(ROLE_KILLER)
-			ply:SetMaxHealth(150)
-			ply:SetHealth(150)
 			PlysMarkedForKiller[k] = false
 			if ply:HasWeapon("weapon_hyp_brainwash") then
 				ply:StripWeapon("weapon_hyp_brainwash")
@@ -1280,17 +1304,18 @@ local function KillerMarkedPlayers()
 			end
 			if ply:HasWeapon("weapon_zom_claws") then
 				ply:StripWeapon("weapon_zom_claws")
-			end
+            end
+            ply:Give("weapon_kil_knife")
 		end
 	end
 end
 
-hook.Add("TTTSelectRoles", "Admin_Round_Assassin", AssassinMarkedPlayers)
+hook.Add("TTTSelectRoles", "Admin_Round_Killer", KillerMarkedPlayers)
 
 local function InnocentMarkedPlayers()
 	for k, v in pairs(PlysMarkedForInnocent) do
 		if v then
-			ply = player.GetByUniqueID(k)
+			local ply = player.GetByUniqueID(k)
 			ply:SetRole(ROLE_INNOCENT)
 			PlysMarkedForPhantom[k] = false
 			if ply:HasWeapon("weapon_hyp_brainwash") then
@@ -1302,6 +1327,9 @@ local function InnocentMarkedPlayers()
 			if ply:HasWeapon("weapon_zom_claws") then
 				ply:StripWeapon("weapon_zom_claws")
 			end
+			if ply:HasWeapon("weapon_kil_knife") then
+				ply:StripWeapon("weapon_kil_knife")
+			end
 		end
 	end
 end
@@ -1311,20 +1339,20 @@ hook.Add("TTTSelectRoles", "Admin_Round_Innocent", InnocentMarkedPlayers)
 --- [Identify Corpse Thanks Neku]----------------------------------------------------------------------------
 function ulx.identify(calling_ply, target_ply, unidentify)
 	if not GetConVarString("gamemode") == "terrortown" then ULib.tsayError(calling_ply, gamemode_error, true) else
-		body = corpse_find(target_ply)
+		local body = corpse_find(target_ply)
 		if not body then ULib.tsayError(calling_ply, "This player's corpse does not exist!", true) return end
-		
+
 		if not unidentify then
 			ulx.fancyLogAdmin(calling_ply, "#A identified #T's body!", target_ply)
 			CORPSE.SetFound(body, true)
 			target_ply:SetNWBool("body_found", true)
-			
+
 			if target_ply:GetRole() == ROLE_TRAITOR then
 				-- update innocent's list of traitors
 				SendConfirmedTraitors(GetInnocentFilter(false))
 				SCORE:HandleBodyFound(calling_ply, target_ply)
 			end
-		
+
 		else
 			ulx.fancyLogAdmin(calling_ply, "#A unidentified #T's body!", target_ply)
 			CORPSE.SetFound(body, false)
@@ -1344,7 +1372,7 @@ identify:help("Identifies a target's body.")
 --- [Remove Corpse Thanks Neku]----------------------------------------------------------------------------
 function ulx.removebody(calling_ply, target_ply)
 	if not GetConVarString("gamemode") == "terrortown" then ULib.tsayError(calling_ply, gamemode_error, true) else
-		body = corpse_find(target_ply)
+		local body = corpse_find(target_ply)
 		if not body then ULib.tsayError(calling_ply, "This player's corpse does not exist!", true) return end
 		ulx.fancyLogAdmin(calling_ply, "#A removed #T's body!", target_ply)
 		if string.find(body:GetModel(), "zm_", 6, true) then
@@ -1362,22 +1390,16 @@ removebody:help("Removes a target's body.")
 
 --- [Impair Next Round - Concpet and some code from Decicus next round slap]----------------------------------------------------------------------------
 function ulx.inr(calling_ply, target_ply, amount)
-	
+    local chat_message = ""
 	if not GetConVarString("gamemode") == "terrortown" then ULib.tsayError(calling_ply, gamemode_error, true) else
-		
-		local ImpairBy = target_ply:GetPData("ImpairNR", 0)
-		
 		if amount == 0 then
 			target_ply:RemovePData("ImpairNR")
 			chat_message = "#T was wrongly convicted. The fine has been removed."
-		
-		else
-			
-			if amount == ImpairBy then
+        else
+            local impairBy = target_ply:GetPData("ImpairNR", 0)
+			if amount == impairBy then
 				ULib.tsayError(calling_ply, calling_ply:Nick() .. " will already be impaired for that amount of health.")
-			
 			else
-				
 				target_ply:SetPData("ImpairNR", amount)
 				chat_message = "#T did the crime and they will pay the fine of " .. amount .. " health next round."
 			end
@@ -1395,14 +1417,11 @@ impair:help("Impair the targets health the following round. Set to 0 to remove i
 --- [impair Next Round Helper Functions ]----------------------------------------------------------------------------
 
 hook.Add("PlayerSpawn", "InformImpair", function(ply)
-	
-	local ImpairDamage = tonumber(ply:GetPData("ImpairNR")) or 0
-	
-	if ply:Alive() and ImpairDamage > 0 then
+	local impairDamage = tonumber(ply:GetPData("ImpairNR")) or 0
+	if ply:Alive() and impairDamage > 0 then
 		local chat_message = ""
-		
-		if ImpairDamage > 0 then
-			chat_message = (chat_message .. "You did the crime and they will pay the fine of " .. ImpairDamage .. " health next round.")
+		if impairDamage > 0 then
+			chat_message = (chat_message .. "You did the crime and they will pay the fine of " .. impairDamage .. " health next round.")
 		end
 		ply:ChatPrint(chat_message)
 	end
@@ -1410,11 +1429,8 @@ end)
 
 
 function ImpairPlayers()
-	
 	for _, ply in ipairs(player.GetAll()) do
-		
 		local impairDamage = tonumber(ply:GetPData("ImpairNR")) or 0
-		
 		if ply:Alive() and impairDamage > 0 then
 			local name = ply:Nick()
 			ply:TakeDamage(impairDamage)
