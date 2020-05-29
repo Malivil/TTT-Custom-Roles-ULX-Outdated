@@ -130,6 +130,19 @@ local function init()
 		ULib.replicatedWritableCvar("ttt_det_credits_traitorkill", "rep_ttt_det_credits_traitorkill", GetConVarNumber("ttt_det_credits_traitorkill"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_det_credits_traitordead", "rep_ttt_det_credits_traitordead", GetConVarNumber("ttt_det_credits_traitordead"), false, false, "xgui_gmsettings")
 
+        --sprint
+        ULib.replicatedWritableCvar("ttt_sprint_enabled", "rep_ttt_sprint_enabled", GetConVarNumber("ttt_sprint_enabled"), false, false, "xgui_gmsettings")
+		ULib.replicatedWritableCvar("ttt_sprint_bonus_rel", "rep_ttt_sprint_bonus_rel", GetConVarNumber("ttt_sprint_bonus_rel"), false, false, "xgui_gmsettings")
+		ULib.replicatedWritableCvar("ttt_sprint_big_crosshair", "rep_ttt_sprint_big_crosshair", GetConVarNumber("ttt_sprint_big_crosshair"), false, false, "xgui_gmsettings")
+        ULib.replicatedWritableCvar("ttt_sprint_regenerate_innocent", "rep_ttt_sprint_regenerate_innocent", GetConVarNumber("ttt_sprint_regenerate_innocent"), false, false, "xgui_gmsettings")
+        ULib.replicatedWritableCvar("ttt_sprint_regenerate_traitor", "rep_ttt_sprint_regenerate_traitor", GetConVarNumber("ttt_sprint_regenerate_traitor"), false, false, "xgui_gmsettings")
+		ULib.replicatedWritableCvar("ttt_sprint_consume", "rep_ttt_sprint_consume", GetConVarNumber("ttt_sprint_consume"), false, false, "xgui_gmsettings")
+
+        --multi-jump
+        ULib.replicatedWritableCvar("multijump_default_jumps", "rep_multijump_default_jumps", GetConVarNumber("multijump_default_jumps"), false, false, "xgui_gmsettings")
+        ULib.replicatedWritableCvar("multijump_default_power", "rep_multijump_default_power", GetConVarNumber("multijump_default_power"), false, false, "xgui_gmsettings")
+        ULib.replicatedWritableCvar("multijump_can_jump_while_falling", "rep_multijump_can_jump_while_falling", GetConVarNumber("multijump_can_jump_while_falling"), false, false, "xgui_gmsettings")
+
 		--prop possession
 		ULib.replicatedWritableCvar("ttt_spec_prop_control", "rep_ttt_spec_prop_control", GetConVarNumber("ttt_spec_prop_control"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_spec_prop_base", "rep_ttt_spec_prop_base", GetConVarNumber("ttt_spec_prop_base"), false, false, "xgui_gmsettings")

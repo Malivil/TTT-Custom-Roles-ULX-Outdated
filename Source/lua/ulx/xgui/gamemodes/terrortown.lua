@@ -535,6 +535,61 @@ ecdclst:AddItem(ecdctd)
 xgui.hookEvent("onProcessModules", nil, ecpnl.processModules)
 xgui.addSubModule("Equipment credits", ecpnl, nil, "terrortown_settings")
 
+-------------------- Player Movement Module--------------------
+local pmpnl = xlib.makelistlayout { w = 415, h = 318, parent = xgui.null }
+
+--Sprint
+local pmspp = vgui.Create("DCollapsibleCategory", pmpnl)
+pmspp:SetSize(390, 150)
+pmspp:SetExpanded(1)
+pmspp:SetLabel("Sprint")
+
+local pmsplst = vgui.Create("DPanelList", pmspp)
+pmsplst:SetPos(5, 25)
+pmsplst:SetSize(390, 150)
+pmsplst:SetSpacing(5)
+
+local pmspe = xlib.makecheckbox { label = "ttt_sprint_enabled (def. 1)", repconvar = "rep_ttt_sprint_enabled", parent = pmsplst }
+pmsplst:AddItem(pmspe)
+
+local pmspbr = xlib.makeslider { label = "ttt_sprint_bonus_rel (def. 0.4)", min = 0.1, max = 2, decimal = 1, repconvar = "rep_ttt_sprint_bonus_rel", parent = pmsplst }
+pmsplst:AddItem(pmspbr)
+
+local pmspbc = xlib.makecheckbox { label = "ttt_sprint_big_crosshair (def. 1)", repconvar = "rep_ttt_sprint_big_crosshair", parent = krmlst }
+pmsplst:AddItem(pmspbc)
+
+local pmspri = xlib.makeslider { label = "ttt_sprint_regenerate_innocent (def. 0.08)", min = 0.01, max = 2, decimal = 2, repconvar = "rep_ttt_sprint_regenerate_innocent", parent = pmsplst }
+pmsplst:AddItem(pmspri)
+
+local pmsprt = xlib.makeslider { label = "ttt_sprint_regenerate_traitor (def. 0.12)", min = 0.01, max = 2, decimal = 2, repconvar = "rep_ttt_sprint_regenerate_traitor", parent = pmsplst }
+pmsplst:AddItem(pmsprt)
+
+local pmspc = xlib.makeslider { label = "ttt_sprint_consume (def. 0.2)", min = 0.1, max = 5, decimal = 1, repconvar = "rep_ttt_sprint_consume", parent = pmsplst }
+pmsplst:AddItem(pmspc)
+
+--Multi-Jump
+local pmmjp = vgui.Create("DCollapsibleCategory", pmpnl)
+pmmjp:SetSize(390, 80)
+pmmjp:SetExpanded(0)
+pmmjp:SetLabel("Multi-Jump")
+
+local pmmjlst = vgui.Create("DPanelList", pmmjp)
+pmmjlst:SetPos(5, 25)
+pmmjlst:SetSize(390, 80)
+pmmjlst:SetSpacing(5)
+
+local pmmjdj = xlib.makeslider { label = "multijump_default_jumps (def. 1)", min = 0, max = 10, repconvar = "rep_multijump_default_jumps", parent = pmmjlst }
+pmmjlst:AddItem(pmmjdj)
+
+local pmmjdp = xlib.makeslider { label = "multijump_default_power (def. 1)", min = 0, max = 50, repconvar = "rep_multijump_default_power", parent = pmmjlst }
+pmmjlst:AddItem(pmmjdp)
+
+local pmmjcjwf = xlib.makecheckbox { label = "multijump_can_jump_while_falling (def. 1)", repconvar = "rep_multijump_can_jump_while_falling", parent = pmmjlst }
+pmmjlst:AddItem(pmmjcjwf)
+
+xgui.hookEvent("onProcessModules", nil, pmpnl.processModules)
+xgui.addSubModule("Player Movement", pmpnl, nil, "terrortown_settings")
+
 -------------------- Prop possession Module--------------------
 local pppnl = xlib.makelistlayout { w = 415, h = 318, parent = xgui.null }
 
