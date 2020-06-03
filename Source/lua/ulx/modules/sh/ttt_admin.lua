@@ -467,8 +467,13 @@ function ulx.force(calling_ply, target_plys, target_role, should_silent)
 
 				table.insert(affected_plys, v)
 
-                v:SetMaxHealth(100)
-                v:SetHealth(100)
+                local health = 100
+                if role == ROLE_KILLER then
+                    health = GetConVar("ttt_killer_max_health"):GetInt()
+                end
+
+                v:SetMaxHealth(health)
+                v:SetHealth(health)
 			end
 		end
 		ulx.fancyLogAdmin(calling_ply, should_silent, "#A forced #T to become the role of " .. role_grammar .. "#s.", affected_plys, role_string)
@@ -541,7 +546,20 @@ function RemoveLoadoutWeapons(ply)
 		if ply:HasWeapon(cls) then
 			ply:StripWeapon(cls)
 		end
-	end
+    end
+
+    if ply:HasWeapon("weapon_hyp_brainwash") then
+        ply:StripWeapon("weapon_hyp_brainwash")
+    end
+    if ply:HasWeapon("weapon_vam_fangs") then
+        ply:StripWeapon("weapon_vam_fangs")
+    end
+    if ply:HasWeapon("weapon_zom_claws") then
+        ply:StripWeapon("weapon_zom_claws")
+    end
+    if ply:HasWeapon("weapon_kil_knife") then
+        ply:StripWeapon("weapon_kil_knife")
+    end
 end
 
 --[[GiveLoadoutWeapons][Gives the loadout weapons for that player.]
@@ -1039,6 +1057,8 @@ local function TraitorMarkedPlayers()
 	for k, v in pairs(PlysMarkedForTraitor) do
 		if v then
 			local ply = player.GetByUniqueID(k)
+            ply:SetMaxHealth(100)
+            ply:SetHealth(100)
 			ply:SetRole(ROLE_TRAITOR)
 			ply:AddCredits(GetConVarNumber("ttt_credits_starting"))
 			PlysMarkedForTraitor[k] = false
@@ -1064,6 +1084,8 @@ local function DetectiveMarkedPlayers()
 	for k, v in pairs(PlysMarkedForDetective) do
 		if v then
 			local ply = player.GetByUniqueID(k)
+            ply:SetMaxHealth(100)
+            ply:SetHealth(100)
 			ply:SetRole(ROLE_DETECTIVE)
 			ply:AddCredits(GetConVarNumber("ttt_det_credits_starting"))
 			PlysMarkedForDetective[k] = false
@@ -1089,6 +1111,8 @@ local function MercenaryMarkedPlayers()
 	for k, v in pairs(PlysMarkedForMercenary) do
 		if v then
 			local ply = player.GetByUniqueID(k)
+            ply:SetMaxHealth(100)
+            ply:SetHealth(100)
 			ply:SetRole(ROLE_MERCENARY)
 			ply:AddCredits(GetConVarNumber("ttt_det_credits_starting"))
 			PlysMarkedForMercenary[k] = false
@@ -1114,6 +1138,8 @@ local function HypnotistMarkedPlayers()
 	for k, v in pairs(PlysMarkedForHypnotist) do
 		if v then
 			local ply = player.GetByUniqueID(k)
+            ply:SetMaxHealth(100)
+            ply:SetHealth(100)
 			ply:SetRole(ROLE_HYPNOTIST)
 			PlysMarkedForHypnotist[k] = false
 			if ply:HasWeapon("weapon_hyp_brainwash") then
@@ -1139,6 +1165,8 @@ local function GlitchMarkedPlayers()
 	for k, v in pairs(PlysMarkedForGlitch) do
 		if v then
 			local ply = player.GetByUniqueID(k)
+            ply:SetMaxHealth(100)
+            ply:SetHealth(100)
 			ply:SetRole(ROLE_GLITCH)
 			PlysMarkedForGlitch[k] = false
 			if ply:HasWeapon("weapon_hyp_brainwash") then
@@ -1163,6 +1191,8 @@ local function JesterMarkedPlayers()
 	for k, v in pairs(PlysMarkedForJester) do
 		if v then
 			local ply = player.GetByUniqueID(k)
+            ply:SetMaxHealth(100)
+            ply:SetHealth(100)
 			ply:SetRole(ROLE_JESTER)
 			PlysMarkedForJester[k] = false
 			if ply:HasWeapon("weapon_hyp_brainwash") then
@@ -1187,6 +1217,8 @@ local function PhantomMarkedPlayers()
 	for k, v in pairs(PlysMarkedForPhantom) do
 		if v then
 			local ply = player.GetByUniqueID(k)
+            ply:SetMaxHealth(100)
+            ply:SetHealth(100)
 			ply:SetRole(ROLE_PHANTOM)
 			PlysMarkedForPhantom[k] = false
 			if ply:HasWeapon("weapon_hyp_brainwash") then
@@ -1211,6 +1243,8 @@ local function ZombieMarkedPlayers()
 	for k, v in pairs(PlysMarkedForZombie) do
 		if v then
 			local ply = player.GetByUniqueID(k)
+            ply:SetMaxHealth(100)
+            ply:SetHealth(100)
 			ply:SetRole(ROLE_ZOMBIE)
 			PlysMarkedForZombie[k] = false
 			if ply:HasWeapon("weapon_hyp_brainwash") then
@@ -1236,6 +1270,8 @@ local function VampireMarkedPlayers()
 	for k, v in pairs(PlysMarkedForVampire) do
 		if v then
 			local ply = player.GetByUniqueID(k)
+            ply:SetMaxHealth(100)
+            ply:SetHealth(100)
 			ply:SetRole(ROLE_VAMPIRE)
 			PlysMarkedForVampire[k] = false
 			if ply:HasWeapon("weapon_hyp_brainwash") then
@@ -1261,6 +1297,8 @@ local function SwapperMarkedPlayers()
 	for k, v in pairs(PlysMarkedForSwapper) do
 		if v then
 			local ply = player.GetByUniqueID(k)
+            ply:SetMaxHealth(100)
+            ply:SetHealth(100)
 			ply:SetRole(ROLE_SWAPPER)
 			PlysMarkedForSwapper[k] = false
 			if ply:HasWeapon("weapon_hyp_brainwash") then
@@ -1285,6 +1323,8 @@ local function AssassinMarkedPlayers()
 	for k, v in pairs(PlysMarkedForAssassin) do
 		if v then
 			local ply = player.GetByUniqueID(k)
+            ply:SetMaxHealth(100)
+            ply:SetHealth(100)
 			ply:SetRole(ROLE_ASSASSIN)
 			PlysMarkedForAssassin[k] = false
 			if ply:HasWeapon("weapon_hyp_brainwash") then
@@ -1308,7 +1348,9 @@ hook.Add("TTTSelectRoles", "Admin_Round_Assassin", AssassinMarkedPlayers)
 local function KillerMarkedPlayers()
 	for k, v in pairs(PlysMarkedForKiller) do
 		if v then
-			local ply = player.GetByUniqueID(k)
+            local ply = player.GetByUniqueID(k)
+            ply:SetMaxHealth(GetConVar("ttt_killer_max_health"):GetInt())
+            ply:SetHealth(GetConVar("ttt_killer_max_health"):GetInt())
 			ply:SetRole(ROLE_KILLER)
 			PlysMarkedForKiller[k] = false
 			if ply:HasWeapon("weapon_hyp_brainwash") then
@@ -1320,7 +1362,10 @@ local function KillerMarkedPlayers()
 			if ply:HasWeapon("weapon_zom_claws") then
 				ply:StripWeapon("weapon_zom_claws")
             end
-            ply:Give("weapon_kil_knife")
+            if GetConVar("ttt_killer_knife_enabled"):GetBool() then
+                ply:StripWeapon("weapon_zm_improvised")
+                ply:Give("weapon_kil_knife")
+            end
 		end
 	end
 end
@@ -1331,8 +1376,10 @@ local function InnocentMarkedPlayers()
 	for k, v in pairs(PlysMarkedForInnocent) do
 		if v then
 			local ply = player.GetByUniqueID(k)
+            ply:SetMaxHealth(100)
+            ply:SetHealth(100)
 			ply:SetRole(ROLE_INNOCENT)
-			PlysMarkedForPhantom[k] = false
+			PlysMarkedForInnocent[k] = false
 			if ply:HasWeapon("weapon_hyp_brainwash") then
 				ply:StripWeapon("weapon_hyp_brainwash")
 			end

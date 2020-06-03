@@ -288,17 +288,26 @@ gptrdlst:AddItem(kchance)
 
 -- Role Configs
 local gptrcfgclp = vgui.Create("DCollapsibleCategory", gppnl)
-gptrcfgclp:SetSize(390, 170)
+gptrcfgclp:SetSize(390, 300)
 gptrcfgclp:SetExpanded(0)
 gptrcfgclp:SetLabel("Role Configs")
 
 local gptrcfglst = vgui.Create("DPanelList", gptrcfgclp)
 gptrcfglst:SetPos(5, 25)
-gptrcfglst:SetSize(390, 170)
+gptrcfglst:SetSize(390, 300)
 gptrcfglst:SetSpacing(5)
 
 local dsearch = xlib.makecheckbox { label = "ttt_detective_search_only (def. 1)", repconvar = "rep_ttt_detective_search_only", parent = gptrcfglst }
 gptrcfglst:AddItem(dsearch)
+
+local kknife = xlib.makecheckbox { label = "ttt_killer_knife_enabled (def. 1)", repconvar = "rep_ttt_killer_knife_enabled", parent = gptrcfglst }
+gptrcfglst:AddItem(kknife)
+
+local khealth = xlib.makeslider { label = "ttt_killer_max_health (def. 100)", min = 1, max = 200, repconvar = "rep_ttt_killer_max_health", parent = gptrcfglst }
+gptrcfglst:AddItem(khealth)
+
+local ksmokee = xlib.makecheckbox { label = "ttt_killer_smoke_enabled (def. 1)", repconvar = "rep_ttt_killer_smoke_enabled", parent = gptrcfglst }
+gptrcfglst:AddItem(ksmokee)
 
 local ksmoke = xlib.makeslider { label = "ttt_killer_smoke_timer (def. 60)", min = 10, max = 200, repconvar = "rep_ttt_killer_smoke_timer", parent = gptrcfglst }
 gptrcfglst:AddItem(ksmoke)
@@ -306,11 +315,20 @@ gptrcfglst:AddItem(ksmoke)
 local kvision = xlib.makecheckbox { label = "ttt_killer_vision_enable (def. 1)", repconvar = "rep_ttt_killer_vision_enable", parent = gptrcfglst }
 gptrcfglst:AddItem(kvision)
 
+local ktarget = xlib.makecheckbox { label = "ttt_killer_show_target_icon (def. 1)", repconvar = "rep_ttt_killer_show_target_icon", parent = gptrcfglst }
+gptrcfglst:AddItem(ktarget)
+
 local zvision = xlib.makecheckbox { label = "ttt_zombie_vision_enable (def. 1)", repconvar = "rep_ttt_zombie_vision_enable", parent = gptrcfglst }
 gptrcfglst:AddItem(zvision)
 
+local ztarget = xlib.makecheckbox { label = "ttt_zombie_show_target_icon (def. 1)", repconvar = "rep_ttt_zombie_show_target_icon", parent = gptrcfglst }
+gptrcfglst:AddItem(ztarget)
+
 local vvision = xlib.makecheckbox { label = "ttt_vampire_vision_enable (def. 1)", repconvar = "rep_ttt_vampire_vision_enable", parent = gptrcfglst }
 gptrcfglst:AddItem(vvision)
+
+local vtarget = xlib.makecheckbox { label = "ttt_vampire_show_target_icon (def. 1)", repconvar = "rep_ttt_vampire_show_target_icon", parent = gptrcfglst }
+gptrcfglst:AddItem(vtarget)
 
 local mshop = xlib.makeslider { label = "ttt_shop_merc_mode (def. 0)", min = 0, max = 4, repconvar = "rep_ttt_shop_merc_mode", parent = gptrcfglst }
 gptrcfglst:AddItem(mshop)
