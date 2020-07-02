@@ -288,13 +288,13 @@ gptrdlst:AddItem(kchance)
 
 -- Role Configs
 local gptrcfgclp = vgui.Create("DCollapsibleCategory", gppnl)
-gptrcfgclp:SetSize(390, 300)
+gptrcfgclp:SetSize(390, 445)
 gptrcfgclp:SetExpanded(0)
 gptrcfgclp:SetLabel("Role Configs")
 
 local gptrcfglst = vgui.Create("DPanelList", gptrcfgclp)
 gptrcfglst:SetPos(5, 25)
-gptrcfglst:SetSize(390, 300)
+gptrcfglst:SetSize(390, 445)
 gptrcfglst:SetSpacing(5)
 
 local dsearch = xlib.makecheckbox { label = "ttt_detective_search_only (def. 1)", repconvar = "rep_ttt_detective_search_only", parent = gptrcfglst }
@@ -318,17 +318,35 @@ gptrcfglst:AddItem(kvision)
 local ktarget = xlib.makecheckbox { label = "ttt_killer_show_target_icon (def. 1)", repconvar = "rep_ttt_killer_show_target_icon", parent = gptrcfglst }
 gptrcfglst:AddItem(ktarget)
 
+local kdmgscale = xlib.makeslider { label = "ttt_killer_damage_scale (def. 0.25)", min = 0.1, max = 1, decimal = 2, repconvar = "rep_ttt_killer_damage_scale", parent = gptrcfglst }
+gptrcfglst:AddItem(kdmgscale)
+
+local kdmgreduc = xlib.makeslider { label = "ttt_killer_damage_reduction (def. 0.55)", min = 0.1, max = 1, decimal = 2, repconvar = "rep_ttt_killer_damage_reduction", parent = gptrcfglst }
+gptrcfglst:AddItem(kdmgreduc)
+
 local zvision = xlib.makecheckbox { label = "ttt_zombie_vision_enable (def. 1)", repconvar = "rep_ttt_zombie_vision_enable", parent = gptrcfglst }
 gptrcfglst:AddItem(zvision)
 
 local ztarget = xlib.makecheckbox { label = "ttt_zombie_show_target_icon (def. 1)", repconvar = "rep_ttt_zombie_show_target_icon", parent = gptrcfglst }
 gptrcfglst:AddItem(ztarget)
 
+local zdmgscale = xlib.makeslider { label = "ttt_zombie_damage_scale (def. 0.2)", min = 0.1, max = 1, decimal = 2, repconvar = "rep_ttt_zombie_damage_scale", parent = gptrcfglst }
+gptrcfglst:AddItem(zdmgscale)
+
+local zdmgreduc = xlib.makeslider { label = "ttt_zombie_damage_reduction (def. 0.8)", min = 0.1, max = 1, decimal = 2, repconvar = "rep_ttt_zombie_damage_reduction", parent = gptrcfglst }
+gptrcfglst:AddItem(zdmgreduc)
+
+local zpoweap = xlib.makecheckbox { label = "ttt_zombie_prime_only_weapons (def. 1)", repconvar = "rep_ttt_zombie_prime_only_weapons", parent = gptrcfglst }
+gptrcfglst:AddItem(zpoweap)
+
 local vvision = xlib.makecheckbox { label = "ttt_vampire_vision_enable (def. 1)", repconvar = "rep_ttt_vampire_vision_enable", parent = gptrcfglst }
 gptrcfglst:AddItem(vvision)
 
 local vtarget = xlib.makecheckbox { label = "ttt_vampire_show_target_icon (def. 1)", repconvar = "rep_ttt_vampire_show_target_icon", parent = gptrcfglst }
 gptrcfglst:AddItem(vtarget)
+
+local vdmgreduc = xlib.makeslider { label = "ttt_vampire_damage_reduction (def. 0.8)", min = 0.1, max = 1, decimal = 2, repconvar = "rep_ttt_vampire_damage_reduction", parent = gptrcfglst }
+gptrcfglst:AddItem(vdmgreduc)
 
 local mshop = xlib.makeslider { label = "ttt_shop_merc_mode (def. 0)", min = 0, max = 4, repconvar = "rep_ttt_shop_merc_mode", parent = gptrcfglst }
 gptrcfglst:AddItem(mshop)
