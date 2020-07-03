@@ -50,8 +50,8 @@ function SetRole(ply, role)
 
     if SERVER then
         net.Start("TTT_RoleChanged")
-        net.WriteInt(ply:UserID(), 8)
-        net.WriteInt(role, 8)
+        net.WriteString(ply:UniqueID())
+        net.WriteUInt(role, 8)
         net.Broadcast()
     end
 end
