@@ -56,6 +56,15 @@ function SetRole(ply, role)
     end
 end
 
+function GetRoleStartingCredits(role)
+    return (role == ROLE_TRAITOR and GetConVarNumber("ttt_credits_starting")) or
+        (role == ROLE_DETECTIVE and GetConVarNumber("ttt_det_credits_starting")) or
+        (role == ROLE_MERCENARY and GetConVarNumber("ttt_mer_credits_starting")) or
+        (role == ROLE_KILLER and GetConVarNumber("ttt_kil_credits_starting")) or
+        (role == ROLE_ASSASSIN and GetConVarNumber("ttt_asn_credits_starting")) or
+        (role == ROLE_HYPNOTIST and GetConVarNumber("ttt_hyp_credits_starting")) or 0
+end
+
 function send_messages(v, message)
 	if type(v) == "Players" then
 		v:ChatPrint(message)
@@ -419,6 +428,8 @@ function ulx.force(calling_ply, target_plys, target_role, should_silent)
 		local det_starting_credits = GetConVarNumber("ttt_det_credits_starting")
 		local mer_starting_credits = GetConVarNumber("ttt_mer_credits_starting")
 		local kil_starting_credits = GetConVarNumber("ttt_kil_credits_starting")
+		local asn_starting_credits = GetConVarNumber("ttt_asn_credits_starting")
+		local hyp_starting_credits = GetConVarNumber("ttt_hyp_credits_starting")
 
 		local role
 		local role_grammar
@@ -428,14 +439,14 @@ function ulx.force(calling_ply, target_plys, target_role, should_silent)
 		if target_role == "traitor" or target_role == "t" then role, role_grammar, role_string, role_credits = ROLE_TRAITOR, "a ", "traitor", starting_credits end
 		if target_role == "detective" or target_role == "d" then role, role_grammar, role_string, role_credits = ROLE_DETECTIVE, "a ", "detective", det_starting_credits end
 		if target_role == "mercenary" or target_role == "m" then role, role_grammar, role_string, role_credits = ROLE_MERCENARY, "a ", "mercenary", mer_starting_credits end
-		if target_role == "hypnotist" or target_role == "h" then role, role_grammar, role_string, role_credits = ROLE_HYPNOTIST, "a ", "hypnotist", 0 end
+		if target_role == "hypnotist" or target_role == "h" then role, role_grammar, role_string, role_credits = ROLE_HYPNOTIST, "a ", "hypnotist", hyp_starting_credits end
 		if target_role == "glitch" or target_role == "g" then role, role_grammar, role_string, role_credits = ROLE_GLITCH, "a ", "glitch", 0 end
 		if target_role == "jester" or target_role == "j" then role, role_grammar, role_string, role_credits = ROLE_JESTER, "a ", "jester", 0 end
 		if target_role == "phantom" or target_role == "p" then role, role_grammar, role_string, role_credits = ROLE_PHANTOM, "a ", "phantom", 0 end
 		if target_role == "zombie" or target_role == "z" then role, role_grammar, role_string, role_credits = ROLE_ZOMBIE, "a ", "zombie", 0 end
 		if target_role == "vampire" or target_role == "v" then role, role_grammar, role_string, role_credits = ROLE_VAMPIRE, "a ", "vampire", 0 end
 		if target_role == "swapper" or target_role == "s" then role, role_grammar, role_string, role_credits = ROLE_SWAPPER, "a ", "swapper", 0 end
-		if target_role == "assassin" or target_role == "a" then role, role_grammar, role_string, role_credits = ROLE_ASSASSIN, "an ", "assassin", 0 end
+		if target_role == "assassin" or target_role == "a" then role, role_grammar, role_string, role_credits = ROLE_ASSASSIN, "an ", "assassin", asn_starting_credits end
 		if target_role == "killer" or target_role == "k" then role, role_grammar, role_string, role_credits = ROLE_KILLER, "a ", "killer", kil_starting_credits end
 		if target_role == "innocent" or target_role == "i" then role, role_grammar, role_string, role_credits = ROLE_INNOCENT, "an ", "innocent", 0 end
 
@@ -621,7 +632,7 @@ function ulx.respawn(calling_ply, target_plys, should_silent)
 					if corpse then corpse_remove(corpse) end
 
 					v:SpawnForRound(true)
-					v:SetCredits(((v:GetRole() == ROLE_INNOCENT) and 0) or GetConVarNumber("ttt_credits_starting"))
+					v:SetCredits(GetRoleStartingCredits(v:GetRole()))
 
 					table.insert(affected_plys, v)
 
@@ -639,7 +650,7 @@ function ulx.respawn(calling_ply, target_plys, should_silent)
 				if corpse then corpse_remove(corpse) end
 
 				v:SpawnForRound(true)
-				v:SetCredits(((v:GetRole() == ROLE_INNOCENT) and 0) or GetConVarNumber("ttt_credits_starting"))
+				v:SetCredits(GetRoleStartingCredits(v:GetRole()))
 
 				table.insert(affected_plys, v)
 			end
@@ -696,7 +707,7 @@ function ulx.respawntp(calling_ply, target_ply, should_silent)
 				if corpse then corpse_remove(corpse) end
 
 				target_ply:SpawnForRound(true)
-				target_ply:SetCredits(((target_ply:GetRole() == ROLE_INNOCENT) and 0) or GetConVarNumber("ttt_credits_starting"))
+                target_ply:SetCredits(GetRoleStartingCredits(target_ply:GetRole()))
 
 				target_ply:SetPos(pos)
 				table.insert(affected_ply, target_ply)
@@ -726,7 +737,7 @@ function ulx.respawntp(calling_ply, target_ply, should_silent)
 			if corpse then corpse_remove(corpse) end
 
 			target_ply:SpawnForRound(true)
-			target_ply:SetCredits(((target_ply:GetRole() == ROLE_INNOCENT) and 0) or GetConVarNumber("ttt_credits_starting"))
+            target_ply:SetCredits(GetRoleStartingCredits(target_ply:GetRole()))
 
 			target_ply:SetPos(pos)
 			table.insert(affected_ply, target_ply)
@@ -1114,7 +1125,7 @@ local function MercenaryMarkedPlayers()
             ply:SetMaxHealth(100)
             ply:SetHealth(100)
 			ply:SetRole(ROLE_MERCENARY)
-			ply:AddCredits(GetConVarNumber("ttt_det_credits_starting"))
+			ply:AddCredits(GetConVarNumber("ttt_mer_credits_starting"))
 			PlysMarkedForMercenary[k] = false
 			if ply:HasWeapon("weapon_hyp_brainwash") then
 				ply:StripWeapon("weapon_hyp_brainwash")
@@ -1140,7 +1151,8 @@ local function HypnotistMarkedPlayers()
 			local ply = player.GetByUniqueID(k)
             ply:SetMaxHealth(100)
             ply:SetHealth(100)
-			ply:SetRole(ROLE_HYPNOTIST)
+            ply:SetRole(ROLE_HYPNOTIST)
+            ply:AddCredits(GetConVarNumber("ttt_hyp_credits_starting"))
 			PlysMarkedForHypnotist[k] = false
 			if ply:HasWeapon("weapon_hyp_brainwash") then
 				ply:StripWeapon("weapon_hyp_brainwash")
@@ -1325,7 +1337,8 @@ local function AssassinMarkedPlayers()
 			local ply = player.GetByUniqueID(k)
             ply:SetMaxHealth(100)
             ply:SetHealth(100)
-			ply:SetRole(ROLE_ASSASSIN)
+            ply:SetRole(ROLE_ASSASSIN)
+            ply:AddCredits(GetConVarNumber("ttt_asn_credits_starting"))
 			PlysMarkedForAssassin[k] = false
 			if ply:HasWeapon("weapon_hyp_brainwash") then
 				ply:StripWeapon("weapon_hyp_brainwash")
