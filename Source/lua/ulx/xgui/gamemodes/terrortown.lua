@@ -288,13 +288,13 @@ gptrdlst:AddItem(kchance)
 
 -- Role Configs
 local gptrcfgclp = vgui.Create("DCollapsibleCategory", gppnl)
-gptrcfgclp:SetSize(390, 445)
+gptrcfgclp:SetSize(390, 480)
 gptrcfgclp:SetExpanded(0)
 gptrcfgclp:SetLabel("Role Configs")
 
 local gptrcfglst = vgui.Create("DPanelList", gptrcfgclp)
 gptrcfglst:SetPos(5, 25)
-gptrcfglst:SetSize(390, 445)
+gptrcfglst:SetSize(390, 480)
 gptrcfglst:SetSpacing(5)
 
 local dsearch = xlib.makecheckbox { label = "ttt_detective_search_only (def. 1)", repconvar = "rep_ttt_detective_search_only", parent = gptrcfglst }
@@ -326,6 +326,12 @@ gptrcfglst:AddItem(kdmgreduc)
 
 local zvision = xlib.makecheckbox { label = "ttt_zombie_vision_enable (def. 1)", repconvar = "rep_ttt_zombie_vision_enable", parent = gptrcfglst }
 gptrcfglst:AddItem(zvision)
+
+local zspit = xlib.makecheckbox { label = "ttt_zombie_spit_enable (def. 1)", repconvar = "rep_ttt_zombie_spit_enable", parent = gptrcfglst }
+gptrcfglst:AddItem(zspit)
+
+local zleap = xlib.makecheckbox { label = "ttt_zombie_leap_enable (def. 1)", repconvar = "rep_ttt_zombie_leap_enable", parent = gptrcfglst }
+gptrcfglst:AddItem(zleap)
 
 local ztarget = xlib.makecheckbox { label = "ttt_zombie_show_target_icon (def. 1)", repconvar = "rep_ttt_zombie_show_target_icon", parent = gptrcfglst }
 gptrcfglst:AddItem(ztarget)
