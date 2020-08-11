@@ -527,13 +527,13 @@ local ecpnl = xlib.makelistlayout { w = 415, h = 318, parent = xgui.null }
 
 --Traitor/Monster/Killer Credits
 local ectcclp = vgui.Create("DCollapsibleCategory", ecpnl)
-ectcclp:SetSize(390, 200)
+ectcclp:SetSize(390, 250)
 ectcclp:SetExpanded(1)
 ectcclp:SetLabel("Traitor/Monster/Killer Credits")
 
 local ectclst = vgui.Create("DPanelList", ectcclp)
 ectclst:SetPos(5, 25)
-ectclst:SetSize(390, 200)
+ectclst:SetSize(390, 250)
 ectclst:SetSpacing(5)
 
 local ectccs = xlib.makeslider { label = "ttt_credits_starting (def. 2)", min = 0, max = 10, repconvar = "rep_ttt_credits_starting", parent = ectclst }
@@ -547,6 +547,12 @@ ectclst:AddItem(ectcacs)
 
 local ectchcs = xlib.makeslider { label = "ttt_hyp_credits_starting (def. 0)", min = 0, max = 10, repconvar = "rep_ttt_hyp_credits_starting", parent = ectclst }
 ectclst:AddItem(ectchcs)
+
+local ectczcs = xlib.makeslider { label = "ttt_zom_credits_starting (def. 0)", min = 0, max = 10, repconvar = "rep_ttt_zom_credits_starting", parent = ectclst }
+ectclst:AddItem(ectczcs)
+
+local ectcvcs = xlib.makeslider { label = "ttt_vam_credits_starting (def. 0)", min = 0, max = 10, repconvar = "rep_ttt_vam_credits_starting", parent = ectclst }
+ectclst:AddItem(ectcvcs)
 
 local ectcap = xlib.makeslider { label = "ttt_credits_award_pct (def. 0.35)", min = 0.01, max = 0.9, decimal = 2, repconvar = "rep_ttt_credits_award_pct", parent = krmlst }
 ectclst:AddItem(ectcap)
