@@ -420,13 +420,13 @@ gpvcblst:AddItem(gpvdr)
 
 --Other Gameplay Settings
 local gpogsclp = vgui.Create("DCollapsibleCategory", gppnl)
-gpogsclp:SetSize(390, 200)
+gpogsclp:SetSize(390, 240)
 gpogsclp:SetExpanded(0)
 gpogsclp:SetLabel("Other Gameplay Settings")
 
 local gpogslst = vgui.Create("DPanelList", gpogsclp)
 gpogslst:SetPos(5, 25)
-gpogslst:SetSize(390, 200)
+gpogslst:SetSize(390, 240)
 gpogslst:SetSpacing(5)
 
 local gpminply = xlib.makeslider { label = "ttt_minimum_players (def. 2)", min = 1, max = 10, repconvar = "rep_ttt_minimum_players", parent = gpogslst }
@@ -455,6 +455,12 @@ gpogslst:AddItem(gprdp)
 
 local gprdpi = xlib.makecheckbox { label = "ttt_ragdoll_pinning_innocents (def. 0)", repconvar = "rep_ttt_ragdoll_pinning_innocents", parent = gpogslst }
 gpogslst:AddItem(gprdpi)
+
+local gppsmis = xlib.makecheckbox { label = "ttt_player_set_model_on_initial_spawn (def. 1)", repconvar = "rep_ttt_player_set_model_on_initial_spawn", parent = gpogslst }
+gpogslst:AddItem(gppsmis)
+
+local gppsmnr = xlib.makecheckbox { label = "ttt_player_set_model_on_new_round (def. 1)", repconvar = "rep_ttt_player_set_model_on_new_round", parent = gpogslst }
+gpogslst:AddItem(gppsmnr)
 
 xgui.hookEvent("onProcessModules", nil, gppnl.processModules)
 xgui.addSubModule("Gameplay", gppnl, nil, "terrortown_settings")
