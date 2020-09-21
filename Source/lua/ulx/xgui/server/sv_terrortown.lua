@@ -114,6 +114,7 @@ local function init()
 		ULib.replicatedWritableCvar("ttt_ragdoll_pinning_innocents", "rep_ttt_ragdoll_pinning_innocents", GetConVarNumber("ttt_ragdoll_pinning_innocents"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_player_set_model_on_initial_spawn", "rep_ttt_player_set_model_on_initial_spawn", GetConVarNumber("ttt_player_set_model_on_initial_spawn"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_player_set_model_on_new_round", "rep_ttt_player_set_model_on_new_round", GetConVarNumber("ttt_player_set_model_on_new_round"), false, false, "xgui_gmsettings")
+		ULib.replicatedWritableCvar("ttt_player_set_model_on_respawn", "rep_ttt_player_set_model_on_respawn", GetConVarNumber("ttt_player_set_model_on_respawn"), false, false, "xgui_gmsettings")
 
 		--karma
 		ULib.replicatedWritableCvar("ttt_karma", "rep_ttt_karma", GetConVarNumber("ttt_karma"), false, false, "xgui_gmsettings")
