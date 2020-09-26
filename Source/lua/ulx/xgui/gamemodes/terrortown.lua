@@ -288,13 +288,13 @@ gptrdlst:AddItem(kchance)
 
 -- Role Configs
 local gptrcfgclp = vgui.Create("DCollapsibleCategory", gppnl)
-gptrcfgclp:SetSize(390, 600)
+gptrcfgclp:SetSize(390, 620)
 gptrcfgclp:SetExpanded(0)
 gptrcfgclp:SetLabel("Role Configs")
 
 local gptrcfglst = vgui.Create("DPanelList", gptrcfgclp)
 gptrcfglst:SetPos(5, 25)
-gptrcfglst:SetSize(390, 600)
+gptrcfglst:SetSize(390, 620)
 gptrcfglst:SetSpacing(5)
 
 local dsearch = xlib.makecheckbox { label = "ttt_detective_search_only (def. 1)", repconvar = "rep_ttt_detective_search_only", parent = gptrcfglst }
@@ -302,6 +302,9 @@ gptrcfglst:AddItem(dsearch)
 
 local asearch = xlib.makecheckbox { label = "ttt_all_search_postround (def. 1)", repconvar = "rep_ttt_all_search_postround", parent = gptrcfglst }
 gptrcfglst:AddItem(asearch)
+
+local amast = xlib.makecheckbox { label = "ttt_monsters_are_traitors (def. 0)", repconvar = "rep_ttt_monsters_are_traitors", parent = gptrcfglst }
+gptrcfglst:AddItem(amast)
 
 local atarget = xlib.makecheckbox { label = "ttt_assassin_show_target_icon (def. 0)", repconvar = "rep_ttt_assassin_show_target_icon", parent = gptrcfglst }
 gptrcfglst:AddItem(atarget)

@@ -66,6 +66,7 @@ local function init()
         --custom role configs
         ULib.replicatedWritableCvar("ttt_detective_search_only", "rep_ttt_detective_search_only", GetConVarNumber("ttt_detective_search_only"), false, false, "xgui_gmsettings")
         ULib.replicatedWritableCvar("ttt_all_search_postround", "rep_ttt_all_search_postround", GetConVarNumber("ttt_all_search_postround"), false, false, "xgui_gmsettings")
+        ULib.replicatedWritableCvar("ttt_monsters_are_traitors", "rep_ttt_monsters_are_traitors", GetConVarNumber("ttt_monsters_are_traitors"), false, false, "xgui_gmsettings")
         ULib.replicatedWritableCvar("ttt_assassin_show_target_icon", "rep_ttt_assassin_show_target_icon", GetConVarNumber("ttt_assassin_show_target_icon"), false, false, "xgui_gmsettings")
         ULib.replicatedWritableCvar("ttt_killer_knife_enabled", "rep_ttt_killer_knife_enabled", GetConVarNumber("ttt_killer_knife_enabled"), false, false, "xgui_gmsettings")
         ULib.replicatedWritableCvar("ttt_killer_max_health", "rep_ttt_killer_max_health", GetConVarNumber("ttt_killer_max_health"), false, false, "xgui_gmsettings")
