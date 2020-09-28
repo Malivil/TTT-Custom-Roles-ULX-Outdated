@@ -7,7 +7,7 @@ end
 
 --[Ulx Completes]------------------------------------------------------------------------------
 ulx.target_role = {}
-function updateRoles()
+function UpdateRoles()
 	table.Empty(ulx.target_role)
 
 	table.insert(ulx.target_role, "innocent") -- Add "innocent" to the table.
@@ -25,8 +25,8 @@ function updateRoles()
 	table.insert(ulx.target_role, "killer") -- Add "innocent" to the table.
 end
 
-hook.Add(ULib.HOOK_UCLCHANGED, "ULXRoleNamesUpdate", updateRoles)
-updateRoles()
+hook.Add(ULib.HOOK_UCLCHANGED, "ULXRoleNamesUpdate", UpdateRoles)
+UpdateRoles()
 
 ulx.modifiers = {
 	"Team Deathmatch",
@@ -40,11 +40,11 @@ ulx.modifiers = {
 --[End]----------------------------------------------------------------------------------------
 
 --[Global Helper Functions][Used by more than one command.]------------------------------------
---[[send_messages][Sends messages to player(s)]
-@param  {[PlayerObject]} v       [The player(s) to send the message to.]
-@param  {[String]}       message [The message that will be sent.]
---]]
 
+--[[SetRole][Changes the role of the given player to the specified role]
+@param  {[PlayerObject]} ply     [The player to change role.]
+@param  {[Integer]}      role    [The player role to set.]
+--]]
 function SetRole(ply, role)
     ply:SetRole(role)
 
@@ -56,6 +56,9 @@ function SetRole(ply, role)
     end
 end
 
+--[[GetRoleStartingCredits][Gets the starting credits for the given role]
+@param  {[Integer]} role       [The player role to get starting credits for.]
+--]]
 function GetRoleStartingCredits(role)
     return (role == ROLE_TRAITOR and GetConVarNumber("ttt_credits_starting")) or
         (role == ROLE_DETECTIVE and GetConVarNumber("ttt_det_credits_starting")) or
@@ -67,7 +70,11 @@ function GetRoleStartingCredits(role)
         (role == ROLE_VAMPIRE and GetConVarNumber("ttt_vam_credits_starting")) or 0
 end
 
-function send_messages(v, message)
+--[[SendMessages][Sends messages to player(s)]
+@param  {[PlayerObject]} v       [The player(s) to send the message to.]
+@param  {[String]}       message [The message that will be sent.]
+--]]
+function SendMessages(v, message)
 	if type(v) == "Players" then
 		v:ChatPrint(message)
 	elseif type(v) == "table" then
@@ -77,10 +84,10 @@ function send_messages(v, message)
 	end
 end
 
---[[corpse_find][Finds the corpse of a given player.]
+--[[CorpseFind][Finds the corpse of a given player.]
 @param  {[PlayerObject]} v       [The player that to find the corpse for.]
 --]]
-function corpse_find(v)
+function CorpseFind(v)
 	for _, ent in pairs(ents.FindByClass("prop_ragdoll")) do
 		if ent.uqid == v:UniqueID() and IsValid(ent) then
 			return ent or false
@@ -88,10 +95,10 @@ function corpse_find(v)
 	end
 end
 
---[[corpse_remove][removes the corpse given.]
+--[[CorpseRemove][removes the corpse given.]
 @param  {[Ragdoll]} corpse [The corpse to be removed.]
 --]]
-function corpse_remove(corpse)
+function CorpseRemove(corpse)
 	CORPSE.SetFound(corpse, false)
 	if string.find(corpse:GetModel(), "zm_", 6, true) then
 		player.GetByUniqueID(corpse.uqid):SetNWBool("body_found", false)
@@ -104,10 +111,10 @@ function corpse_remove(corpse)
 	end
 end
 
---[[corpse_identify][identifies the given corpse.]
+--[[CorpseIdentify][identifies the given corpse.]
 @param  {[Ragdoll]} corpse [The corpse to be identified.]
 --]]
-function corpse_identify(corpse)
+function CorpseIdentify(corpse)
 	if corpse then
 		local ply = player.GetByUniqueID(corpse.uqid)
 		ply:SetNWBool("body_found", true)
@@ -333,7 +340,7 @@ hook.Add("TTTBeginRound", "SlayPlayersNextRound", function()
 
 				GAMEMODE:PlayerSilentDeath(v)
 
-				local corpse = corpse_find(v)
+				local corpse = CorpseFind(v)
 				if corpse then
 					v:SetNWBool("body_found", true)
 					SendFullStateUpdate()
@@ -395,7 +402,7 @@ hook.Add("PlayerSpawn", "Inform", function(ply)
 			chat_message = (chat_message .. " and " .. (slays_left - 1) .. " round(s) after the current round")
 		end
 		if slay_reason then
-			chat_message = (chat_message .. " for \"" .. slays_reason .. "\".")
+			chat_message = (chat_message .. " for \"" .. slay_reason .. "\".")
 		else
 			chat_message = (chat_message .. ".")
 		end
@@ -474,7 +481,7 @@ function ulx.force(calling_ply, target_plys, target_role, should_silent)
 			end
 		end
 		ulx.fancyLogAdmin(calling_ply, should_silent, "#A forced #T to become the role of " .. role_grammar .. "#s.", affected_plys, role_string)
-		send_messages(affected_plys, "Your role has been set to " .. role_string .. ".")
+		SendMessages(affected_plys, "Your role has been set to " .. role_string .. ".")
 	end
 end
 
@@ -614,8 +621,8 @@ function ulx.respawn(calling_ply, target_plys, should_silent)
 				timer.Destroy("traitorcheck" .. v:SteamID())
 				v:ConCommand("ttt_spectator_mode 0") -- just incase they are in spectator mode take them out of it
 				timer.Create("respawndelay", 0.1, 0, function() --seems to be a slight delay from when you leave spec and when you can spawn this should get us around that
-					local corpse = corpse_find(v) -- run the normal respawn code now
-					if corpse then corpse_remove(corpse) end
+					local corpse = CorpseFind(v) -- run the normal respawn code now
+					if corpse then CorpseRemove(corpse) end
 
 					v:SpawnForRound(true)
 					v:SetCredits(GetRoleStartingCredits(v:GetRole()))
@@ -623,7 +630,7 @@ function ulx.respawn(calling_ply, target_plys, should_silent)
 					table.insert(affected_plys, v)
 
 					ulx.fancyLogAdmin(calling_ply, should_silent, "#A respawned #T!", affected_plys)
-					send_messages(affected_plys, "You have been respawned.")
+					SendMessages(affected_plys, "You have been respawned.")
 
 					if v:Alive() then timer.Destroy("respawndelay") return end
 				end)
@@ -632,8 +639,8 @@ function ulx.respawn(calling_ply, target_plys, should_silent)
 				ULib.tsayError(calling_ply, v:Nick() .. " is already alive!", true)
 			else
 				timer.Destroy("traitorcheck" .. v:SteamID())
-				local corpse = corpse_find(v)
-				if corpse then corpse_remove(corpse) end
+				local corpse = CorpseFind(v)
+				if corpse then CorpseRemove(corpse) end
 
 				v:SpawnForRound(true)
 				v:SetCredits(GetRoleStartingCredits(v:GetRole()))
@@ -642,7 +649,7 @@ function ulx.respawn(calling_ply, target_plys, should_silent)
 			end
 		end
 		ulx.fancyLogAdmin(calling_ply, should_silent, "#A respawned #T!", affected_plys)
-		send_messages(affected_plys, "You have been respawned.")
+		SendMessages(affected_plys, "You have been respawned.")
 	end
 end
 
@@ -689,8 +696,8 @@ function ulx.respawntp(calling_ply, target_ply, should_silent)
 
 				local pos = tr.HitPos
 
-				local corpse = corpse_find(target_ply)
-				if corpse then corpse_remove(corpse) end
+				local corpse = CorpseFind(target_ply)
+				if corpse then CorpseRemove(corpse) end
 
 				target_ply:SpawnForRound(true)
                 target_ply:SetCredits(GetRoleStartingCredits(target_ply:GetRole()))
@@ -699,7 +706,7 @@ function ulx.respawntp(calling_ply, target_ply, should_silent)
 				table.insert(affected_ply, target_ply)
 
 				ulx.fancyLogAdmin(calling_ply, should_silent, "#A respawned and teleported #T!", affected_ply)
-				send_messages(target_ply, "You have been respawned and teleported.")
+				SendMessages(target_ply, "You have been respawned and teleported.")
 
 				if target_ply:Alive() then timer.Destroy("respawntpdelay") return end
 			end)
@@ -719,8 +726,8 @@ function ulx.respawntp(calling_ply, target_ply, should_silent)
 
 			local pos = tr.HitPos
 
-			local corpse = corpse_find(target_ply)
-			if corpse then corpse_remove(corpse) end
+			local corpse = CorpseFind(target_ply)
+			if corpse then CorpseRemove(corpse) end
 
 			target_ply:SpawnForRound(true)
             target_ply:SetCredits(GetRoleStartingCredits(target_ply:GetRole()))
@@ -729,7 +736,7 @@ function ulx.respawntp(calling_ply, target_ply, should_silent)
 			table.insert(affected_ply, target_ply)
 		end
 		ulx.fancyLogAdmin(calling_ply, should_silent, "#A respawned and teleported #T!", affected_ply)
-		send_messages(affected_plys, "You have been respawned and teleported.")
+		SendMessages(affected_ply, "You have been respawned and teleported.")
 	end
 end
 
@@ -1408,7 +1415,7 @@ hook.Add("TTTSelectRoles", "Admin_Round_Innocent", InnocentMarkedPlayers)
 --- [Identify Corpse Thanks Neku]----------------------------------------------------------------------------
 function ulx.identify(calling_ply, target_ply, unidentify)
 	if not GetConVarString("gamemode") == "terrortown" then ULib.tsayError(calling_ply, gamemode_error, true) else
-		local body = corpse_find(target_ply)
+		local body = CorpseFind(target_ply)
 		if not body then ULib.tsayError(calling_ply, "This player's corpse does not exist!", true) return end
 
 		if not unidentify then
@@ -1441,7 +1448,7 @@ identify:help("Identifies a target's body.")
 --- [Remove Corpse Thanks Neku]----------------------------------------------------------------------------
 function ulx.removebody(calling_ply, target_ply)
 	if not GetConVarString("gamemode") == "terrortown" then ULib.tsayError(calling_ply, gamemode_error, true) else
-		local body = corpse_find(target_ply)
+		local body = CorpseFind(target_ply)
 		if not body then ULib.tsayError(calling_ply, "This player's corpse does not exist!", true) return end
 		ulx.fancyLogAdmin(calling_ply, "#A removed #T's body!", target_ply)
 		if string.find(body:GetModel(), "zm_", 6, true) then
