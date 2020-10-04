@@ -92,6 +92,9 @@ local function init()
 		ULib.replicatedWritableCvar("ttt_shop_merc_mode", "rep_ttt_shop_merc_mode", GetConVarNumber("ttt_shop_merc_mode"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_shop_assassin_sync", "rep_ttt_shop_assassin_sync", GetConVarNumber("ttt_shop_assassin_sync"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_shop_hypnotist_sync", "rep_ttt_shop_hypnotist_sync", GetConVarNumber("ttt_shop_hypnotist_sync"), false, false, "xgui_gmsettings")
+		ULib.replicatedWritableCvar("ttt_traitors_know_swapper", "rep_ttt_traitors_know_swapper", GetConVarNumber("ttt_traitors_know_swapper"), false, false, "xgui_gmsettings")
+		ULib.replicatedWritableCvar("ttt_monsters_know_swapper", "rep_ttt_monsters_know_swapper", GetConVarNumber("ttt_monsters_know_swapper"), false, false, "xgui_gmsettings")
+		ULib.replicatedWritableCvar("ttt_killers_know_swapper", "rep_ttt_killers_know_swapper", GetConVarNumber("ttt_killers_know_swapper"), false, false, "xgui_gmsettings")
 
 		--dna
 		ULib.replicatedWritableCvar("ttt_killer_dna_range", "rep_ttt_killer_dna_range", GetConVarNumber("ttt_killer_dna_range"), false, false, "xgui_gmsettings")
