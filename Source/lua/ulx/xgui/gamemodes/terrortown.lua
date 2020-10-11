@@ -300,13 +300,13 @@ local function AddGameplayModule()
 
     -- Role Configs
     local gptrcfgclp = vgui.Create("DCollapsibleCategory", gppnl)
-    gptrcfgclp:SetSize(390, 680)
+    gptrcfgclp:SetSize(390, 700)
     gptrcfgclp:SetExpanded(0)
     gptrcfgclp:SetLabel("Role Configs")
 
     local gptrcfglst = vgui.Create("DPanelList", gptrcfgclp)
     gptrcfglst:SetPos(5, 25)
-    gptrcfglst:SetSize(390, 680)
+    gptrcfglst:SetSize(390, 700)
     gptrcfglst:SetSpacing(5)
 
     local dsearch = xlib.makecheckbox { label = "ttt_detective_search_only (def. 1)", repconvar = "rep_ttt_detective_search_only", parent = gptrcfglst }
@@ -317,6 +317,9 @@ local function AddGameplayModule()
 
     local msats = xlib.makecheckbox { label = "ttt_monsters_are_traitors (def. 0)", repconvar = "rep_ttt_monsters_are_traitors", parent = gptrcfglst }
     gptrcfglst:AddItem(msats)
+
+    local tvision = xlib.makecheckbox { label = "ttt_traitor_vision_enable (def. 0)", repconvar = "rep_ttt_traitor_vision_enable", parent = gptrcfglst }
+    gptrcfglst:AddItem(tvision)
 
     local tkswa = xlib.makecheckbox { label = "ttt_traitors_know_swapper (def. 0)", repconvar = "rep_ttt_traitors_know_swapper", parent = gptrcfglst }
     gptrcfglst:AddItem(tkswa)
