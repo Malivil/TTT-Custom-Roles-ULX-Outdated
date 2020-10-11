@@ -68,713 +68,753 @@ xgui.hookEvent("onProcessModules", nil, terrortown_settings.processModules)
 xgui.addModule("TTT", terrortown_settings, "icon16/ttt.png", "xgui_gmsettings")
 
 -------------------- Round structure Module--------------------
-local rspnl = xlib.makelistlayout { w = 415, h = 318, parent = xgui.null }
+local function AddRoundStructureModule()
+    local rspnl = xlib.makelistlayout { w = 415, h = 318, parent = xgui.null }
 
---Preparation and Post-Round
-local rspapclp = vgui.Create("DCollapsibleCategory", rspnl)
-rspapclp:SetSize(390, 70)
-rspapclp:SetExpanded(1)
-rspapclp:SetLabel("Preparation and Post-Round")
+    --Preparation and Post-Round
+    local rspapclp = vgui.Create("DCollapsibleCategory", rspnl)
+    rspapclp:SetSize(390, 70)
+    rspapclp:SetExpanded(1)
+    rspapclp:SetLabel("Preparation and Post-Round")
 
-local rspaplst = vgui.Create("DPanelList", rspapclp)
-rspaplst:SetPos(5, 25)
-rspaplst:SetSize(390, 70)
-rspaplst:SetSpacing(5)
+    local rspaplst = vgui.Create("DPanelList", rspapclp)
+    rspaplst:SetPos(5, 25)
+    rspaplst:SetSize(390, 70)
+    rspaplst:SetSpacing(5)
 
-local prept = xlib.makeslider { label = "ttt_preptime_seconds (def. 30)", min = 1, max = 120, repconvar = "rep_ttt_preptime_seconds", parent = rspaplst }
-rspaplst:AddItem(prept)
+    local prept = xlib.makeslider { label = "ttt_preptime_seconds (def. 30)", min = 1, max = 120, repconvar = "rep_ttt_preptime_seconds", parent = rspaplst }
+    rspaplst:AddItem(prept)
 
-local fprept = xlib.makeslider { label = "ttt_firstpreptime (def. 60)", min = 1, max = 120, repconvar = "rep_ttt_firstpreptime", parent = rspaplst }
-rspaplst:AddItem(fprept)
+    local fprept = xlib.makeslider { label = "ttt_firstpreptime (def. 60)", min = 1, max = 120, repconvar = "rep_ttt_firstpreptime", parent = rspaplst }
+    rspaplst:AddItem(fprept)
 
-local pstt = xlib.makeslider { label = "ttt_posttime_seconds (def. 30)", min = 1, max = 120, repconvar = "rep_ttt_posttime_seconds", parent = rspaplst }
-rspaplst:AddItem(pstt)
+    local pstt = xlib.makeslider { label = "ttt_posttime_seconds (def. 30)", min = 1, max = 120, repconvar = "rep_ttt_posttime_seconds", parent = rspaplst }
+    rspaplst:AddItem(pstt)
 
---Round Length
-local rsrlclp = vgui.Create("DCollapsibleCategory", rspnl)
-rsrlclp:SetSize(390, 90)
-rsrlclp:SetExpanded(0)
-rsrlclp:SetLabel("Round Length")
+    --Round Length
+    local rsrlclp = vgui.Create("DCollapsibleCategory", rspnl)
+    rsrlclp:SetSize(390, 90)
+    rsrlclp:SetExpanded(0)
+    rsrlclp:SetLabel("Round Length")
 
-local rsrllst = vgui.Create("DPanelList", rsrlclp)
-rsrllst:SetPos(5, 25)
-rsrllst:SetSize(390, 90)
-rsrllst:SetSpacing(5)
+    local rsrllst = vgui.Create("DPanelList", rsrlclp)
+    rsrllst:SetPos(5, 25)
+    rsrllst:SetSize(390, 90)
+    rsrllst:SetSpacing(5)
 
-local hstmd = xlib.makecheckbox { label = "ttt_haste", repconvar = "rep_ttt_haste", parent = rsrllst }
-rsrllst:AddItem(hstmd)
+    local hstmd = xlib.makecheckbox { label = "ttt_haste", repconvar = "rep_ttt_haste", parent = rsrllst }
+    rsrllst:AddItem(hstmd)
 
-local hstsm = xlib.makeslider { label = "ttt_haste_starting_minutes (def. 5)", min = 1, max = 60, repconvar = "rep_ttt_haste_starting_minutes", parent = rsrllst }
-rsrllst:AddItem(hstsm)
+    local hstsm = xlib.makeslider { label = "ttt_haste_starting_minutes (def. 5)", min = 1, max = 60, repconvar = "rep_ttt_haste_starting_minutes", parent = rsrllst }
+    rsrllst:AddItem(hstsm)
 
-local hstmpd = xlib.makeslider { label = "ttt_haste_minutes_per_death (def. 0.5)", min = 0.1, max = 9, decimal = 1, repconvar = "rep_ttt_haste_minutes_per_death", parent = rsrllst }
-rsrllst:AddItem(hstmpd)
+    local hstmpd = xlib.makeslider { label = "ttt_haste_minutes_per_death (def. 0.5)", min = 0.1, max = 9, decimal = 1, repconvar = "rep_ttt_haste_minutes_per_death", parent = rsrllst }
+    rsrllst:AddItem(hstmpd)
 
-local rtm = xlib.makeslider { label = "ttt_roundtime_minutes (def. 10)", min = 1, max = 60, repconvar = "rep_ttt_roundtime_minutes", parent = rsrllst }
-rsrllst:AddItem(rtm)
+    local rtm = xlib.makeslider { label = "ttt_roundtime_minutes (def. 10)", min = 1, max = 60, repconvar = "rep_ttt_roundtime_minutes", parent = rsrllst }
+    rsrllst:AddItem(rtm)
 
---Map Switching and Voting
-local msavclp = vgui.Create("DCollapsibleCategory", rspnl)
-msavclp:SetSize(390, 95)
-msavclp:SetExpanded(0)
-msavclp:SetLabel("Map Switching and Voting")
+    --Map Switching and Voting
+    local msavclp = vgui.Create("DCollapsibleCategory", rspnl)
+    msavclp:SetSize(390, 95)
+    msavclp:SetExpanded(0)
+    msavclp:SetLabel("Map Switching and Voting")
 
-local msavlst = vgui.Create("DPanelList", msavclp)
-msavlst:SetPos(5, 25)
-msavlst:SetSize(390, 95)
-msavlst:SetSpacing(5)
+    local msavlst = vgui.Create("DPanelList", msavclp)
+    msavlst:SetPos(5, 25)
+    msavlst:SetSize(390, 95)
+    msavlst:SetSpacing(5)
 
-local rndl = xlib.makeslider { label = "ttt_round_limit (def. 6)", min = 1, max = 100, repconvar = "rep_ttt_round_limit", parent = msavlst }
-msavlst:AddItem(rndl)
+    local rndl = xlib.makeslider { label = "ttt_round_limit (def. 6)", min = 1, max = 100, repconvar = "rep_ttt_round_limit", parent = msavlst }
+    msavlst:AddItem(rndl)
 
-local rndtlm = xlib.makeslider { label = "ttt_time_limit_minutes (def. 75)", min = 1, max = 150, repconvar = "rep_ttt_time_limit_minutes", parent = msavlst }
-msavlst:AddItem(rndtlm)
+    local rndtlm = xlib.makeslider { label = "ttt_time_limit_minutes (def. 75)", min = 1, max = 150, repconvar = "rep_ttt_time_limit_minutes", parent = msavlst }
+    msavlst:AddItem(rndtlm)
 
-local rndawm = xlib.makecheckbox { label = "ttt_always_use_mapcycle (def. 0)", repconvar = "rep_ttt_always_use_mapcycle", parent = msavlst }
-msavlst:AddItem(rndawm)
+    local rndawm = xlib.makecheckbox { label = "ttt_always_use_mapcycle (def. 0)", repconvar = "rep_ttt_always_use_mapcycle", parent = msavlst }
+    msavlst:AddItem(rndawm)
 
-local rndawmtxt = xlib.makelabel { wordwrap = true, label = "This does nothing but since its included in TTT it's here.", parent = msavlst }
-msavlst:AddItem(rndawmtxt)
+    local rndawmtxt = xlib.makelabel { wordwrap = true, label = "This does nothing but since its included in TTT it's here.", parent = msavlst }
+    msavlst:AddItem(rndawmtxt)
 
-xgui.hookEvent("onProcessModules", nil, rspnl.processModules)
-xgui.addSubModule("Round structure", rspnl, nil, "terrortown_settings")
+    xgui.hookEvent("onProcessModules", nil, rspnl.processModules)
+    xgui.addSubModule("Round structure", rspnl, nil, "terrortown_settings")
+end
 
--------------------- Gameplay Module--------------------
-local gppnl = xlib.makelistlayout { w = 415, h = 318, parent = xgui.null }
+local function AddGameplayModule()
+    -------------------- Gameplay Module--------------------
+    local gppnl = xlib.makelistlayout { w = 415, h = 318, parent = xgui.null }
 
--- Roles Enabled
-local gptreclp = vgui.Create("DCollapsibleCategory", gppnl)
-gptreclp:SetSize(390, 200)
-gptreclp:SetExpanded(1)
-gptreclp:SetLabel("Roles Enabled")
+    -- Roles Enabled
+    local gptreclp = vgui.Create("DCollapsibleCategory", gppnl)
+    gptreclp:SetSize(390, 220)
+    gptreclp:SetExpanded(1)
+    gptreclp:SetLabel("Roles Enabled")
 
-local gptrelst = vgui.Create("DPanelList", gptreclp)
-gptrelst:SetPos(5, 25)
-gptrelst:SetSize(390, 200)
-gptrelst:SetSpacing(5)
+    local gptrelst = vgui.Create("DPanelList", gptreclp)
+    gptrelst:SetPos(5, 25)
+    gptrelst:SetSize(390, 220)
+    gptrelst:SetSpacing(5)
 
-local hasmer = xlib.makecheckbox { label = "ttt_mercenary_enabled (def. 1)", repconvar = "rep_ttt_mercenary_enabled", parent = gptrelst }
-gptrelst:AddItem(hasmer)
+    local hasder = xlib.makecheckbox { label = "ttt_detraitor_enabled (def. 0)", repconvar = "rep_ttt_detraitor_enabled", parent = gptrelst }
+    gptrelst:AddItem(hasder)
 
-local hashyp = xlib.makecheckbox { label = "ttt_hypnotist_enabled (def. 1)", repconvar = "rep_ttt_hypnotist_enabled", parent = gptrelst }
-gptrelst:AddItem(hashyp)
+    local hasmer = xlib.makecheckbox { label = "ttt_mercenary_enabled (def. 1)", repconvar = "rep_ttt_mercenary_enabled", parent = gptrelst }
+    gptrelst:AddItem(hasmer)
 
-local hasgli = xlib.makecheckbox { label = "ttt_glitch_enabled (def. 1)", repconvar = "rep_ttt_glitch_enabled", parent = gptrelst }
-gptrelst:AddItem(hasgli)
+    local hashyp = xlib.makecheckbox { label = "ttt_hypnotist_enabled (def. 1)", repconvar = "rep_ttt_hypnotist_enabled", parent = gptrelst }
+    gptrelst:AddItem(hashyp)
 
-local hasjes = xlib.makecheckbox { label = "ttt_jester_enabled (def. 1)", repconvar = "rep_ttt_jester_enabled", parent = gptrelst }
-gptrelst:AddItem(hasjes)
+    local hasgli = xlib.makecheckbox { label = "ttt_glitch_enabled (def. 1)", repconvar = "rep_ttt_glitch_enabled", parent = gptrelst }
+    gptrelst:AddItem(hasgli)
 
-local haspha = xlib.makecheckbox { label = "ttt_phantom_enabled (def. 1)", repconvar = "rep_ttt_phantom_enabled", parent = gptrelst }
-gptrelst:AddItem(haspha)
+    local hasjes = xlib.makecheckbox { label = "ttt_jester_enabled (def. 1)", repconvar = "rep_ttt_jester_enabled", parent = gptrelst }
+    gptrelst:AddItem(hasjes)
 
-local haszom = xlib.makecheckbox { label = "ttt_zombie_enabled (def. 1)", repconvar = "rep_ttt_zombie_enabled", parent = gptrelst }
-gptrelst:AddItem(haszom)
+    local haspha = xlib.makecheckbox { label = "ttt_phantom_enabled (def. 1)", repconvar = "rep_ttt_phantom_enabled", parent = gptrelst }
+    gptrelst:AddItem(haspha)
 
-local hasvam = xlib.makecheckbox { label = "ttt_vampire_enabled (def. 1)", repconvar = "rep_ttt_vampire_enabled", parent = gptrelst }
-gptrelst:AddItem(hasvam)
+    local haszom = xlib.makecheckbox { label = "ttt_zombie_enabled (def. 1)", repconvar = "rep_ttt_zombie_enabled", parent = gptrelst }
+    gptrelst:AddItem(haszom)
 
-local hasswa = xlib.makecheckbox { label = "ttt_swapper_enabled (def. 1)", repconvar = "rep_ttt_swapper_enabled", parent = gptrelst }
-gptrelst:AddItem(hasswa)
+    local hasvam = xlib.makecheckbox { label = "ttt_vampire_enabled (def. 1)", repconvar = "rep_ttt_vampire_enabled", parent = gptrelst }
+    gptrelst:AddItem(hasvam)
 
-local hasas = xlib.makecheckbox { label = "ttt_assassin_enabled (def. 1)", repconvar = "rep_ttt_assassin_enabled", parent = gptrelst }
-gptrelst:AddItem(hasas)
+    local hasswa = xlib.makecheckbox { label = "ttt_swapper_enabled (def. 1)", repconvar = "rep_ttt_swapper_enabled", parent = gptrelst }
+    gptrelst:AddItem(hasswa)
 
-local askil = xlib.makecheckbox { label = "ttt_killer_enabled (def. 1)", repconvar = "rep_ttt_killer_enabled", parent = gptrelst }
-gptrelst:AddItem(askil)
+    local hasas = xlib.makecheckbox { label = "ttt_assassin_enabled (def. 1)", repconvar = "rep_ttt_assassin_enabled", parent = gptrelst }
+    gptrelst:AddItem(hasas)
 
---Role Counts
-local gptrcclp = vgui.Create("DCollapsibleCategory", gppnl)
-gptrcclp:SetSize(390, 325)
-gptrcclp:SetExpanded(0)
-gptrcclp:SetLabel("Role Counts")
+    local askil = xlib.makecheckbox { label = "ttt_killer_enabled (def. 1)", repconvar = "rep_ttt_killer_enabled", parent = gptrelst }
+    gptrelst:AddItem(askil)
 
-local gptrclst = vgui.Create("DPanelList", gptrcclp)
-gptrclst:SetPos(5, 25)
-gptrclst:SetSize(390, 325)
-gptrclst:SetSpacing(5)
+    --Role Counts
+    local gptrcclp = vgui.Create("DCollapsibleCategory", gppnl)
+    gptrcclp:SetSize(390, 345)
+    gptrcclp:SetExpanded(0)
+    gptrcclp:SetLabel("Role Counts")
 
-local tmax = xlib.makeslider { label = "ttt_traitor_max (def. 32)", min = 1, max = 80, repconvar = "rep_ttt_traitor_max", parent = gptrclst }
-gptrclst:AddItem(tmax)
+    local gptrclst = vgui.Create("DPanelList", gptrcclp)
+    gptrclst:SetPos(5, 25)
+    gptrclst:SetSize(390, 345)
+    gptrclst:SetSpacing(5)
 
-local dmax = xlib.makeslider { label = "ttt_detective_max (def. 32)", min = 1, max = 80, repconvar = "rep_ttt_detective_max", parent = gptrclst }
-gptrclst:AddItem(dmax)
+    local tmax = xlib.makeslider { label = "ttt_traitor_max (def. 32)", min = 1, max = 80, repconvar = "rep_ttt_traitor_max", parent = gptrclst }
+    gptrclst:AddItem(tmax)
 
-local dmp = xlib.makeslider { label = "ttt_detective_min_players (def. 10)", min = 1, max = 50, repconvar = "rep_ttt_detective_min_players", parent = gptrclst }
-gptrclst:AddItem(dmp)
+    local dmax = xlib.makeslider { label = "ttt_detective_max (def. 32)", min = 1, max = 80, repconvar = "rep_ttt_detective_max", parent = gptrclst }
+    gptrclst:AddItem(dmax)
 
-local hreq = xlib.makeslider { label = "ttt_hypnotist_required_traitors (def. 2)", min = 0, max = 50, repconvar = "rep_ttt_hypnotist_required_traitors", parent = gptrclst }
-gptrclst:AddItem(hreq)
+    local dmp = xlib.makeslider { label = "ttt_detective_min_players (def. 10)", min = 1, max = 50, repconvar = "rep_ttt_detective_min_players", parent = gptrclst }
+    gptrclst:AddItem(dmp)
 
-local areq = xlib.makeslider { label = "ttt_assassin_required_traitors (def. 2)", min = 0, max = 50, repconvar = "rep_ttt_assassin_required_traitors", parent = gptrclst }
-gptrclst:AddItem(areq)
+    local derreq = xlib.makeslider { label = "ttt_detraitor_required_traitors (def. 2)", min = 0, max = 50, repconvar = "rep_ttt_detraitor_required_traitors", parent = gptrclst }
+    gptrclst:AddItem(derreq)
 
-local greq = xlib.makeslider { label = "ttt_glitch_required_innos (def. 2)", min = 0, max = 50, repconvar = "rep_ttt_glitch_required_innos", parent = gptrclst }
-gptrclst:AddItem(greq)
+    local hreq = xlib.makeslider { label = "ttt_hypnotist_required_traitors (def. 2)", min = 0, max = 50, repconvar = "rep_ttt_hypnotist_required_traitors", parent = gptrclst }
+    gptrclst:AddItem(hreq)
 
-local preq = xlib.makeslider { label = "ttt_phantom_required_innos (def. 2)", min = 0, max = 50, repconvar = "rep_ttt_phantom_required_innos", parent = gptrclst }
-gptrclst:AddItem(preq)
+    local areq = xlib.makeslider { label = "ttt_assassin_required_traitors (def. 2)", min = 0, max = 50, repconvar = "rep_ttt_assassin_required_traitors", parent = gptrclst }
+    gptrclst:AddItem(areq)
 
-local mreq = xlib.makeslider { label = "ttt_mercenary_required_innos (def. 2)", min = 0, max = 50, repconvar = "rep_ttt_mercenary_required_innos", parent = gptrclst }
-gptrclst:AddItem(mreq)
+    local greq = xlib.makeslider { label = "ttt_glitch_required_innos (def. 2)", min = 0, max = 50, repconvar = "rep_ttt_glitch_required_innos", parent = gptrclst }
+    gptrclst:AddItem(greq)
 
-local jreq = xlib.makeslider { label = "ttt_jester_required_innos (def. 2)", min = 0, max = 50, repconvar = "rep_ttt_jester_required_innos", parent = gptrclst }
-gptrclst:AddItem(jreq)
+    local preq = xlib.makeslider { label = "ttt_phantom_required_innos (def. 2)", min = 0, max = 50, repconvar = "rep_ttt_phantom_required_innos", parent = gptrclst }
+    gptrclst:AddItem(preq)
 
-local sreq = xlib.makeslider { label = "ttt_swapper_required_innos (def. 2)", min = 0, max = 50, repconvar = "rep_ttt_swapper_required_innos", parent = gptrclst }
-gptrclst:AddItem(sreq)
+    local mreq = xlib.makeslider { label = "ttt_mercenary_required_innos (def. 2)", min = 0, max = 50, repconvar = "rep_ttt_mercenary_required_innos", parent = gptrclst }
+    gptrclst:AddItem(mreq)
 
-local zreq = xlib.makeslider { label = "ttt_zombie_required_traitors (def. 2)", min = 0, max = 50, repconvar = "rep_ttt_zombie_required_traitors", parent = gptrclst }
-gptrclst:AddItem(zreq)
+    local jreq = xlib.makeslider { label = "ttt_jester_required_innos (def. 2)", min = 0, max = 50, repconvar = "rep_ttt_jester_required_innos", parent = gptrclst }
+    gptrclst:AddItem(jreq)
 
-local vreq = xlib.makeslider { label = "ttt_vampire_required_traitors (def. 2)", min = 0, max = 50, repconvar = "rep_ttt_vampire_required_traitors", parent = gptrclst }
-gptrclst:AddItem(vreq)
+    local sreq = xlib.makeslider { label = "ttt_swapper_required_innos (def. 2)", min = 0, max = 50, repconvar = "rep_ttt_swapper_required_innos", parent = gptrclst }
+    gptrclst:AddItem(sreq)
 
-local kreq = xlib.makeslider { label = "ttt_killer_required_innos (def. 2)", min = 0, max = 50, repconvar = "rep_ttt_killer_required_innos", parent = gptrclst }
-gptrclst:AddItem(kreq)
+    local zreq = xlib.makeslider { label = "ttt_zombie_required_traitors (def. 2)", min = 0, max = 50, repconvar = "rep_ttt_zombie_required_traitors", parent = gptrclst }
+    gptrclst:AddItem(zreq)
 
---Role Determination
-local gptrdclp = vgui.Create("DCollapsibleCategory", gppnl)
-gptrdclp:SetSize(390, 350)
-gptrdclp:SetExpanded(0)
-gptrdclp:SetLabel("Role Determination")
+    local vreq = xlib.makeslider { label = "ttt_vampire_required_traitors (def. 2)", min = 0, max = 50, repconvar = "rep_ttt_vampire_required_traitors", parent = gptrclst }
+    gptrclst:AddItem(vreq)
 
-local gptrdlst = vgui.Create("DPanelList", gptrdclp)
-gptrdlst:SetPos(5, 25)
-gptrdlst:SetSize(390, 350)
-gptrdlst:SetSpacing(5)
+    local kreq = xlib.makeslider { label = "ttt_killer_required_innos (def. 2)", min = 0, max = 50, repconvar = "rep_ttt_killer_required_innos", parent = gptrclst }
+    gptrclst:AddItem(kreq)
 
-local dkm = xlib.makeslider { label = "ttt_detective_karma_min (def. 600)", min = 1, max = 1000, repconvar = "rep_ttt_detective_karma_min", parent = gptrdlst }
-gptrdlst:AddItem(dkm)
+    --Role Determination
+    local gptrdclp = vgui.Create("DCollapsibleCategory", gppnl)
+    gptrdclp:SetSize(390, 370)
+    gptrdclp:SetExpanded(0)
+    gptrdclp:SetLabel("Role Determination")
 
-local mpercet = xlib.makeslider { label = "ttt_monster_pct (def. 0.33)", min = 0.01, max = 2, decimal = 2, repconvar = "rep_ttt_monster_pct", parent = gptrdlst }
-gptrdlst:AddItem(mpercet)
+    local gptrdlst = vgui.Create("DPanelList", gptrdclp)
+    gptrdlst:SetPos(5, 25)
+    gptrdlst:SetSize(390, 370)
+    gptrdlst:SetSpacing(5)
 
-local tpercet = xlib.makeslider { label = "ttt_traitor_pct (def. 0.25)", min = 0.01, max = 2, decimal = 2, repconvar = "rep_ttt_traitor_pct", parent = gptrdlst }
-gptrdlst:AddItem(tpercet)
+    local dkm = xlib.makeslider { label = "ttt_detective_karma_min (def. 600)", min = 1, max = 1000, repconvar = "rep_ttt_detective_karma_min", parent = gptrdlst }
+    gptrdlst:AddItem(dkm)
 
-local dpercet = xlib.makeslider { label = "ttt_detective_pct (def. 0.13)", min = 0.01, max = 2, decimal = 2, repconvar = "rep_ttt_detective_pct", parent = gptrdlst }
-gptrdlst:AddItem(dpercet)
+    local mpercet = xlib.makeslider { label = "ttt_monster_pct (def. 0.33)", min = 0.01, max = 2, decimal = 2, repconvar = "rep_ttt_monster_pct", parent = gptrdlst }
+    gptrdlst:AddItem(mpercet)
 
-local hchance = xlib.makeslider { label = "ttt_hypnotist_chance (def. 0.2)", min = 0.01, max = 1, decimal = 2, repconvar = "rep_ttt_hypnotist_chance", parent = gptrdlst }
-gptrdlst:AddItem(hchance)
+    local tpercet = xlib.makeslider { label = "ttt_traitor_pct (def. 0.25)", min = 0.01, max = 2, decimal = 2, repconvar = "rep_ttt_traitor_pct", parent = gptrdlst }
+    gptrdlst:AddItem(tpercet)
 
-local achance = xlib.makeslider { label = "ttt_assassin_chance (def. 0.2)", min = 0.01, max = 1, decimal = 2, repconvar = "rep_ttt_assassin_chance", parent = gptrdlst }
-gptrdlst:AddItem(achance)
+    local dpercet = xlib.makeslider { label = "ttt_detective_pct (def. 0.13)", min = 0.01, max = 2, decimal = 2, repconvar = "rep_ttt_detective_pct", parent = gptrdlst }
+    gptrdlst:AddItem(dpercet)
 
-local gchance = xlib.makeslider { label = "ttt_glitch_chance (def. 0.25)", min = 0.01, max = 1, decimal = 2, repconvar = "rep_ttt_glitch_chance", parent = gptrdlst }
-gptrdlst:AddItem(gchance)
+    local hchance = xlib.makeslider { label = "ttt_hypnotist_chance (def. 0.2)", min = 0.01, max = 1, decimal = 2, repconvar = "rep_ttt_hypnotist_chance", parent = gptrdlst }
+    gptrdlst:AddItem(hchance)
 
-local pchance = xlib.makeslider { label = "ttt_phantom_chance (def. 0.25)", min = 0.01, max = 1, decimal = 2, repconvar = "rep_ttt_phantom_chance", parent = gptrdlst }
-gptrdlst:AddItem(pchance)
+    local achance = xlib.makeslider { label = "ttt_assassin_chance (def. 0.2)", min = 0.01, max = 1, decimal = 2, repconvar = "rep_ttt_assassin_chance", parent = gptrdlst }
+    gptrdlst:AddItem(achance)
 
-local mchance = xlib.makeslider { label = "ttt_mercenary_chance (def. 0.25)", min = 0.01, max = 1, decimal = 2, repconvar = "rep_ttt_mercenary_chance", parent = gptrdlst }
-gptrdlst:AddItem(mchance)
+    local gchance = xlib.makeslider { label = "ttt_glitch_chance (def. 0.25)", min = 0.01, max = 1, decimal = 2, repconvar = "rep_ttt_glitch_chance", parent = gptrdlst }
+    gptrdlst:AddItem(gchance)
 
-local jchance = xlib.makeslider { label = "ttt_jester_chance (def. 0.25)", min = 0.01, max = 1, decimal = 2, repconvar = "rep_ttt_jester_chance", parent = gptrdlst }
-gptrdlst:AddItem(jchance)
+    local pchance = xlib.makeslider { label = "ttt_phantom_chance (def. 0.25)", min = 0.01, max = 1, decimal = 2, repconvar = "rep_ttt_phantom_chance", parent = gptrdlst }
+    gptrdlst:AddItem(pchance)
 
-local schance = xlib.makeslider { label = "ttt_swapper_chance (def. 0.25)", min = 0.01, max = 1, decimal = 2, repconvar = "rep_ttt_swapper_chance", parent = gptrdlst }
-gptrdlst:AddItem(schance)
+    local mchance = xlib.makeslider { label = "ttt_mercenary_chance (def. 0.25)", min = 0.01, max = 1, decimal = 2, repconvar = "rep_ttt_mercenary_chance", parent = gptrdlst }
+    gptrdlst:AddItem(mchance)
 
-local zchance = xlib.makeslider { label = "ttt_zombie_chance (def. 0.1)", min = 0.01, max = 1, decimal = 2, repconvar = "rep_ttt_zombie_chance", parent = gptrdlst }
-gptrdlst:AddItem(zchance)
+    local derchance = xlib.makeslider { label = "ttt_detraitor_chance (def. 0.2)", min = 0.01, max = 1, decimal = 2, repconvar = "rep_ttt_detraitor_chance", parent = gptrdlst }
+    gptrdlst:AddItem(derchance)
 
-local vchance = xlib.makeslider { label = "ttt_vampire_chance (def. 0.2)", min = 0.01, max = 1, decimal = 2, repconvar = "rep_ttt_vampire_chance", parent = gptrdlst }
-gptrdlst:AddItem(vchance)
+    local jchance = xlib.makeslider { label = "ttt_jester_chance (def. 0.25)", min = 0.01, max = 1, decimal = 2, repconvar = "rep_ttt_jester_chance", parent = gptrdlst }
+    gptrdlst:AddItem(jchance)
 
-local kchance = xlib.makeslider { label = "ttt_killer_chance (def. 0.25)", min = 0.01, max = 1, decimal = 2, repconvar = "rep_ttt_killer_chance", parent = gptrdlst }
-gptrdlst:AddItem(kchance)
+    local schance = xlib.makeslider { label = "ttt_swapper_chance (def. 0.25)", min = 0.01, max = 1, decimal = 2, repconvar = "rep_ttt_swapper_chance", parent = gptrdlst }
+    gptrdlst:AddItem(schance)
 
--- Role Configs
-local gptrcfgclp = vgui.Create("DCollapsibleCategory", gppnl)
-gptrcfgclp:SetSize(390, 680)
-gptrcfgclp:SetExpanded(0)
-gptrcfgclp:SetLabel("Role Configs")
+    local zchance = xlib.makeslider { label = "ttt_zombie_chance (def. 0.1)", min = 0.01, max = 1, decimal = 2, repconvar = "rep_ttt_zombie_chance", parent = gptrdlst }
+    gptrdlst:AddItem(zchance)
 
-local gptrcfglst = vgui.Create("DPanelList", gptrcfgclp)
-gptrcfglst:SetPos(5, 25)
-gptrcfglst:SetSize(390, 680)
-gptrcfglst:SetSpacing(5)
+    local vchance = xlib.makeslider { label = "ttt_vampire_chance (def. 0.2)", min = 0.01, max = 1, decimal = 2, repconvar = "rep_ttt_vampire_chance", parent = gptrdlst }
+    gptrdlst:AddItem(vchance)
 
-local dsearch = xlib.makecheckbox { label = "ttt_detective_search_only (def. 1)", repconvar = "rep_ttt_detective_search_only", parent = gptrcfglst }
-gptrcfglst:AddItem(dsearch)
+    local kchance = xlib.makeslider { label = "ttt_killer_chance (def. 0.25)", min = 0.01, max = 1, decimal = 2, repconvar = "rep_ttt_killer_chance", parent = gptrdlst }
+    gptrdlst:AddItem(kchance)
 
-local asearch = xlib.makecheckbox { label = "ttt_all_search_postround (def. 1)", repconvar = "rep_ttt_all_search_postround", parent = gptrcfglst }
-gptrcfglst:AddItem(asearch)
+    -- Role Configs
+    local gptrcfgclp = vgui.Create("DCollapsibleCategory", gppnl)
+    gptrcfgclp:SetSize(390, 680)
+    gptrcfgclp:SetExpanded(0)
+    gptrcfgclp:SetLabel("Role Configs")
 
-local msats = xlib.makecheckbox { label = "ttt_monsters_are_traitors (def. 0)", repconvar = "rep_ttt_monsters_are_traitors", parent = gptrcfglst }
-gptrcfglst:AddItem(msats)
+    local gptrcfglst = vgui.Create("DPanelList", gptrcfgclp)
+    gptrcfglst:SetPos(5, 25)
+    gptrcfglst:SetSize(390, 680)
+    gptrcfglst:SetSpacing(5)
 
-local tkswa = xlib.makecheckbox { label = "ttt_traitors_know_swapper (def. 0)", repconvar = "rep_ttt_traitors_know_swapper", parent = gptrcfglst }
-gptrcfglst:AddItem(tkswa)
+    local dsearch = xlib.makecheckbox { label = "ttt_detective_search_only (def. 1)", repconvar = "rep_ttt_detective_search_only", parent = gptrcfglst }
+    gptrcfglst:AddItem(dsearch)
 
-local mkswa = xlib.makecheckbox { label = "ttt_monsters_know_swapper (def. 0)", repconvar = "rep_ttt_monsters_know_swapper", parent = gptrcfglst }
-gptrcfglst:AddItem(mkswa)
+    local asearch = xlib.makecheckbox { label = "ttt_all_search_postround (def. 1)", repconvar = "rep_ttt_all_search_postround", parent = gptrcfglst }
+    gptrcfglst:AddItem(asearch)
 
-local kkswa = xlib.makecheckbox { label = "ttt_killers_know_swapper (def. 0)", repconvar = "rep_ttt_killers_know_swapper", parent = gptrcfglst }
-gptrcfglst:AddItem(kkswa)
+    local msats = xlib.makecheckbox { label = "ttt_monsters_are_traitors (def. 0)", repconvar = "rep_ttt_monsters_are_traitors", parent = gptrcfglst }
+    gptrcfglst:AddItem(msats)
 
-local atarget = xlib.makecheckbox { label = "ttt_assassin_show_target_icon (def. 0)", repconvar = "rep_ttt_assassin_show_target_icon", parent = gptrcfglst }
-gptrcfglst:AddItem(atarget)
+    local tkswa = xlib.makecheckbox { label = "ttt_traitors_know_swapper (def. 0)", repconvar = "rep_ttt_traitors_know_swapper", parent = gptrcfglst }
+    gptrcfglst:AddItem(tkswa)
 
-local kknife = xlib.makecheckbox { label = "ttt_killer_knife_enabled (def. 1)", repconvar = "rep_ttt_killer_knife_enabled", parent = gptrcfglst }
-gptrcfglst:AddItem(kknife)
+    local mkswa = xlib.makecheckbox { label = "ttt_monsters_know_swapper (def. 0)", repconvar = "rep_ttt_monsters_know_swapper", parent = gptrcfglst }
+    gptrcfglst:AddItem(mkswa)
 
-local khealth = xlib.makeslider { label = "ttt_killer_max_health (def. 100)", min = 1, max = 200, repconvar = "rep_ttt_killer_max_health", parent = gptrcfglst }
-gptrcfglst:AddItem(khealth)
+    local kkswa = xlib.makecheckbox { label = "ttt_killers_know_swapper (def. 0)", repconvar = "rep_ttt_killers_know_swapper", parent = gptrcfglst }
+    gptrcfglst:AddItem(kkswa)
 
-local ksmokee = xlib.makecheckbox { label = "ttt_killer_smoke_enabled (def. 1)", repconvar = "rep_ttt_killer_smoke_enabled", parent = gptrcfglst }
-gptrcfglst:AddItem(ksmokee)
+    local atarget = xlib.makecheckbox { label = "ttt_assassin_show_target_icon (def. 0)", repconvar = "rep_ttt_assassin_show_target_icon", parent = gptrcfglst }
+    gptrcfglst:AddItem(atarget)
 
-local ksmoke = xlib.makeslider { label = "ttt_killer_smoke_timer (def. 60)", min = 10, max = 200, repconvar = "rep_ttt_killer_smoke_timer", parent = gptrcfglst }
-gptrcfglst:AddItem(ksmoke)
+    local kknife = xlib.makecheckbox { label = "ttt_killer_knife_enabled (def. 1)", repconvar = "rep_ttt_killer_knife_enabled", parent = gptrcfglst }
+    gptrcfglst:AddItem(kknife)
 
-local kvision = xlib.makecheckbox { label = "ttt_killer_vision_enable (def. 1)", repconvar = "rep_ttt_killer_vision_enable", parent = gptrcfglst }
-gptrcfglst:AddItem(kvision)
+    local khealth = xlib.makeslider { label = "ttt_killer_max_health (def. 100)", min = 1, max = 200, repconvar = "rep_ttt_killer_max_health", parent = gptrcfglst }
+    gptrcfglst:AddItem(khealth)
 
-local ktarget = xlib.makecheckbox { label = "ttt_killer_show_target_icon (def. 1)", repconvar = "rep_ttt_killer_show_target_icon", parent = gptrcfglst }
-gptrcfglst:AddItem(ktarget)
+    local ksmokee = xlib.makecheckbox { label = "ttt_killer_smoke_enabled (def. 1)", repconvar = "rep_ttt_killer_smoke_enabled", parent = gptrcfglst }
+    gptrcfglst:AddItem(ksmokee)
 
-local kdmgscale = xlib.makeslider { label = "ttt_killer_damage_scale (def. 0.25)", min = 0.1, max = 1, decimal = 2, repconvar = "rep_ttt_killer_damage_scale", parent = gptrcfglst }
-gptrcfglst:AddItem(kdmgscale)
+    local ksmoke = xlib.makeslider { label = "ttt_killer_smoke_timer (def. 60)", min = 10, max = 200, repconvar = "rep_ttt_killer_smoke_timer", parent = gptrcfglst }
+    gptrcfglst:AddItem(ksmoke)
 
-local kdmgreduc = xlib.makeslider { label = "ttt_killer_damage_reduction (def. 0.55)", min = 0.1, max = 1, decimal = 2, repconvar = "rep_ttt_killer_damage_reduction", parent = gptrcfglst }
-gptrcfglst:AddItem(kdmgreduc)
+    local kvision = xlib.makecheckbox { label = "ttt_killer_vision_enable (def. 1)", repconvar = "rep_ttt_killer_vision_enable", parent = gptrcfglst }
+    gptrcfglst:AddItem(kvision)
 
-local zvision = xlib.makecheckbox { label = "ttt_zombie_vision_enable (def. 1)", repconvar = "rep_ttt_zombie_vision_enable", parent = gptrcfglst }
-gptrcfglst:AddItem(zvision)
+    local ktarget = xlib.makecheckbox { label = "ttt_killer_show_target_icon (def. 1)", repconvar = "rep_ttt_killer_show_target_icon", parent = gptrcfglst }
+    gptrcfglst:AddItem(ktarget)
 
-local zspit = xlib.makecheckbox { label = "ttt_zombie_spit_enable (def. 1)", repconvar = "rep_ttt_zombie_spit_enable", parent = gptrcfglst }
-gptrcfglst:AddItem(zspit)
+    local kdmgscale = xlib.makeslider { label = "ttt_killer_damage_scale (def. 0.25)", min = 0.1, max = 1, decimal = 2, repconvar = "rep_ttt_killer_damage_scale", parent = gptrcfglst }
+    gptrcfglst:AddItem(kdmgscale)
 
-local zleap = xlib.makecheckbox { label = "ttt_zombie_leap_enable (def. 1)", repconvar = "rep_ttt_zombie_leap_enable", parent = gptrcfglst }
-gptrcfglst:AddItem(zleap)
+    local kdmgreduc = xlib.makeslider { label = "ttt_killer_damage_reduction (def. 0.55)", min = 0.1, max = 1, decimal = 2, repconvar = "rep_ttt_killer_damage_reduction", parent = gptrcfglst }
+    gptrcfglst:AddItem(kdmgreduc)
 
-local ztarget = xlib.makecheckbox { label = "ttt_zombie_show_target_icon (def. 1)", repconvar = "rep_ttt_zombie_show_target_icon", parent = gptrcfglst }
-gptrcfglst:AddItem(ztarget)
+    local zvision = xlib.makecheckbox { label = "ttt_zombie_vision_enable (def. 1)", repconvar = "rep_ttt_zombie_vision_enable", parent = gptrcfglst }
+    gptrcfglst:AddItem(zvision)
 
-local zdmgscale = xlib.makeslider { label = "ttt_zombie_damage_scale (def. 0.2)", min = 0.1, max = 1, decimal = 2, repconvar = "rep_ttt_zombie_damage_scale", parent = gptrcfglst }
-gptrcfglst:AddItem(zdmgscale)
+    local zspit = xlib.makecheckbox { label = "ttt_zombie_spit_enable (def. 1)", repconvar = "rep_ttt_zombie_spit_enable", parent = gptrcfglst }
+    gptrcfglst:AddItem(zspit)
 
-local zdmgreduc = xlib.makeslider { label = "ttt_zombie_damage_reduction (def. 0.8)", min = 0.1, max = 1, decimal = 2, repconvar = "rep_ttt_zombie_damage_reduction", parent = gptrcfglst }
-gptrcfglst:AddItem(zdmgreduc)
+    local zleap = xlib.makecheckbox { label = "ttt_zombie_leap_enable (def. 1)", repconvar = "rep_ttt_zombie_leap_enable", parent = gptrcfglst }
+    gptrcfglst:AddItem(zleap)
 
-local zpoweap = xlib.makecheckbox { label = "ttt_zombie_prime_only_weapons (def. 1)", repconvar = "rep_ttt_zombie_prime_only_weapons", parent = gptrcfglst }
-gptrcfglst:AddItem(zpoweap)
+    local ztarget = xlib.makecheckbox { label = "ttt_zombie_show_target_icon (def. 1)", repconvar = "rep_ttt_zombie_show_target_icon", parent = gptrcfglst }
+    gptrcfglst:AddItem(ztarget)
 
-local vvision = xlib.makecheckbox { label = "ttt_vampire_vision_enable (def. 1)", repconvar = "rep_ttt_vampire_vision_enable", parent = gptrcfglst }
-gptrcfglst:AddItem(vvision)
+    local zdmgscale = xlib.makeslider { label = "ttt_zombie_damage_scale (def. 0.2)", min = 0.1, max = 1, decimal = 2, repconvar = "rep_ttt_zombie_damage_scale", parent = gptrcfglst }
+    gptrcfglst:AddItem(zdmgscale)
 
-local vtarget = xlib.makecheckbox { label = "ttt_vampire_show_target_icon (def. 1)", repconvar = "rep_ttt_vampire_show_target_icon", parent = gptrcfglst }
-gptrcfglst:AddItem(vtarget)
+    local zdmgreduc = xlib.makeslider { label = "ttt_zombie_damage_reduction (def. 0.8)", min = 0.1, max = 1, decimal = 2, repconvar = "rep_ttt_zombie_damage_reduction", parent = gptrcfglst }
+    gptrcfglst:AddItem(zdmgreduc)
 
-local vdmgreduc = xlib.makeslider { label = "ttt_vampire_damage_reduction (def. 0.8)", min = 0.1, max = 1, decimal = 2, repconvar = "rep_ttt_vampire_damage_reduction", parent = gptrcfglst }
-gptrcfglst:AddItem(vdmgreduc)
+    local zpoweap = xlib.makecheckbox { label = "ttt_zombie_prime_only_weapons (def. 1)", repconvar = "rep_ttt_zombie_prime_only_weapons", parent = gptrcfglst }
+    gptrcfglst:AddItem(zpoweap)
 
-local vfangtim = xlib.makeslider { label = "ttt_vampire_fang_timer (def. 5)", min = 1, max = 10, repconvar = "rep_ttt_vampire_fang_timer", parent = gptrcfglst }
-gptrcfglst:AddItem(vfangtim)
+    local vvision = xlib.makecheckbox { label = "ttt_vampire_vision_enable (def. 1)", repconvar = "rep_ttt_vampire_vision_enable", parent = gptrcfglst }
+    gptrcfglst:AddItem(vvision)
 
-local vfangheal = xlib.makeslider { label = "ttt_vampire_fang_heal (def. 50)", min = 10, max = 100, repconvar = "rep_ttt_vampire_fang_heal", parent = gptrcfglst }
-gptrcfglst:AddItem(vfangheal)
+    local vtarget = xlib.makecheckbox { label = "ttt_vampire_show_target_icon (def. 1)", repconvar = "rep_ttt_vampire_show_target_icon", parent = gptrcfglst }
+    gptrcfglst:AddItem(vtarget)
 
-local vfangoheal = xlib.makeslider { label = "ttt_vampire_fang_overheal (def. 25)", min = 5, max = 50, repconvar = "rep_ttt_vampire_fang_overheal", parent = gptrcfglst }
-gptrcfglst:AddItem(vfangoheal)
+    local vdmgreduc = xlib.makeslider { label = "ttt_vampire_damage_reduction (def. 0.8)", min = 0.1, max = 1, decimal = 2, repconvar = "rep_ttt_vampire_damage_reduction", parent = gptrcfglst }
+    gptrcfglst:AddItem(vdmgreduc)
 
-local mshop = xlib.makeslider { label = "ttt_shop_merc_mode (def. 0)", min = 0, max = 4, repconvar = "rep_ttt_shop_merc_mode", parent = gptrcfglst }
-gptrcfglst:AddItem(mshop)
+    local vfangtim = xlib.makeslider { label = "ttt_vampire_fang_timer (def. 5)", min = 1, max = 10, repconvar = "rep_ttt_vampire_fang_timer", parent = gptrcfglst }
+    gptrcfglst:AddItem(vfangtim)
 
-local ashop = xlib.makecheckbox { label = "ttt_shop_assassin_sync (def. 0)", repconvar = "rep_ttt_shop_assassin_sync", parent = gptrcfglst }
-gptrcfglst:AddItem(ashop)
+    local vfangheal = xlib.makeslider { label = "ttt_vampire_fang_heal (def. 50)", min = 10, max = 100, repconvar = "rep_ttt_vampire_fang_heal", parent = gptrcfglst }
+    gptrcfglst:AddItem(vfangheal)
 
-local hshop = xlib.makecheckbox { label = "ttt_shop_hypnotist_sync (def. 0)", repconvar = "rep_ttt_shop_hypnotist_sync", parent = gptrcfglst }
-gptrcfglst:AddItem(hshop)
+    local vfangoheal = xlib.makeslider { label = "ttt_vampire_fang_overheal (def. 25)", min = 5, max = 50, repconvar = "rep_ttt_vampire_fang_overheal", parent = gptrcfglst }
+    gptrcfglst:AddItem(vfangoheal)
 
---DNA
-local gpdnaclp = vgui.Create("DCollapsibleCategory", gppnl)
-gpdnaclp:SetSize(390, 50)
-gpdnaclp:SetExpanded(0)
-gpdnaclp:SetLabel("DNA")
+    local mshop = xlib.makeslider { label = "ttt_shop_merc_mode (def. 0)", min = 0, max = 4, repconvar = "rep_ttt_shop_merc_mode", parent = gptrcfglst }
+    gptrcfglst:AddItem(mshop)
 
-local gpdnalst = vgui.Create("DPanelList", gpdnaclp)
-gpdnalst:SetPos(5, 25)
-gpdnalst:SetSize(390, 50)
-gpdnalst:SetSpacing(5)
+    local ashop = xlib.makecheckbox { label = "ttt_shop_assassin_sync (def. 0)", repconvar = "rep_ttt_shop_assassin_sync", parent = gptrcfglst }
+    gptrcfglst:AddItem(ashop)
 
-local dnarange = xlib.makeslider { label = "ttt_killer_dna_range (def. 550)", min = 100, max = 1000, repconvar = "rep_ttt_killer_dna_range", parent = gpdnalst }
-gpdnalst:AddItem(dnarange)
+    local hshop = xlib.makecheckbox { label = "ttt_shop_hypnotist_sync (def. 0)", repconvar = "rep_ttt_shop_hypnotist_sync", parent = gptrcfglst }
+    gptrcfglst:AddItem(hshop)
 
-local dnakbt = xlib.makeslider { label = "ttt_killer_dna_basetime (def. 100)", min = 10, max = 200, repconvar = "rep_ttt_killer_dna_basetime", parent = gpdnalst }
-gpdnalst:AddItem(dnakbt)
+    --DNA
+    local gpdnaclp = vgui.Create("DCollapsibleCategory", gppnl)
+    gpdnaclp:SetSize(390, 50)
+    gpdnaclp:SetExpanded(0)
+    gpdnaclp:SetLabel("DNA")
 
---Voice Chat Battery
-local gpvcbclp = vgui.Create("DCollapsibleCategory", gppnl)
-gpvcbclp:SetSize(390, 65)
-gpvcbclp:SetExpanded(0)
-gpvcbclp:SetLabel("Voice Chat Battery")
+    local gpdnalst = vgui.Create("DPanelList", gpdnaclp)
+    gpdnalst:SetPos(5, 25)
+    gpdnalst:SetSize(390, 50)
+    gpdnalst:SetSpacing(5)
 
-local gpvcblst = vgui.Create("DPanelList", gpvcbclp)
-gpvcblst:SetPos(5, 25)
-gpvcblst:SetSize(390, 65)
-gpvcblst:SetSpacing(5)
+    local dnarange = xlib.makeslider { label = "ttt_killer_dna_range (def. 550)", min = 100, max = 1000, repconvar = "rep_ttt_killer_dna_range", parent = gpdnalst }
+    gpdnalst:AddItem(dnarange)
 
-local gpevd = xlib.makecheckbox { label = "ttt_voice_drain (def. 0)", repconvar = "rep_ttt_voice_drain", parent = gpvcblst }
-gpvcblst:AddItem(gpevd)
+    local dnakbt = xlib.makeslider { label = "ttt_killer_dna_basetime (def. 100)", min = 10, max = 200, repconvar = "rep_ttt_killer_dna_basetime", parent = gpdnalst }
+    gpdnalst:AddItem(dnakbt)
 
-local gpvdn = xlib.makeslider { label = "ttt_voice_drain_normal (def. 0.2)", min = 0.1, max = 1, decimal = 1, repconvar = "rep_ttt_voice_drain_normal", parent = gpvcblst }
-gpvcblst:AddItem(gpvdn)
+    --Voice Chat Battery
+    local gpvcbclp = vgui.Create("DCollapsibleCategory", gppnl)
+    gpvcbclp:SetSize(390, 65)
+    gpvcbclp:SetExpanded(0)
+    gpvcbclp:SetLabel("Voice Chat Battery")
 
-local gpvda = xlib.makeslider { label = "ttt_voice_drain_admin (def. 0.05)", min = 0.01, max = 1, decimal = 2, repconvar = "rep_ttt_voice_drain_admin", parent = gpvcblst }
-gpvcblst:AddItem(gpvda)
+    local gpvcblst = vgui.Create("DPanelList", gpvcbclp)
+    gpvcblst:SetPos(5, 25)
+    gpvcblst:SetSize(390, 65)
+    gpvcblst:SetSpacing(5)
 
-local gpvdr = xlib.makeslider { label = "ttt_voice_drain_recharge (def. 0.05)", min = 0.01, max = 1, decimal = 2, repconvar = "rep_ttt_voice_drain_recharge", parent = gpvcblst }
-gpvcblst:AddItem(gpvdr)
+    local gpevd = xlib.makecheckbox { label = "ttt_voice_drain (def. 0)", repconvar = "rep_ttt_voice_drain", parent = gpvcblst }
+    gpvcblst:AddItem(gpevd)
 
---Other Gameplay Settings
-local gpogsclp = vgui.Create("DCollapsibleCategory", gppnl)
-gpogsclp:SetSize(390, 245)
-gpogsclp:SetExpanded(0)
-gpogsclp:SetLabel("Other Gameplay Settings")
+    local gpvdn = xlib.makeslider { label = "ttt_voice_drain_normal (def. 0.2)", min = 0.1, max = 1, decimal = 1, repconvar = "rep_ttt_voice_drain_normal", parent = gpvcblst }
+    gpvcblst:AddItem(gpvdn)
 
-local gpogslst = vgui.Create("DPanelList", gpogsclp)
-gpogslst:SetPos(5, 25)
-gpogslst:SetSize(390, 245)
-gpogslst:SetSpacing(5)
+    local gpvda = xlib.makeslider { label = "ttt_voice_drain_admin (def. 0.05)", min = 0.01, max = 1, decimal = 2, repconvar = "rep_ttt_voice_drain_admin", parent = gpvcblst }
+    gpvcblst:AddItem(gpvda)
 
-local gpminply = xlib.makeslider { label = "ttt_minimum_players (def. 2)", min = 1, max = 10, repconvar = "rep_ttt_minimum_players", parent = gpogslst }
-gpogslst:AddItem(gpminply)
+    local gpvdr = xlib.makeslider { label = "ttt_voice_drain_recharge (def. 0.05)", min = 0.01, max = 1, decimal = 2, repconvar = "rep_ttt_voice_drain_recharge", parent = gpvcblst }
+    gpvcblst:AddItem(gpvdr)
 
-local gpprdm = xlib.makecheckbox { label = "ttt_postround_dm (def. 0)", repconvar = "rep_ttt_postround_dm", parent = gpogslst }
-gpogslst:AddItem(gpprdm)
+    --Other Gameplay Settings
+    local gpogsclp = vgui.Create("DCollapsibleCategory", gppnl)
+    gpogsclp:SetSize(390, 245)
+    gpogsclp:SetExpanded(0)
+    gpogsclp:SetLabel("Other Gameplay Settings")
 
-local gpds = xlib.makecheckbox { label = "ttt_dyingshot (def. 0)", repconvar = "rep_ttt_dyingshot", parent = gpogslst }
-gpogslst:AddItem(gpds)
+    local gpogslst = vgui.Create("DPanelList", gpogsclp)
+    gpogslst:SetPos(5, 25)
+    gpogslst:SetSize(390, 245)
+    gpogslst:SetSpacing(5)
 
-local gpnntdp = xlib.makecheckbox { label = "ttt_no_nade_throw_during_prep (def. 0)", repconvar = "rep_ttt_no_nade_throw_during_prep", parent = gpogslst }
-gpogslst:AddItem(gpnntdp)
+    local gpminply = xlib.makeslider { label = "ttt_minimum_players (def. 2)", min = 1, max = 10, repconvar = "rep_ttt_minimum_players", parent = gpogslst }
+    gpogslst:AddItem(gpminply)
 
-local gpwc = xlib.makecheckbox { label = "ttt_weapon_carrying (def. 1)", repconvar = "rep_ttt_weapon_carrying", parent = gpogslst }
-gpogslst:AddItem(gpwc)
+    local gpprdm = xlib.makecheckbox { label = "ttt_postround_dm (def. 0)", repconvar = "rep_ttt_postround_dm", parent = gpogslst }
+    gpogslst:AddItem(gpprdm)
 
-local gpwcr = xlib.makeslider { label = "ttt_weapon_carrying_range (def. 50)", min = 10, max = 100, repconvar = "rep_ttt_weapon_carrying_range", parent = gpogslst }
-gpogslst:AddItem(gpwcr)
+    local gpds = xlib.makecheckbox { label = "ttt_dyingshot (def. 0)", repconvar = "rep_ttt_dyingshot", parent = gpogslst }
+    gpogslst:AddItem(gpds)
 
-local gpttf = xlib.makecheckbox { label = "ttt_teleport_telefrags (def. 0)", repconvar = "rep_ttt_teleport_telefrags", parent = gpogslst }
-gpogslst:AddItem(gpttf)
+    local gpnntdp = xlib.makecheckbox { label = "ttt_no_nade_throw_during_prep (def. 0)", repconvar = "rep_ttt_no_nade_throw_during_prep", parent = gpogslst }
+    gpogslst:AddItem(gpnntdp)
 
-local gprdp = xlib.makecheckbox { label = "ttt_ragdoll_pinning (def. 1)", repconvar = "rep_ttt_ragdoll_pinning", parent = gpogslst }
-gpogslst:AddItem(gprdp)
+    local gpwc = xlib.makecheckbox { label = "ttt_weapon_carrying (def. 1)", repconvar = "rep_ttt_weapon_carrying", parent = gpogslst }
+    gpogslst:AddItem(gpwc)
 
-local gprdpi = xlib.makecheckbox { label = "ttt_ragdoll_pinning_innocents (def. 0)", repconvar = "rep_ttt_ragdoll_pinning_innocents", parent = gpogslst }
-gpogslst:AddItem(gprdpi)
+    local gpwcr = xlib.makeslider { label = "ttt_weapon_carrying_range (def. 50)", min = 10, max = 100, repconvar = "rep_ttt_weapon_carrying_range", parent = gpogslst }
+    gpogslst:AddItem(gpwcr)
 
-local gppsmis = xlib.makecheckbox { label = "ttt_player_set_model_on_initial_spawn (def. 1)", repconvar = "rep_ttt_player_set_model_on_initial_spawn", parent = gpogslst }
-gpogslst:AddItem(gppsmis)
+    local gpttf = xlib.makecheckbox { label = "ttt_teleport_telefrags (def. 0)", repconvar = "rep_ttt_teleport_telefrags", parent = gpogslst }
+    gpogslst:AddItem(gpttf)
 
-local gppsmnr = xlib.makecheckbox { label = "ttt_player_set_model_on_new_round (def. 1)", repconvar = "rep_ttt_player_set_model_on_new_round", parent = gpogslst }
-gpogslst:AddItem(gppsmnr)
+    local gprdp = xlib.makecheckbox { label = "ttt_ragdoll_pinning (def. 1)", repconvar = "rep_ttt_ragdoll_pinning", parent = gpogslst }
+    gpogslst:AddItem(gprdp)
 
-local gppsmr = xlib.makecheckbox { label = "ttt_player_set_model_on_respawn (def. 1)", repconvar = "rep_ttt_player_set_model_on_respawn", parent = gpogslst }
-gpogslst:AddItem(gppsmr)
+    local gprdpi = xlib.makecheckbox { label = "ttt_ragdoll_pinning_innocents (def. 0)", repconvar = "rep_ttt_ragdoll_pinning_innocents", parent = gpogslst }
+    gpogslst:AddItem(gprdpi)
 
-xgui.hookEvent("onProcessModules", nil, gppnl.processModules)
-xgui.addSubModule("Gameplay", gppnl, nil, "terrortown_settings")
+    local gppsmis = xlib.makecheckbox { label = "ttt_player_set_model_on_initial_spawn (def. 1)", repconvar = "rep_ttt_player_set_model_on_initial_spawn", parent = gpogslst }
+    gpogslst:AddItem(gppsmis)
 
--------------------- Karma Module--------------------
-local krmpnl = xlib.makelistlayout { w = 415, h = 318, parent = xgui.null }
+    local gppsmnr = xlib.makecheckbox { label = "ttt_player_set_model_on_new_round (def. 1)", repconvar = "rep_ttt_player_set_model_on_new_round", parent = gpogslst }
+    gpogslst:AddItem(gppsmnr)
 
-local krmclp = vgui.Create("DCollapsibleCategory", krmpnl)
-krmclp:SetSize(390, 400)
-krmclp:SetExpanded(1)
-krmclp:SetLabel("Karma")
+    local gppsmr = xlib.makecheckbox { label = "ttt_player_set_model_on_respawn (def. 1)", repconvar = "rep_ttt_player_set_model_on_respawn", parent = gpogslst }
+    gpogslst:AddItem(gppsmr)
 
-local krmlst = vgui.Create("DPanelList", krmclp)
-krmlst:SetPos(5, 25)
-krmlst:SetSize(390, 400)
-krmlst:SetSpacing(5)
+    xgui.hookEvent("onProcessModules", nil, gppnl.processModules)
+    xgui.addSubModule("Gameplay", gppnl, nil, "terrortown_settings")
+end
 
-local krmekrm = xlib.makecheckbox { label = "ttt_karma", repconvar = "rep_ttt_karma", parent = krmlst }
-krmlst:AddItem(krmekrm)
+local function AddKarmaModule()
+    -------------------- Karma Module--------------------
+    local krmpnl = xlib.makelistlayout { w = 415, h = 318, parent = xgui.null }
 
-local krmeskrm = xlib.makecheckbox { label = "ttt_karma_strict", repconvar = "rep_ttt_karma_strict", parent = krmlst }
-krmlst:AddItem(krmeskrm)
+    local krmclp = vgui.Create("DCollapsibleCategory", krmpnl)
+    krmclp:SetSize(390, 400)
+    krmclp:SetExpanded(1)
+    krmclp:SetLabel("Karma")
 
-local krms = xlib.makeslider { label = "ttt_karma_starting (def. 1000)", min = 500, max = 2000, repconvar = "rep_ttt_karma_starting", parent = krmlst }
-krmlst:AddItem(krms)
+    local krmlst = vgui.Create("DPanelList", krmclp)
+    krmlst:SetPos(5, 25)
+    krmlst:SetSize(390, 400)
+    krmlst:SetSpacing(5)
 
-local krmmx = xlib.makeslider { label = "ttt_karma_max (def. 1000)", min = 500, max = 2000, repconvar = "rep_ttt_karma_max", parent = krmlst }
-krmlst:AddItem(krmmx)
+    local krmekrm = xlib.makecheckbox { label = "ttt_karma", repconvar = "rep_ttt_karma", parent = krmlst }
+    krmlst:AddItem(krmekrm)
 
-local krmr = xlib.makeslider { label = "ttt_karma_ratio (def. 0.001)", min = 0.001, max = 0.009, decimal = 3, repconvar = "rep_ttt_karma_ratio", parent = krmlst }
-krmlst:AddItem(krmr)
+    local krmeskrm = xlib.makecheckbox { label = "ttt_karma_strict", repconvar = "rep_ttt_karma_strict", parent = krmlst }
+    krmlst:AddItem(krmeskrm)
 
-local krmkp = xlib.makeslider { label = "ttt_karma_kill_penalty (def. 15)", min = 1, max = 30, repconvar = "rep_ttt_karma_kill_penalty", parent = krmlst }
-krmlst:AddItem(krmkp)
+    local krms = xlib.makeslider { label = "ttt_karma_starting (def. 1000)", min = 500, max = 2000, repconvar = "rep_ttt_karma_starting", parent = krmlst }
+    krmlst:AddItem(krms)
 
-local krmri = xlib.makeslider { label = "ttt_karma_round_increment (def. 5)", min = 1, max = 30, repconvar = "rep_ttt_karma_round_increment", parent = krmlst }
-krmlst:AddItem(krmri)
+    local krmmx = xlib.makeslider { label = "ttt_karma_max (def. 1000)", min = 500, max = 2000, repconvar = "rep_ttt_karma_max", parent = krmlst }
+    krmlst:AddItem(krmmx)
 
-local krmcb = xlib.makeslider { label = "ttt_karma_clean_bonus (def. 30)", min = 10, max = 100, repconvar = "rep_ttt_karma_clean_bonus", parent = krmlst }
-krmlst:AddItem(krmcb)
+    local krmr = xlib.makeslider { label = "ttt_karma_ratio (def. 0.001)", min = 0.001, max = 0.009, decimal = 3, repconvar = "rep_ttt_karma_ratio", parent = krmlst }
+    krmlst:AddItem(krmr)
 
-local krmtdmgr = xlib.makeslider { label = "ttt_karma_traitordmg_ratio (def. 0.0003)", min = 0.0001, max = 0.001, decimal = 4, repconvar = "rep_ttt_karma_traitordmg_ratio", parent = krmlst }
-krmlst:AddItem(krmtdmgr)
+    local krmkp = xlib.makeslider { label = "ttt_karma_kill_penalty (def. 15)", min = 1, max = 30, repconvar = "rep_ttt_karma_kill_penalty", parent = krmlst }
+    krmlst:AddItem(krmkp)
 
-local krmtkb = xlib.makeslider { label = "ttt_karma_traitorkill_bonus (def. 40)", min = 10, max = 100, repconvar = "rep_ttt_karma_traitorkill_bonus", parent = krmlst }
-krmlst:AddItem(krmtkb)
+    local krmri = xlib.makeslider { label = "ttt_karma_round_increment (def. 5)", min = 1, max = 30, repconvar = "rep_ttt_karma_round_increment", parent = krmlst }
+    krmlst:AddItem(krmri)
 
-local krmlak = xlib.makecheckbox { label = "ttt_karma_low_autokick (def. 1)", repconvar = "rep_ttt_karma_low_autokick", parent = krmlst }
-krmlst:AddItem(krmlak)
+    local krmcb = xlib.makeslider { label = "ttt_karma_clean_bonus (def. 30)", min = 10, max = 100, repconvar = "rep_ttt_karma_clean_bonus", parent = krmlst }
+    krmlst:AddItem(krmcb)
 
-local krmla = xlib.makeslider { label = "ttt_karma_low_amount (def. 450)", min = 100, max = 1000, repconvar = "rep_ttt_karma_low_amount", parent = krmlst }
-krmlst:AddItem(krmla)
+    local krmtdmgr = xlib.makeslider { label = "ttt_karma_traitordmg_ratio (def. 0.0003)", min = 0.0001, max = 0.001, decimal = 4, repconvar = "rep_ttt_karma_traitordmg_ratio", parent = krmlst }
+    krmlst:AddItem(krmtdmgr)
 
-local krmlab = xlib.makecheckbox { label = "ttt_karma_low_ban (def. 1)", repconvar = "rep_ttt_karma_low_ban", parent = krmlst }
-krmlst:AddItem(krmlab)
+    local krmtkb = xlib.makeslider { label = "ttt_karma_traitorkill_bonus (def. 40)", min = 10, max = 100, repconvar = "rep_ttt_karma_traitorkill_bonus", parent = krmlst }
+    krmlst:AddItem(krmtkb)
 
-local krmlbm = xlib.makeslider { label = "ttt_karma_low_ban_minutes (def. 60)", min = 10, max = 100, repconvar = "rep_ttt_karma_low_ban_minutes", parent = krmlst }
-krmlst:AddItem(krmlbm)
+    local krmlak = xlib.makecheckbox { label = "ttt_karma_low_autokick (def. 1)", repconvar = "rep_ttt_karma_low_autokick", parent = krmlst }
+    krmlst:AddItem(krmlak)
 
-local krmpre = xlib.makecheckbox { label = "ttt_karma_persist (def. 0)", repconvar = "rep_ttt_karma_persist", parent = krmlst }
-krmlst:AddItem(krmpre)
+    local krmla = xlib.makeslider { label = "ttt_karma_low_amount (def. 450)", min = 100, max = 1000, repconvar = "rep_ttt_karma_low_amount", parent = krmlst }
+    krmlst:AddItem(krmla)
 
-local krmdbs = xlib.makecheckbox { label = "ttt_karma_debugspam (def. 0)", repconvar = "rep_ttt_karma_debugspam", parent = krmlst }
-krmlst:AddItem(krmdbs)
+    local krmlab = xlib.makecheckbox { label = "ttt_karma_low_ban (def. 1)", repconvar = "rep_ttt_karma_low_ban", parent = krmlst }
+    krmlst:AddItem(krmlab)
 
-local krmch = xlib.makeslider { label = "ttt_karma_clean_half (def. 0.25)", min = 0.01, max = 0.9, decimal = 2, repconvar = "rep_ttt_karma_clean_half", parent = krmlst }
-krmlst:AddItem(krmch)
+    local krmlbm = xlib.makeslider { label = "ttt_karma_low_ban_minutes (def. 60)", min = 10, max = 100, repconvar = "rep_ttt_karma_low_ban_minutes", parent = krmlst }
+    krmlst:AddItem(krmlbm)
 
-xgui.hookEvent("onProcessModules", nil, krmpnl.processModules)
-xgui.addSubModule("Karma", krmpnl, nil, "terrortown_settings")
+    local krmpre = xlib.makecheckbox { label = "ttt_karma_persist (def. 0)", repconvar = "rep_ttt_karma_persist", parent = krmlst }
+    krmlst:AddItem(krmpre)
 
--------------------- Map-related Module--------------------
-local mprpnl = xlib.makepanel { w = 415, h = 318, parent = xgui.null }
+    local krmdbs = xlib.makecheckbox { label = "ttt_karma_debugspam (def. 0)", repconvar = "rep_ttt_karma_debugspam", parent = krmlst }
+    krmlst:AddItem(krmdbs)
 
-xlib.makecheckbox { x = 5, y = 5, label = "ttt_use_weapon_spawn_scripts (def. 1)", repconvar = "rep_ttt_use_weapon_spawn_scripts", parent = mprpnl }
+    local krmch = xlib.makeslider { label = "ttt_karma_clean_half (def. 0.25)", min = 0.01, max = 0.9, decimal = 2, repconvar = "rep_ttt_karma_clean_half", parent = krmlst }
+    krmlst:AddItem(krmch)
 
-xgui.hookEvent("onProcessModules", nil, mprpnl.processModules)
-xgui.addSubModule("Map-related", mprpnl, nil, "terrortown_settings")
+    xgui.hookEvent("onProcessModules", nil, krmpnl.processModules)
+    xgui.addSubModule("Karma", krmpnl, nil, "terrortown_settings")
+end
 
--------------------- Equipment credits Module--------------------
-local ecpnl = xlib.makelistlayout { w = 415, h = 318, parent = xgui.null }
+local function AddMapModule()
+    -------------------- Map-related Module--------------------
+    local mprpnl = xlib.makepanel { w = 415, h = 318, parent = xgui.null }
 
---Traitor/Monster/Killer Credits
-local ectcclp = vgui.Create("DCollapsibleCategory", ecpnl)
-ectcclp:SetSize(390, 250)
-ectcclp:SetExpanded(1)
-ectcclp:SetLabel("Traitor/Monster/Killer Credits")
+    xlib.makecheckbox { x = 5, y = 5, label = "ttt_use_weapon_spawn_scripts (def. 1)", repconvar = "rep_ttt_use_weapon_spawn_scripts", parent = mprpnl }
 
-local ectclst = vgui.Create("DPanelList", ectcclp)
-ectclst:SetPos(5, 25)
-ectclst:SetSize(390, 250)
-ectclst:SetSpacing(5)
+    xgui.hookEvent("onProcessModules", nil, mprpnl.processModules)
+    xgui.addSubModule("Map-related", mprpnl, nil, "terrortown_settings")
+end
 
-local ectccs = xlib.makeslider { label = "ttt_credits_starting (def. 2)", min = 0, max = 10, repconvar = "rep_ttt_credits_starting", parent = ectclst }
-ectclst:AddItem(ectccs)
+local function AddEquipmentCreditsModule()
+    -------------------- Equipment credits Module--------------------
+    local ecpnl = xlib.makelistlayout { w = 415, h = 318, parent = xgui.null }
 
-local ectckcs = xlib.makeslider { label = "ttt_kil_credits_starting (def. 2)", min = 0, max = 10, repconvar = "rep_ttt_kil_credits_starting", parent = ectclst }
-ectclst:AddItem(ectckcs)
+    --Traitor/Monster/Killer Credits
+    local ectcclp = vgui.Create("DCollapsibleCategory", ecpnl)
+    ectcclp:SetSize(390, 270)
+    ectcclp:SetExpanded(1)
+    ectcclp:SetLabel("Traitor/Monster/Killer Credits")
 
-local ectcacs = xlib.makeslider { label = "ttt_asn_credits_starting (def. 0)", min = 0, max = 10, repconvar = "rep_ttt_asn_credits_starting", parent = ectclst }
-ectclst:AddItem(ectcacs)
+    local ectclst = vgui.Create("DPanelList", ectcclp)
+    ectclst:SetPos(5, 25)
+    ectclst:SetSize(390, 270)
+    ectclst:SetSpacing(5)
 
-local ectchcs = xlib.makeslider { label = "ttt_hyp_credits_starting (def. 0)", min = 0, max = 10, repconvar = "rep_ttt_hyp_credits_starting", parent = ectclst }
-ectclst:AddItem(ectchcs)
+    local ectccs = xlib.makeslider { label = "ttt_credits_starting (def. 2)", min = 0, max = 10, repconvar = "rep_ttt_credits_starting", parent = ectclst }
+    ectclst:AddItem(ectccs)
 
-local ectczcs = xlib.makeslider { label = "ttt_zom_credits_starting (def. 0)", min = 0, max = 10, repconvar = "rep_ttt_zom_credits_starting", parent = ectclst }
-ectclst:AddItem(ectczcs)
+    local ectcdcs = xlib.makeslider { label = "ttt_der_credits_starting (def. 2)", min = 0, max = 10, repconvar = "rep_ttt_der_credits_starting", parent = ectclst }
+    ectclst:AddItem(ectcdcs)
 
-local ectcvcs = xlib.makeslider { label = "ttt_vam_credits_starting (def. 0)", min = 0, max = 10, repconvar = "rep_ttt_vam_credits_starting", parent = ectclst }
-ectclst:AddItem(ectcvcs)
+    local ectckcs = xlib.makeslider { label = "ttt_kil_credits_starting (def. 2)", min = 0, max = 10, repconvar = "rep_ttt_kil_credits_starting", parent = ectclst }
+    ectclst:AddItem(ectckcs)
 
-local ectcap = xlib.makeslider { label = "ttt_credits_award_pct (def. 0.35)", min = 0.01, max = 0.9, decimal = 2, repconvar = "rep_ttt_credits_award_pct", parent = krmlst }
-ectclst:AddItem(ectcap)
+    local ectcacs = xlib.makeslider { label = "ttt_asn_credits_starting (def. 0)", min = 0, max = 10, repconvar = "rep_ttt_asn_credits_starting", parent = ectclst }
+    ectclst:AddItem(ectcacs)
 
-local ectcas = xlib.makeslider { label = "ttt_credits_award_size (def. 1)", min = 0, max = 5, repconvar = "rep_ttt_credits_award_size", parent = ectclst }
-ectclst:AddItem(ectcas)
+    local ectchcs = xlib.makeslider { label = "ttt_hyp_credits_starting (def. 0)", min = 0, max = 10, repconvar = "rep_ttt_hyp_credits_starting", parent = ectclst }
+    ectclst:AddItem(ectchcs)
 
-local ectcar = xlib.makeslider { label = "ttt_credits_award_repeat (def. 1)", min = 0, max = 5, repconvar = "rep_ttt_credits_award_repeat", parent = ectclst }
-ectclst:AddItem(ectcar)
+    local ectczcs = xlib.makeslider { label = "ttt_zom_credits_starting (def. 0)", min = 0, max = 10, repconvar = "rep_ttt_zom_credits_starting", parent = ectclst }
+    ectclst:AddItem(ectczcs)
 
-local ectcdk = xlib.makeslider { label = "ttt_credits_detectivekill (def. 1)", min = 0, max = 5, repconvar = "rep_ttt_credits_detectivekill", parent = ectclst }
-ectclst:AddItem(ectcdk)
+    local ectcvcs = xlib.makeslider { label = "ttt_vam_credits_starting (def. 0)", min = 0, max = 10, repconvar = "rep_ttt_vam_credits_starting", parent = ectclst }
+    ectclst:AddItem(ectcvcs)
 
---Innocent Credits
-local ecdcclp = vgui.Create("DCollapsibleCategory", ecpnl)
-ecdcclp:SetSize(390, 110)
-ecdcclp:SetExpanded(0)
-ecdcclp:SetLabel("Innocent Credits")
+    local ectcap = xlib.makeslider { label = "ttt_credits_award_pct (def. 0.35)", min = 0.01, max = 0.9, decimal = 2, repconvar = "rep_ttt_credits_award_pct", parent = ectclst }
+    ectclst:AddItem(ectcap)
 
-local ecdclst = vgui.Create("DPanelList", ecdcclp)
-ecdclst:SetPos(5, 25)
-ecdclst:SetSize(390, 110)
-ecdclst:SetSpacing(5)
+    local ectcas = xlib.makeslider { label = "ttt_credits_award_size (def. 1)", min = 0, max = 5, repconvar = "rep_ttt_credits_award_size", parent = ectclst }
+    ectclst:AddItem(ectcas)
 
-local ecdccs = xlib.makeslider { label = "ttt_det_credits_starting (def. 1)", min = 0, max = 10, repconvar = "rep_ttt_det_credits_starting", parent = ecdclst }
-ecdclst:AddItem(ecdccs)
+    local ectcar = xlib.makeslider { label = "ttt_credits_award_repeat (def. 1)", min = 0, max = 5, repconvar = "rep_ttt_credits_award_repeat", parent = ectclst }
+    ectclst:AddItem(ectcar)
 
-local ecmccs = xlib.makeslider { label = "ttt_mer_credits_starting (def. 1)", min = 0, max = 10, repconvar = "rep_ttt_mer_credits_starting", parent = ecdclst }
-ecdclst:AddItem(ecmccs)
+    local ectcdk = xlib.makeslider { label = "ttt_credits_detectivekill (def. 1)", min = 0, max = 5, repconvar = "rep_ttt_credits_detectivekill", parent = ectclst }
+    ectclst:AddItem(ectcdk)
 
-local ecdctk = xlib.makeslider { label = "ttt_det_credits_traitorkill (def. 0)", min = 0, max = 10, repconvar = "rep_ttt_det_credits_traitorkill", parent = ecdclst }
-ecdclst:AddItem(ecdctk)
+    --Innocent Credits
+    local ecdcclp = vgui.Create("DCollapsibleCategory", ecpnl)
+    ecdcclp:SetSize(390, 110)
+    ecdcclp:SetExpanded(0)
+    ecdcclp:SetLabel("Innocent Credits")
 
-local ecdctd = xlib.makeslider { label = "ttt_det_credits_traitordead (def. 1)", min = 0, max = 10, repconvar = "rep_ttt_det_credits_traitordead", parent = ecdclst }
-ecdclst:AddItem(ecdctd)
+    local ecdclst = vgui.Create("DPanelList", ecdcclp)
+    ecdclst:SetPos(5, 25)
+    ecdclst:SetSize(390, 110)
+    ecdclst:SetSpacing(5)
 
-xgui.hookEvent("onProcessModules", nil, ecpnl.processModules)
-xgui.addSubModule("Equipment credits", ecpnl, nil, "terrortown_settings")
+    local ecdccs = xlib.makeslider { label = "ttt_det_credits_starting (def. 1)", min = 0, max = 10, repconvar = "rep_ttt_det_credits_starting", parent = ecdclst }
+    ecdclst:AddItem(ecdccs)
 
--------------------- Player Movement Module--------------------
-local pmpnl = xlib.makelistlayout { w = 415, h = 318, parent = xgui.null }
+    local ecmccs = xlib.makeslider { label = "ttt_mer_credits_starting (def. 1)", min = 0, max = 10, repconvar = "rep_ttt_mer_credits_starting", parent = ecdclst }
+    ecdclst:AddItem(ecmccs)
 
---Sprint
-local pmspp = vgui.Create("DCollapsibleCategory", pmpnl)
-pmspp:SetSize(390, 150)
-pmspp:SetExpanded(1)
-pmspp:SetLabel("Sprint")
+    local ecdctk = xlib.makeslider { label = "ttt_det_credits_traitorkill (def. 0)", min = 0, max = 10, repconvar = "rep_ttt_det_credits_traitorkill", parent = ecdclst }
+    ecdclst:AddItem(ecdctk)
 
-local pmsplst = vgui.Create("DPanelList", pmspp)
-pmsplst:SetPos(5, 25)
-pmsplst:SetSize(390, 150)
-pmsplst:SetSpacing(5)
+    local ecdctd = xlib.makeslider { label = "ttt_det_credits_traitordead (def. 1)", min = 0, max = 10, repconvar = "rep_ttt_det_credits_traitordead", parent = ecdclst }
+    ecdclst:AddItem(ecdctd)
 
-local pmspe = xlib.makecheckbox { label = "ttt_sprint_enabled (def. 1)", repconvar = "rep_ttt_sprint_enabled", parent = pmsplst }
-pmsplst:AddItem(pmspe)
+    xgui.hookEvent("onProcessModules", nil, ecpnl.processModules)
+    xgui.addSubModule("Equipment credits", ecpnl, nil, "terrortown_settings")
+end
 
-local pmspbr = xlib.makeslider { label = "ttt_sprint_bonus_rel (def. 0.4)", min = 0.1, max = 2, decimal = 1, repconvar = "rep_ttt_sprint_bonus_rel", parent = pmsplst }
-pmsplst:AddItem(pmspbr)
+local function AddPlayerMovementModule()
+    -------------------- Player Movement Module--------------------
+    local pmpnl = xlib.makelistlayout { w = 415, h = 318, parent = xgui.null }
 
-local pmspbc = xlib.makecheckbox { label = "ttt_sprint_big_crosshair (def. 1)", repconvar = "rep_ttt_sprint_big_crosshair", parent = krmlst }
-pmsplst:AddItem(pmspbc)
+    --Sprint
+    local pmspp = vgui.Create("DCollapsibleCategory", pmpnl)
+    pmspp:SetSize(390, 150)
+    pmspp:SetExpanded(1)
+    pmspp:SetLabel("Sprint")
 
-local pmspri = xlib.makeslider { label = "ttt_sprint_regenerate_innocent (def. 0.08)", min = 0.01, max = 2, decimal = 2, repconvar = "rep_ttt_sprint_regenerate_innocent", parent = pmsplst }
-pmsplst:AddItem(pmspri)
+    local pmsplst = vgui.Create("DPanelList", pmspp)
+    pmsplst:SetPos(5, 25)
+    pmsplst:SetSize(390, 150)
+    pmsplst:SetSpacing(5)
 
-local pmsprt = xlib.makeslider { label = "ttt_sprint_regenerate_traitor (def. 0.12)", min = 0.01, max = 2, decimal = 2, repconvar = "rep_ttt_sprint_regenerate_traitor", parent = pmsplst }
-pmsplst:AddItem(pmsprt)
+    local pmspe = xlib.makecheckbox { label = "ttt_sprint_enabled (def. 1)", repconvar = "rep_ttt_sprint_enabled", parent = pmsplst }
+    pmsplst:AddItem(pmspe)
 
-local pmspc = xlib.makeslider { label = "ttt_sprint_consume (def. 0.2)", min = 0.1, max = 5, decimal = 1, repconvar = "rep_ttt_sprint_consume", parent = pmsplst }
-pmsplst:AddItem(pmspc)
+    local pmspbr = xlib.makeslider { label = "ttt_sprint_bonus_rel (def. 0.4)", min = 0.1, max = 2, decimal = 1, repconvar = "rep_ttt_sprint_bonus_rel", parent = pmsplst }
+    pmsplst:AddItem(pmspbr)
 
---Multi-Jump
-local pmmjp = vgui.Create("DCollapsibleCategory", pmpnl)
-pmmjp:SetSize(390, 80)
-pmmjp:SetExpanded(0)
-pmmjp:SetLabel("Multi-Jump")
+    local pmspbc = xlib.makecheckbox { label = "ttt_sprint_big_crosshair (def. 1)", repconvar = "rep_ttt_sprint_big_crosshair", parent = pmsplst }
+    pmsplst:AddItem(pmspbc)
 
-local pmmjlst = vgui.Create("DPanelList", pmmjp)
-pmmjlst:SetPos(5, 25)
-pmmjlst:SetSize(390, 80)
-pmmjlst:SetSpacing(5)
+    local pmspri = xlib.makeslider { label = "ttt_sprint_regenerate_innocent (def. 0.08)", min = 0.01, max = 2, decimal = 2, repconvar = "rep_ttt_sprint_regenerate_innocent", parent = pmsplst }
+    pmsplst:AddItem(pmspri)
 
-local pmmjdj = xlib.makeslider { label = "multijump_default_jumps (def. 1)", min = 0, max = 10, repconvar = "rep_multijump_default_jumps", parent = pmmjlst }
-pmmjlst:AddItem(pmmjdj)
+    local pmsprt = xlib.makeslider { label = "ttt_sprint_regenerate_traitor (def. 0.12)", min = 0.01, max = 2, decimal = 2, repconvar = "rep_ttt_sprint_regenerate_traitor", parent = pmsplst }
+    pmsplst:AddItem(pmsprt)
 
-local pmmjdp = xlib.makeslider { label = "multijump_default_power (def. 1)", min = 0, max = 50, repconvar = "rep_multijump_default_power", parent = pmmjlst }
-pmmjlst:AddItem(pmmjdp)
+    local pmspc = xlib.makeslider { label = "ttt_sprint_consume (def. 0.2)", min = 0.1, max = 5, decimal = 1, repconvar = "rep_ttt_sprint_consume", parent = pmsplst }
+    pmsplst:AddItem(pmspc)
 
-local pmmjcjwf = xlib.makecheckbox { label = "multijump_can_jump_while_falling (def. 1)", repconvar = "rep_multijump_can_jump_while_falling", parent = pmmjlst }
-pmmjlst:AddItem(pmmjcjwf)
+    --Multi-Jump
+    local pmmjp = vgui.Create("DCollapsibleCategory", pmpnl)
+    pmmjp:SetSize(390, 80)
+    pmmjp:SetExpanded(0)
+    pmmjp:SetLabel("Multi-Jump")
 
-xgui.hookEvent("onProcessModules", nil, pmpnl.processModules)
-xgui.addSubModule("Player Movement", pmpnl, nil, "terrortown_settings")
+    local pmmjlst = vgui.Create("DPanelList", pmmjp)
+    pmmjlst:SetPos(5, 25)
+    pmmjlst:SetSize(390, 80)
+    pmmjlst:SetSpacing(5)
 
--------------------- Prop possession Module--------------------
-local pppnl = xlib.makelistlayout { w = 415, h = 318, parent = xgui.null }
+    local pmmjdj = xlib.makeslider { label = "multijump_default_jumps (def. 1)", min = 0, max = 10, repconvar = "rep_multijump_default_jumps", parent = pmmjlst }
+    pmmjlst:AddItem(pmmjdj)
 
-local ppclp = vgui.Create("DCollapsibleCategory", pppnl)
-ppclp:SetSize(390, 120)
-ppclp:SetExpanded(1)
-ppclp:SetLabel("Prop possession")
+    local pmmjdp = xlib.makeslider { label = "multijump_default_power (def. 1)", min = 0, max = 50, repconvar = "rep_multijump_default_power", parent = pmmjlst }
+    pmmjlst:AddItem(pmmjdp)
 
-local pplst = vgui.Create("DPanelList", ppclp)
-pplst:SetPos(5, 25)
-pplst:SetSize(390, 120)
-pplst:SetSpacing(5)
+    local pmmjcjwf = xlib.makecheckbox { label = "multijump_can_jump_while_falling (def. 1)", repconvar = "rep_multijump_can_jump_while_falling", parent = pmmjlst }
+    pmmjlst:AddItem(pmmjcjwf)
 
-local ppspc = xlib.makecheckbox { label = "ttt_spec_prop_control  (def. 1)", repconvar = "rep_ttt_spec_prop_control", parent = pplst }
-pplst:AddItem(ppspc)
+    xgui.hookEvent("onProcessModules", nil, pmpnl.processModules)
+    xgui.addSubModule("Player Movement", pmpnl, nil, "terrortown_settings")
+end
 
-local ppspb = xlib.makeslider { label = "ttt_spec_prop_base (def. 8)", min = 0, max = 50, repconvar = "rep_ttt_spec_prop_base", parent = pplst }
-pplst:AddItem(ppspb)
+local function AddPropPossessionModule()
+    -------------------- Prop possession Module--------------------
+    local pppnl = xlib.makelistlayout { w = 415, h = 318, parent = xgui.null }
 
-local ppspmp = xlib.makeslider { label = "ttt_spec_prop_maxpenalty (def. -6)", min = -50, max = 0, repconvar = "rep_ttt_spec_prop_maxpenalty", parent = pplst }
-pplst:AddItem(ppspmp)
+    local ppclp = vgui.Create("DCollapsibleCategory", pppnl)
+    ppclp:SetSize(390, 120)
+    ppclp:SetExpanded(1)
+    ppclp:SetLabel("Prop possession")
 
-local ppspmb = xlib.makeslider { label = "ttt_spec_prop_maxbonus (def. 16)", min = 0, max = 50, repconvar = "rep_ttt_spec_prop_maxbonus", parent = pplst }
-pplst:AddItem(ppspmb)
+    local pplst = vgui.Create("DPanelList", ppclp)
+    pplst:SetPos(5, 25)
+    pplst:SetSize(390, 120)
+    pplst:SetSpacing(5)
 
-local ppspf = xlib.makeslider { label = "ttt_spec_prop_force (def. 110)", min = 50, max = 300, repconvar = "rep_ttt_spec_prop_force", parent = pplst }
-pplst:AddItem(ppspf)
+    local ppspc = xlib.makecheckbox { label = "ttt_spec_prop_control  (def. 1)", repconvar = "rep_ttt_spec_prop_control", parent = pplst }
+    pplst:AddItem(ppspc)
 
-local ppprt = xlib.makeslider { label = "ttt_spec_prop_rechargetime (def. 1)", min = 0, max = 10, repconvar = "rep_ttt_spec_prop_rechargetime", parent = pplst }
-pplst:AddItem(ppprt)
+    local ppspb = xlib.makeslider { label = "ttt_spec_prop_base (def. 8)", min = 0, max = 50, repconvar = "rep_ttt_spec_prop_base", parent = pplst }
+    pplst:AddItem(ppspb)
 
-xgui.hookEvent("onProcessModules", nil, pppnl.processModules)
-xgui.addSubModule("Prop possession", pppnl, nil, "terrortown_settings")
+    local ppspmp = xlib.makeslider { label = "ttt_spec_prop_maxpenalty (def. -6)", min = -50, max = 0, repconvar = "rep_ttt_spec_prop_maxpenalty", parent = pplst }
+    pplst:AddItem(ppspmp)
 
--------------------- Admin-related Module--------------------
-local arpnl = xlib.makelistlayout { w = 415, h = 318, parent = xgui.null }
+    local ppspmb = xlib.makeslider { label = "ttt_spec_prop_maxbonus (def. 16)", min = 0, max = 50, repconvar = "rep_ttt_spec_prop_maxbonus", parent = pplst }
+    pplst:AddItem(ppspmb)
 
-local arclp = vgui.Create("DCollapsibleCategory", arpnl)
-arclp:SetSize(390, 120)
-arclp:SetExpanded(1)
-arclp:SetLabel("Admin-related")
+    local ppspf = xlib.makeslider { label = "ttt_spec_prop_force (def. 110)", min = 50, max = 300, repconvar = "rep_ttt_spec_prop_force", parent = pplst }
+    pplst:AddItem(ppspf)
 
-local arlst = vgui.Create("DPanelList", arclp)
-arlst:SetPos(5, 25)
-arlst:SetSize(390, 120)
-arlst:SetSpacing(5)
+    local ppprt = xlib.makeslider { label = "ttt_spec_prop_rechargetime (def. 1)", min = 0, max = 10, repconvar = "rep_ttt_spec_prop_rechargetime", parent = pplst }
+    pplst:AddItem(ppprt)
 
-local aril = xlib.makeslider { label = "ttt_idle_limit (def. 180)", min = 50, max = 300, repconvar = "rep_ttt_idle_limit", parent = arlst }
-arlst:AddItem(aril)
+    xgui.hookEvent("onProcessModules", nil, pppnl.processModules)
+    xgui.addSubModule("Prop possession", pppnl, nil, "terrortown_settings")
+end
 
-local arnck = xlib.makecheckbox { label = "ttt_namechange_kick (def. 1)", repconvar = "rep_ttt_namechange_kick", parent = arlst }
-arlst:AddItem(arnck)
+local function AddAdminModule()
+    -------------------- Admin-related Module--------------------
+    local arpnl = xlib.makelistlayout { w = 415, h = 318, parent = xgui.null }
 
-local arncbt = xlib.makeslider { label = "ttt_namechange_bantime (def. 10)", min = 0, max = 60, repconvar = "rep_ttt_namechange_bantime", parent = arlst }
-arlst:AddItem(arncbt)
+    local arclp = vgui.Create("DCollapsibleCategory", arpnl)
+    arclp:SetSize(390, 120)
+    arclp:SetExpanded(1)
+    arclp:SetLabel("Admin-related")
 
-xgui.hookEvent("onProcessModules", nil, arpnl.processModules)
-xgui.addSubModule("Admin-related", arpnl, nil, "terrortown_settings")
+    local arlst = vgui.Create("DPanelList", arclp)
+    arlst:SetPos(5, 25)
+    arlst:SetSize(390, 120)
+    arlst:SetSpacing(5)
 
--------------------- Miscellaneous Module--------------------
-local miscpnl = xlib.makelistlayout { w = 415, h = 318, parent = xgui.null }
+    local aril = xlib.makeslider { label = "ttt_idle_limit (def. 180)", min = 50, max = 300, repconvar = "rep_ttt_idle_limit", parent = arlst }
+    arlst:AddItem(aril)
 
-local miscclp = vgui.Create("DCollapsibleCategory", miscpnl)
-miscclp:SetSize(390, 120)
-miscclp:SetExpanded(1)
-miscclp:SetLabel("Miscellaneous")
+    local arnck = xlib.makecheckbox { label = "ttt_namechange_kick (def. 1)", repconvar = "rep_ttt_namechange_kick", parent = arlst }
+    arlst:AddItem(arnck)
 
-local misclst = vgui.Create("DPanelList", miscclp)
-misclst:SetPos(5, 25)
-misclst:SetSize(390, 120)
-misclst:SetSpacing(5)
+    local arncbt = xlib.makeslider { label = "ttt_namechange_bantime (def. 10)", min = 0, max = 60, repconvar = "rep_ttt_namechange_bantime", parent = arlst }
+    arlst:AddItem(arncbt)
 
-local miscdh = xlib.makecheckbox { label = "ttt_detective_hats (def. 0)", repconvar = "rep_ttt_detective_hats", parent = misclst }
-misclst:AddItem(miscdh)
+    xgui.hookEvent("onProcessModules", nil, arpnl.processModules)
+    xgui.addSubModule("Admin-related", arpnl, nil, "terrortown_settings")
+end
 
-local miscpcm = xlib.makeslider { label = "ttt_playercolor_mode (def. 1)", min = 0, max = 3, repconvar = "rep_ttt_playercolor_mode", parent = misclst }
-misclst:AddItem(miscpcm)
+local function AddMiscModule()
+    -------------------- Miscellaneous Module--------------------
+    local miscpnl = xlib.makelistlayout { w = 415, h = 318, parent = xgui.null }
 
-local miscrc = xlib.makecheckbox { label = "ttt_ragdoll_collide (def. 0)", repconvar = "rep_ttt_ragdoll_collide", parent = misclst }
-misclst:AddItem(miscrc)
+    local miscclp = vgui.Create("DCollapsibleCategory", miscpnl)
+    miscclp:SetSize(390, 120)
+    miscclp:SetExpanded(1)
+    miscclp:SetLabel("Miscellaneous")
 
-local miscbs = xlib.makecheckbox { label = "ttt_bots_are_spectators (def. 0)", repconvar = "rep_ttt_bots_are_spectators", parent = misclst }
-misclst:AddItem(miscbs)
+    local misclst = vgui.Create("DPanelList", miscclp)
+    misclst:SetPos(5, 25)
+    misclst:SetSize(390, 120)
+    misclst:SetSpacing(5)
 
-local miscdm = xlib.makecheckbox { label = "ttt_debug_preventwin (def. 0)", repconvar = "rep_ttt_debug_preventwin", parent = misclst }
-misclst:AddItem(miscdm)
+    local miscdh = xlib.makecheckbox { label = "ttt_detective_hats (def. 0)", repconvar = "rep_ttt_detective_hats", parent = misclst }
+    misclst:AddItem(miscdh)
 
-local misclv = xlib.makecheckbox { label = "ttt_locational_voice (def. 0)", repconvar = "rep_ttt_locational_voice", parent = misclst }
-misclst:AddItem(misclv)
+    local miscpcm = xlib.makeslider { label = "ttt_playercolor_mode (def. 1)", min = 0, max = 3, repconvar = "rep_ttt_playercolor_mode", parent = misclst }
+    misclst:AddItem(miscpcm)
 
-local miscdj = xlib.makecheckbox { label = "ttt_allow_discomb_jump (def. 0)", repconvar = "rep_ttt_allow_discomb_jump", parent = misclst }
-misclst:AddItem(miscdj)
+    local miscrc = xlib.makecheckbox { label = "ttt_ragdoll_collide (def. 0)", repconvar = "rep_ttt_ragdoll_collide", parent = misclst }
+    misclst:AddItem(miscrc)
 
-local miscswi = xlib.makeslider { label = "ttt_spawn_wave_interval (def. 0)", min = 0, max = 30, repconvar = "rep_ttt_spawn_wave_interval", parent = misclst }
-misclst:AddItem(miscswi)
+    local miscbs = xlib.makecheckbox { label = "ttt_bots_are_spectators (def. 0)", repconvar = "rep_ttt_bots_are_spectators", parent = misclst }
+    misclst:AddItem(miscbs)
 
-xgui.hookEvent("onProcessModules", nil, miscpnl.processModules)
-xgui.addSubModule("Miscellaneous", miscpnl, nil, "terrortown_settings")
+    local miscdm = xlib.makecheckbox { label = "ttt_debug_preventwin (def. 0)", repconvar = "rep_ttt_debug_preventwin", parent = misclst }
+    misclst:AddItem(miscdm)
+
+    local misclv = xlib.makecheckbox { label = "ttt_locational_voice (def. 0)", repconvar = "rep_ttt_locational_voice", parent = misclst }
+    misclst:AddItem(misclv)
+
+    local miscdj = xlib.makecheckbox { label = "ttt_allow_discomb_jump (def. 0)", repconvar = "rep_ttt_allow_discomb_jump", parent = misclst }
+    misclst:AddItem(miscdj)
+
+    local miscswi = xlib.makeslider { label = "ttt_spawn_wave_interval (def. 0)", min = 0, max = 30, repconvar = "rep_ttt_spawn_wave_interval", parent = misclst }
+    misclst:AddItem(miscswi)
+
+    xgui.hookEvent("onProcessModules", nil, miscpnl.processModules)
+    xgui.addSubModule("Miscellaneous", miscpnl, nil, "terrortown_settings")
+end
+
+AddRoundStructureModule()
+AddGameplayModule()
+AddKarmaModule()
+AddMapModule()
+AddEquipmentCreditsModule()
+AddPlayerMovementModule()
+AddPropPossessionModule()
+AddAdminModule()
+AddMiscModule()

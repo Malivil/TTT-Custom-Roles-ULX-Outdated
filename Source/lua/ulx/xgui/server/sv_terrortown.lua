@@ -28,6 +28,7 @@ local function init()
 		ULib.replicatedWritableCvar("ttt_detective_karma_min", "rep_ttt_detective_karma_min", GetConVarNumber("ttt_detective_karma_min"), false, false, "xgui_gmsettings")
 
 		--custom roles
+		ULib.replicatedWritableCvar("ttt_detraitor_enabled", "rep_ttt_detraitor_enabled", GetConVarNumber("ttt_detraitor_enabled"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_mercenary_enabled", "rep_ttt_mercenary_enabled", GetConVarNumber("ttt_mercenary_enabled"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_hypnotist_enabled", "rep_ttt_hypnotist_enabled", GetConVarNumber("ttt_hypnotist_enabled"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_glitch_enabled", "rep_ttt_glitch_enabled", GetConVarNumber("ttt_glitch_enabled"), false, false, "xgui_gmsettings")
@@ -40,6 +41,7 @@ local function init()
         ULib.replicatedWritableCvar("ttt_killer_enabled", "rep_ttt_killer_enabled", GetConVarNumber("ttt_killer_enabled"), false, false, "xgui_gmsettings")
 
 		--custom role chances
+		ULib.replicatedWritableCvar("ttt_detraitor_chance", "rep_ttt_detraitor_chance", GetConVarNumber("ttt_detraitor_chance"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_mercenary_chance", "rep_ttt_mercenary_chance", GetConVarNumber("ttt_mercenary_chance"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_hypnotist_chance", "rep_ttt_hypnotist_chance", GetConVarNumber("ttt_hypnotist_chance"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_glitch_chance", "rep_ttt_glitch_chance", GetConVarNumber("ttt_glitch_chance"), false, false, "xgui_gmsettings")
@@ -52,6 +54,7 @@ local function init()
         ULib.replicatedWritableCvar("ttt_killer_chance", "rep_ttt_killer_chance", GetConVarNumber("ttt_killer_chance"), false, false, "xgui_gmsettings")
 
         --custom role requirements
+        ULib.replicatedWritableCvar("ttt_detraitor_required_traitors", "rep_ttt_detraitor_required_traitors", GetConVarNumber("ttt_detraitor_required_traitors"), false, false, "xgui_gmsettings")
         ULib.replicatedWritableCvar("ttt_mercenary_required_innos", "rep_ttt_mercenary_required_innos", GetConVarNumber("ttt_mercenary_required_innos"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_hypnotist_required_traitors", "rep_ttt_hypnotist_required_traitors", GetConVarNumber("ttt_hypnotist_required_traitors"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_glitch_required_innos", "rep_ttt_glitch_required_innos", GetConVarNumber("ttt_glitch_required_innos"), false, false, "xgui_gmsettings")
@@ -144,6 +147,7 @@ local function init()
 
 		--traitor/monster/killer credits
 		ULib.replicatedWritableCvar("ttt_credits_starting", "rep_ttt_credits_starting", GetConVarNumber("ttt_credits_starting"), false, false, "xgui_gmsettings")
+        ULib.replicatedWritableCvar("ttt_der_credits_starting", "rep_ttt_der_credits_starting", GetConVarNumber("ttt_der_credits_starting"), false, false, "xgui_gmsettings")
         ULib.replicatedWritableCvar("ttt_kil_credits_starting", "rep_ttt_kil_credits_starting", GetConVarNumber("ttt_kil_credits_starting"), false, false, "xgui_gmsettings")
         ULib.replicatedWritableCvar("ttt_asn_credits_starting", "rep_ttt_asn_credits_starting", GetConVarNumber("ttt_asn_credits_starting"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_hyp_credits_starting", "rep_ttt_hyp_credits_starting", GetConVarNumber("ttt_hyp_credits_starting"), false, false, "xgui_gmsettings")

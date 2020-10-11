@@ -46,6 +46,7 @@
         "EquipmentItems",
         "Vector",
         "Msg",
-        "_"
+        "_",
+        "ROLE_DETRAITOR"
     ]
 }
