@@ -464,7 +464,10 @@ function ulx.force(calling_ply, target_plys, target_role, should_silent)
                 v:ResetEquipment()
                 RemoveLoadoutWeapons(v)
                 RemoveBoughtWeapons(v)
-
+                -- Save previous role if forcing someone to be a vampire
+                if role == ROLE_VAMPIRE and v.SetVampirePreviousRole then
+                    v:SetVampirePreviousRole(v:GetRole())
+                end
                 SetRole(v, role)
                 v:SetCredits(role_credits)
                 SendFullStateUpdate()

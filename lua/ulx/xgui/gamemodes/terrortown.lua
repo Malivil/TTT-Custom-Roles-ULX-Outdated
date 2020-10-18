@@ -300,13 +300,13 @@ local function AddGameplayModule()
 
     -- Role Configs
     local gptrcfgclp = vgui.Create("DCollapsibleCategory", gppnl)
-    gptrcfgclp:SetSize(390, 700)
+    gptrcfgclp:SetSize(390, 720)
     gptrcfgclp:SetExpanded(0)
     gptrcfgclp:SetLabel("Role Configs")
 
     local gptrcfglst = vgui.Create("DPanelList", gptrcfgclp)
     gptrcfglst:SetPos(5, 25)
-    gptrcfglst:SetSize(390, 700)
+    gptrcfglst:SetSize(390, 720)
     gptrcfglst:SetSpacing(5)
 
     local dsearch = xlib.makecheckbox { label = "ttt_detective_search_only (def. 1)", repconvar = "rep_ttt_detective_search_only", parent = gptrcfglst }
@@ -395,6 +395,9 @@ local function AddGameplayModule()
 
     local vfangoheal = xlib.makeslider { label = "ttt_vampire_fang_overheal (def. 25)", min = 5, max = 50, repconvar = "rep_ttt_vampire_fang_overheal", parent = gptrcfglst }
     gptrcfglst:AddItem(vfangoheal)
+
+    local vpdm = xlib.makeslider { label = "ttt_vampire_prime_death_mode (def. 0)", min = 0, max = 2, repconvar = "rep_ttt_vampire_prime_death_mode", parent = gptrcfglst }
+    gptrcfglst:AddItem(vpdm)
 
     local mshop = xlib.makeslider { label = "ttt_shop_merc_mode (def. 0)", min = 0, max = 4, repconvar = "rep_ttt_shop_merc_mode", parent = gptrcfglst }
     gptrcfglst:AddItem(mshop)
