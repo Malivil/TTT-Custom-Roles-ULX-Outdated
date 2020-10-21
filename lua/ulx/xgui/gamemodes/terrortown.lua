@@ -300,13 +300,13 @@ local function AddGameplayModule()
 
     -- Role Configs
     local gptrcfgclp = vgui.Create("DCollapsibleCategory", gppnl)
-    gptrcfgclp:SetSize(390, 720)
+    gptrcfgclp:SetSize(390, 740)
     gptrcfgclp:SetExpanded(0)
     gptrcfgclp:SetLabel("Role Configs")
 
     local gptrcfglst = vgui.Create("DPanelList", gptrcfgclp)
     gptrcfglst:SetPos(5, 25)
-    gptrcfglst:SetSize(390, 720)
+    gptrcfglst:SetSize(390, 740)
     gptrcfglst:SetSpacing(5)
 
     local dsearch = xlib.makecheckbox { label = "ttt_detective_search_only (def. 1)", repconvar = "rep_ttt_detective_search_only", parent = gptrcfglst }
@@ -356,6 +356,9 @@ local function AddGameplayModule()
 
     local kdmgreduc = xlib.makeslider { label = "ttt_killer_damage_reduction (def. 0.55)", min = 0.1, max = 1, decimal = 2, repconvar = "rep_ttt_killer_damage_reduction", parent = gptrcfglst }
     gptrcfglst:AddItem(kdmgreduc)
+
+    local kwarnall = xlib.makecheckbox { label = "ttt_killer_warn_all (def. 0)", repconvar = "rep_ttt_killer_warn_all", parent = gptrcfglst }
+    gptrcfglst:AddItem(kwarnall)
 
     local zvision = xlib.makecheckbox { label = "ttt_zombie_vision_enable (def. 1)", repconvar = "rep_ttt_zombie_vision_enable", parent = gptrcfglst }
     gptrcfglst:AddItem(zvision)
