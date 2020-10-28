@@ -179,6 +179,7 @@ local function init()
         ULib.replicatedWritableCvar("multijump_default_jumps", "rep_multijump_default_jumps", GetConVarNumber("multijump_default_jumps"), false, false, "xgui_gmsettings")
         ULib.replicatedWritableCvar("multijump_default_power", "rep_multijump_default_power", GetConVarNumber("multijump_default_power"), false, false, "xgui_gmsettings")
         ULib.replicatedWritableCvar("multijump_can_jump_while_falling", "rep_multijump_can_jump_while_falling", GetConVarNumber("multijump_can_jump_while_falling"), false, false, "xgui_gmsettings")
+        ULib.replicatedWritableCvar("multijump_max_fall_distance", "rep_multijump_max_fall_distance", GetConVarNumber("multijump_max_fall_distance"), false, false, "xgui_gmsettings")
 
 		--prop possession
 		ULib.replicatedWritableCvar("ttt_spec_prop_control", "rep_ttt_spec_prop_control", GetConVarNumber("ttt_spec_prop_control"), false, false, "xgui_gmsettings")

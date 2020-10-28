@@ -662,13 +662,13 @@ local function AddPlayerMovementModule()
 
     --Sprint
     local pmspp = vgui.Create("DCollapsibleCategory", pmpnl)
-    pmspp:SetSize(390, 150)
+    pmspp:SetSize(390, 140)
     pmspp:SetExpanded(1)
     pmspp:SetLabel("Sprint")
 
     local pmsplst = vgui.Create("DPanelList", pmspp)
     pmsplst:SetPos(5, 25)
-    pmsplst:SetSize(390, 150)
+    pmsplst:SetSize(390, 140)
     pmsplst:SetSpacing(5)
 
     local pmspe = xlib.makecheckbox { label = "ttt_sprint_enabled (def. 1)", repconvar = "rep_ttt_sprint_enabled", parent = pmsplst }
@@ -691,13 +691,13 @@ local function AddPlayerMovementModule()
 
     --Multi-Jump
     local pmmjp = vgui.Create("DCollapsibleCategory", pmpnl)
-    pmmjp:SetSize(390, 80)
+    pmmjp:SetSize(390, 110)
     pmmjp:SetExpanded(0)
     pmmjp:SetLabel("Multi-Jump")
 
     local pmmjlst = vgui.Create("DPanelList", pmmjp)
     pmmjlst:SetPos(5, 25)
-    pmmjlst:SetSize(390, 80)
+    pmmjlst:SetSize(390, 110)
     pmmjlst:SetSpacing(5)
 
     local pmmjdj = xlib.makeslider { label = "multijump_default_jumps (def. 1)", min = 0, max = 10, repconvar = "rep_multijump_default_jumps", parent = pmmjlst }
@@ -708,6 +708,9 @@ local function AddPlayerMovementModule()
 
     local pmmjcjwf = xlib.makecheckbox { label = "multijump_can_jump_while_falling (def. 1)", repconvar = "rep_multijump_can_jump_while_falling", parent = pmmjlst }
     pmmjlst:AddItem(pmmjcjwf)
+
+    local pmmjmfd = xlib.makeslider { label = "multijump_max_fall_distance (def. 0)", min = 0, max = 2000, repconvar = "rep_multijump_max_fall_distance", parent = pmmjlst }
+    pmmjlst:AddItem(pmmjmfd)
 
     xgui.hookEvent("onProcessModules", nil, pmpnl.processModules)
     xgui.addSubModule("Player Movement", pmpnl, nil, "terrortown_settings")
