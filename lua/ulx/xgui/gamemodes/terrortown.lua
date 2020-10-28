@@ -402,6 +402,9 @@ local function AddGameplayModule()
     local vpdm = xlib.makeslider { label = "ttt_vampire_prime_death_mode (def. 0)", min = 0, max = 2, repconvar = "rep_ttt_vampire_prime_death_mode", parent = gptrcfglst }
     gptrcfglst:AddItem(vpdm)
 
+    local jwbt = xlib.makecheckbox { label = "ttt_jester_win_by_traitors (def. 1)", repconvar = "rep_ttt_jester_win_by_traitors", parent = gptrcfglst }
+    gptrcfglst:AddItem(jwbt)
+
     local mshop = xlib.makeslider { label = "ttt_shop_merc_mode (def. 0)", min = 0, max = 4, repconvar = "rep_ttt_shop_merc_mode", parent = gptrcfglst }
     gptrcfglst:AddItem(mshop)
 
