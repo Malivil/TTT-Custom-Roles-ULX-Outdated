@@ -793,13 +793,13 @@ local function AddMiscModule()
     local miscpnl = xlib.makelistlayout { w = 415, h = 318, parent = xgui.null }
 
     local miscclp = vgui.Create("DCollapsibleCategory", miscpnl)
-    miscclp:SetSize(390, 120)
+    miscclp:SetSize(390, 160)
     miscclp:SetExpanded(1)
     miscclp:SetLabel("Miscellaneous")
 
     local misclst = vgui.Create("DPanelList", miscclp)
     misclst:SetPos(5, 25)
-    misclst:SetSize(390, 120)
+    misclst:SetSize(390, 160)
     misclst:SetSpacing(5)
 
     local miscdh = xlib.makecheckbox { label = "ttt_detective_hats (def. 0)", repconvar = "rep_ttt_detective_hats", parent = misclst }
@@ -814,8 +814,14 @@ local function AddMiscModule()
     local miscbs = xlib.makecheckbox { label = "ttt_bots_are_spectators (def. 0)", repconvar = "rep_ttt_bots_are_spectators", parent = misclst }
     misclst:AddItem(miscbs)
 
-    local miscdm = xlib.makecheckbox { label = "ttt_debug_preventwin (def. 0)", repconvar = "rep_ttt_debug_preventwin", parent = misclst }
-    misclst:AddItem(miscdm)
+    local miscdpw = xlib.makecheckbox { label = "ttt_debug_preventwin (def. 0)", repconvar = "rep_ttt_debug_preventwin", parent = misclst }
+    misclst:AddItem(miscdpw)
+
+    local miscdlk = xlib.makecheckbox { label = "ttt_debug_logkills (def. 1)", repconvar = "rep_ttt_debug_logkills", parent = misclst }
+    misclst:AddItem(miscdlk)
+
+    local miscdlr = xlib.makecheckbox { label = "ttt_debug_logroles (def. 1)", repconvar = "rep_ttt_debug_logroles", parent = misclst }
+    misclst:AddItem(miscdlr)
 
     local misclv = xlib.makecheckbox { label = "ttt_locational_voice (def. 0)", repconvar = "rep_ttt_locational_voice", parent = misclst }
     misclst:AddItem(misclv)
