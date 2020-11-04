@@ -300,13 +300,13 @@ local function AddGameplayModule()
 
     -- Role Configs
     local gptrcfgclp = vgui.Create("DCollapsibleCategory", gppnl)
-    gptrcfgclp:SetSize(390, 800)
+    gptrcfgclp:SetSize(390, 820)
     gptrcfgclp:SetExpanded(0)
     gptrcfgclp:SetLabel("Role Configs")
 
     local gptrcfglst = vgui.Create("DPanelList", gptrcfgclp)
     gptrcfglst:SetPos(5, 25)
-    gptrcfglst:SetSize(390, 800)
+    gptrcfglst:SetSize(390, 820)
     gptrcfglst:SetSpacing(5)
 
     local dsearch = xlib.makecheckbox { label = "ttt_detective_search_only (def. 1)", repconvar = "rep_ttt_detective_search_only", parent = gptrcfglst }
@@ -383,6 +383,9 @@ local function AddGameplayModule()
 
     local vvision = xlib.makecheckbox { label = "ttt_vampire_vision_enable (def. 1)", repconvar = "rep_ttt_vampire_vision_enable", parent = gptrcfglst }
     gptrcfglst:AddItem(vvision)
+
+    local vconvert = xlib.makecheckbox { label = "ttt_vampire_convert_enable (def. 1)", repconvar = "rep_ttt_vampire_convert_enable", parent = gptrcfglst }
+    gptrcfglst:AddItem(vconvert)
 
     local vtarget = xlib.makecheckbox { label = "ttt_vampire_show_target_icon (def. 1)", repconvar = "rep_ttt_vampire_show_target_icon", parent = gptrcfglst }
     gptrcfglst:AddItem(vtarget)
