@@ -300,13 +300,13 @@ local function AddGameplayModule()
 
     -- Role Configs
     local gptrcfgclp = vgui.Create("DCollapsibleCategory", gppnl)
-    gptrcfgclp:SetSize(390, 820)
+    gptrcfgclp:SetSize(390, 840)
     gptrcfgclp:SetExpanded(0)
     gptrcfgclp:SetLabel("Role Configs")
 
     local gptrcfglst = vgui.Create("DPanelList", gptrcfgclp)
     gptrcfglst:SetPos(5, 25)
-    gptrcfglst:SetSize(390, 820)
+    gptrcfglst:SetSize(390, 840)
     gptrcfglst:SetSpacing(5)
 
     local dsearch = xlib.makecheckbox { label = "ttt_detective_search_only (def. 1)", repconvar = "rep_ttt_detective_search_only", parent = gptrcfglst }
@@ -404,6 +404,9 @@ local function AddGameplayModule()
 
     local vpdm = xlib.makeslider { label = "ttt_vampire_prime_death_mode (def. 0)", min = 0, max = 2, repconvar = "rep_ttt_vampire_prime_death_mode", parent = gptrcfglst }
     gptrcfglst:AddItem(vpdm)
+
+    local vpoc = xlib.makecheckbox { label = "ttt_vampire_prime_only_convert (def. 1)", repconvar = "rep_ttt_vampire_prime_only_convert", parent = gptrcfglst }
+    gptrcfglst:AddItem(vpoc)
 
     local jwbt = xlib.makecheckbox { label = "ttt_jester_win_by_traitors (def. 1)", repconvar = "rep_ttt_jester_win_by_traitors", parent = gptrcfglst }
     gptrcfglst:AddItem(jwbt)
