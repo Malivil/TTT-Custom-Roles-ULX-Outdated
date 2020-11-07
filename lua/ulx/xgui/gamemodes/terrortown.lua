@@ -300,13 +300,13 @@ local function AddGameplayModule()
 
     -- Role Configs
     local gptrcfgclp = vgui.Create("DCollapsibleCategory", gppnl)
-    gptrcfgclp:SetSize(390, 840)
+    gptrcfgclp:SetSize(390, 880)
     gptrcfgclp:SetExpanded(0)
     gptrcfgclp:SetLabel("Role Configs")
 
     local gptrcfglst = vgui.Create("DPanelList", gptrcfgclp)
     gptrcfglst:SetPos(5, 25)
-    gptrcfglst:SetSize(390, 840)
+    gptrcfglst:SetSize(390, 880)
     gptrcfglst:SetSpacing(5)
 
     local dsearch = xlib.makecheckbox { label = "ttt_detective_search_only (def. 1)", repconvar = "rep_ttt_detective_search_only", parent = gptrcfglst }
@@ -425,6 +425,12 @@ local function AddGameplayModule()
 
     local hshop = xlib.makecheckbox { label = "ttt_shop_hypnotist_sync (def. 0)", repconvar = "rep_ttt_shop_hypnotist_sync", parent = gptrcfglst }
     gptrcfglst:AddItem(hshop)
+
+    local pkft = xlib.makecheckbox { label = "ttt_phantom_killer_footstep_time (def. 5)", repconvar = "rep_ttt_phantom_killer_footstep_time", parent = gptrcfglst }
+    gptrcfglst:AddItem(pkft)
+
+    local pks = xlib.makecheckbox { label = "ttt_phantom_killer_smoke (def. 1)", repconvar = "rep_ttt_phantom_killer_smoke", parent = gptrcfglst }
+    gptrcfglst:AddItem(pks)
 
     --DNA
     local gpdnaclp = vgui.Create("DCollapsibleCategory", gppnl)

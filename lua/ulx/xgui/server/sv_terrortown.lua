@@ -105,7 +105,9 @@ local function init()
         ULib.replicatedWritableCvar("ttt_traitor_vision_enable", "rep_ttt_traitor_vision_enable", GetConVarNumber("ttt_traitor_vision_enable"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_traitors_know_swapper", "rep_ttt_traitors_know_swapper", GetConVarNumber("ttt_traitors_know_swapper"), false, false, "xgui_gmsettings")
 		ULib.replicatedWritableCvar("ttt_monsters_know_swapper", "rep_ttt_monsters_know_swapper", GetConVarNumber("ttt_monsters_know_swapper"), false, false, "xgui_gmsettings")
-		ULib.replicatedWritableCvar("ttt_killers_know_swapper", "rep_ttt_killers_know_swapper", GetConVarNumber("ttt_killers_know_swapper"), false, false, "xgui_gmsettings")
+        ULib.replicatedWritableCvar("ttt_killers_know_swapper", "rep_ttt_killers_know_swapper", GetConVarNumber("ttt_killers_know_swapper"), false, false, "xgui_gmsettings")
+        ULib.replicatedWritableCvar("ttt_phantom_killer_footstep_time", "rep_ttt_phantom_killer_footstep_time", GetConVarNumber("ttt_phantom_killer_footstep_time"), false, false, "xgui_gmsettings")
+        ULib.replicatedWritableCvar("ttt_phantom_killer_smoke", "rep_ttt_phantom_killer_smoke", GetConVarNumber("ttt_phantom_killer_smoke"), false, false, "xgui_gmsettings")
 
 		--dna
 		ULib.replicatedWritableCvar("ttt_killer_dna_range", "rep_ttt_killer_dna_range", GetConVarNumber("ttt_killer_dna_range"), false, false, "xgui_gmsettings")
