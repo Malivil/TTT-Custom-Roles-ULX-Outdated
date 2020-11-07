@@ -426,7 +426,7 @@ local function AddGameplayModule()
     local hshop = xlib.makecheckbox { label = "ttt_shop_hypnotist_sync (def. 0)", repconvar = "rep_ttt_shop_hypnotist_sync", parent = gptrcfglst }
     gptrcfglst:AddItem(hshop)
 
-    local pkft = xlib.makecheckbox { label = "ttt_phantom_killer_footstep_time (def. 5)", repconvar = "rep_ttt_phantom_killer_footstep_time", parent = gptrcfglst }
+    local pkft = xlib.makecheckbox { label = "ttt_phantom_killer_footstep_time (def. 10)", repconvar = "rep_ttt_phantom_killer_footstep_time", parent = gptrcfglst }
     gptrcfglst:AddItem(pkft)
 
     local pks = xlib.makecheckbox { label = "ttt_phantom_killer_smoke (def. 1)", repconvar = "rep_ttt_phantom_killer_smoke", parent = gptrcfglst }
