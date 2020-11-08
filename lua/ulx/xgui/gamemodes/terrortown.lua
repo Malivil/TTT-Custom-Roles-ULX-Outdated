@@ -300,13 +300,13 @@ local function AddGameplayModule()
 
     -- Role Configs
     local gptrcfgclp = vgui.Create("DCollapsibleCategory", gppnl)
-    gptrcfgclp:SetSize(390, 880)
+    gptrcfgclp:SetSize(390, 1050)
     gptrcfgclp:SetExpanded(0)
     gptrcfgclp:SetLabel("Role Configs")
 
     local gptrcfglst = vgui.Create("DPanelList", gptrcfgclp)
     gptrcfglst:SetPos(5, 25)
-    gptrcfglst:SetSize(390, 880)
+    gptrcfglst:SetSize(390, 1050)
     gptrcfglst:SetSpacing(5)
 
     local dsearch = xlib.makecheckbox { label = "ttt_detective_search_only (def. 1)", repconvar = "rep_ttt_detective_search_only", parent = gptrcfglst }
@@ -414,9 +414,6 @@ local function AddGameplayModule()
     local srh = xlib.makeslider { label = "ttt_swapper_respawn_health (def. 100)", min = 25, max = 150, repconvar = "rep_ttt_swapper_respawn_health", parent = gptrcfglst }
     gptrcfglst:AddItem(srh)
 
-    local pwer = xlib.makecheckbox { label = "ttt_phantom_weaker_each_respawn (def. 0)", repconvar = "rep_ttt_phantom_weaker_each_respawn", parent = gptrcfglst }
-    gptrcfglst:AddItem(pwer)
-
     local mshop = xlib.makeslider { label = "ttt_shop_merc_mode (def. 0)", min = 0, max = 4, repconvar = "rep_ttt_shop_merc_mode", parent = gptrcfglst }
     gptrcfglst:AddItem(mshop)
 
@@ -426,11 +423,35 @@ local function AddGameplayModule()
     local hshop = xlib.makecheckbox { label = "ttt_shop_hypnotist_sync (def. 0)", repconvar = "rep_ttt_shop_hypnotist_sync", parent = gptrcfglst }
     gptrcfglst:AddItem(hshop)
 
+    local pwer = xlib.makecheckbox { label = "ttt_phantom_weaker_each_respawn (def. 0)", repconvar = "rep_ttt_phantom_weaker_each_respawn", parent = gptrcfglst }
+    gptrcfglst:AddItem(pwer)
+
     local pkft = xlib.makecheckbox { label = "ttt_phantom_killer_footstep_time (def. 10)", repconvar = "rep_ttt_phantom_killer_footstep_time", parent = gptrcfglst }
     gptrcfglst:AddItem(pkft)
 
     local pks = xlib.makecheckbox { label = "ttt_phantom_killer_smoke (def. 1)", repconvar = "rep_ttt_phantom_killer_smoke", parent = gptrcfglst }
     gptrcfglst:AddItem(pks)
+
+    local pkh = xlib.makecheckbox { label = "ttt_phantom_killer_haunt (def. 1)", repconvar = "rep_ttt_phantom_killer_haunt", parent = gptrcfglst }
+    gptrcfglst:AddItem(pkh)
+
+    local pkhpm = xlib.makeslider { label = "ttt_phantom_killer_haunt_power_max (def. 100)", min = 0, max = 250, repconvar = "rep_ttt_phantom_killer_haunt_power_max", parent = gptrcfglst }
+    gptrcfglst:AddItem(pkhpm)
+
+    local pkhpr = xlib.makeslider { label = "ttt_phantom_killer_haunt_power_rate (def. 10)", min = 1, max = 50, repconvar = "rep_ttt_phantom_killer_haunt_power_rate", parent = gptrcfglst }
+    gptrcfglst:AddItem(pkhpr)
+
+    local pkhmc = xlib.makeslider { label = "ttt_phantom_killer_haunt_move_cost (def. 25)", min = 1, max = 100, repconvar = "rep_ttt_phantom_killer_haunt_move_cost", parent = gptrcfglst }
+    gptrcfglst:AddItem(pkhmc)
+
+    local pkhac = xlib.makeslider { label = "ttt_phantom_killer_haunt_attack_cost (def. 50)", min = 1, max = 100, repconvar = "rep_ttt_phantom_killer_haunt_attack_cost", parent = gptrcfglst }
+    gptrcfglst:AddItem(pkhac)
+
+    local pkhjc = xlib.makeslider { label = "ttt_phantom_killer_haunt_jump_cost (def. 20)", min = 1, max = 100, repconvar = "rep_ttt_phantom_killer_haunt_jump_cost", parent = gptrcfglst }
+    gptrcfglst:AddItem(pkhjc)
+
+    local pkhdc = xlib.makeslider { label = "ttt_phantom_killer_haunt_drop_cost (def. 15)", min = 1, max = 100, repconvar = "rep_ttt_phantom_killer_haunt_drop_cost", parent = gptrcfglst }
+    gptrcfglst:AddItem(pkhdc)
 
     --DNA
     local gpdnaclp = vgui.Create("DCollapsibleCategory", gppnl)
