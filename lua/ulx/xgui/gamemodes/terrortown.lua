@@ -438,19 +438,19 @@ local function AddGameplayModule()
     local pkhpm = xlib.makeslider { label = "ttt_phantom_killer_haunt_power_max (def. 100)", min = 0, max = 250, repconvar = "rep_ttt_phantom_killer_haunt_power_max", parent = gptrcfglst }
     gptrcfglst:AddItem(pkhpm)
 
-    local pkhpr = xlib.makeslider { label = "ttt_phantom_killer_haunt_power_rate (def. 10)", min = 1, max = 50, repconvar = "rep_ttt_phantom_killer_haunt_power_rate", parent = gptrcfglst }
+    local pkhpr = xlib.makeslider { label = "ttt_phantom_killer_haunt_power_rate (def. 5)", min = 1, max = 50, repconvar = "rep_ttt_phantom_killer_haunt_power_rate", parent = gptrcfglst }
     gptrcfglst:AddItem(pkhpr)
 
-    local pkhmc = xlib.makeslider { label = "ttt_phantom_killer_haunt_move_cost (def. 25)", min = 1, max = 100, repconvar = "rep_ttt_phantom_killer_haunt_move_cost", parent = gptrcfglst }
+    local pkhmc = xlib.makeslider { label = "ttt_phantom_killer_haunt_move_cost (def. 50)", min = 1, max = 100, repconvar = "rep_ttt_phantom_killer_haunt_move_cost", parent = gptrcfglst }
     gptrcfglst:AddItem(pkhmc)
 
-    local pkhac = xlib.makeslider { label = "ttt_phantom_killer_haunt_attack_cost (def. 50)", min = 1, max = 100, repconvar = "rep_ttt_phantom_killer_haunt_attack_cost", parent = gptrcfglst }
+    local pkhac = xlib.makeslider { label = "ttt_phantom_killer_haunt_attack_cost (def. 75)", min = 1, max = 100, repconvar = "rep_ttt_phantom_killer_haunt_attack_cost", parent = gptrcfglst }
     gptrcfglst:AddItem(pkhac)
 
-    local pkhjc = xlib.makeslider { label = "ttt_phantom_killer_haunt_jump_cost (def. 20)", min = 1, max = 100, repconvar = "rep_ttt_phantom_killer_haunt_jump_cost", parent = gptrcfglst }
+    local pkhjc = xlib.makeslider { label = "ttt_phantom_killer_haunt_jump_cost (def. 30)", min = 1, max = 100, repconvar = "rep_ttt_phantom_killer_haunt_jump_cost", parent = gptrcfglst }
     gptrcfglst:AddItem(pkhjc)
 
-    local pkhdc = xlib.makeslider { label = "ttt_phantom_killer_haunt_drop_cost (def. 15)", min = 1, max = 100, repconvar = "rep_ttt_phantom_killer_haunt_drop_cost", parent = gptrcfglst }
+    local pkhdc = xlib.makeslider { label = "ttt_phantom_killer_haunt_drop_cost (def. 25)", min = 1, max = 100, repconvar = "rep_ttt_phantom_killer_haunt_drop_cost", parent = gptrcfglst }
     gptrcfglst:AddItem(pkhdc)
 
     --DNA
