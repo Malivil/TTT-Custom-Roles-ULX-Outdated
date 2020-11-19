@@ -321,13 +321,13 @@ local function AddGameplayModule()
     local tvision = xlib.makecheckbox { label = "ttt_traitor_vision_enable (def. 0)", repconvar = "rep_ttt_traitor_vision_enable", parent = gptrcfglst }
     gptrcfglst:AddItem(tvision)
 
-    local tkswa = xlib.makecheckbox { label = "ttt_traitors_know_swapper (def. 0)", repconvar = "rep_ttt_traitors_know_swapper", parent = gptrcfglst }
+    local tkswa = xlib.makeslider { label = "ttt_traitors_jester_id_mode (def. 1)", min = 0, max = 4, repconvar = "rep_ttt_traitors_jester_id_mode", parent = gptrcfglst }
     gptrcfglst:AddItem(tkswa)
 
-    local mkswa = xlib.makecheckbox { label = "ttt_monsters_know_swapper (def. 0)", repconvar = "rep_ttt_monsters_know_swapper", parent = gptrcfglst }
+    local mkswa = xlib.makeslider { label = "ttt_monsters_jester_id_mode (def. 1)", min = 0, max = 4, repconvar = "rep_ttt_monsters_jester_id_mode", parent = gptrcfglst }
     gptrcfglst:AddItem(mkswa)
 
-    local kkswa = xlib.makecheckbox { label = "ttt_killers_know_swapper (def. 0)", repconvar = "rep_ttt_killers_know_swapper", parent = gptrcfglst }
+    local kkswa = xlib.makeslider { label = "ttt_killers_jester_id_mode (def. 1)", min = 0, max = 4, repconvar = "rep_ttt_killers_jester_id_mode", parent = gptrcfglst }
     gptrcfglst:AddItem(kkswa)
 
     local atarget = xlib.makecheckbox { label = "ttt_assassin_show_target_icon (def. 0)", repconvar = "rep_ttt_assassin_show_target_icon", parent = gptrcfglst }
