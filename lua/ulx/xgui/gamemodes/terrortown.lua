@@ -303,13 +303,13 @@ end
 local function AddRoleConfigs(gppnl)
     -- Role Configs
     local gptrcfgclp = vgui.Create("DCollapsibleCategory", gppnl)
-    gptrcfgclp:SetSize(390, 1050)
+    gptrcfgclp:SetSize(390, 1200)
     gptrcfgclp:SetExpanded(0)
     gptrcfgclp:SetLabel("Role Configs")
 
     local gptrcfglst = vgui.Create("DPanelList", gptrcfgclp)
     gptrcfglst:SetPos(5, 25)
-    gptrcfglst:SetSize(390, 1050)
+    gptrcfglst:SetSize(390, 1200)
     gptrcfglst:SetSpacing(5)
 
     local dsearch = xlib.makecheckbox { label = "ttt_detective_search_only (def. 1)", repconvar = "rep_ttt_detective_search_only", parent = gptrcfglst }
@@ -414,8 +414,26 @@ local function AddRoleConfigs(gppnl)
     local jwbt = xlib.makecheckbox { label = "ttt_jester_win_by_traitors (def. 1)", repconvar = "rep_ttt_jester_win_by_traitors", parent = gptrcfglst }
     gptrcfglst:AddItem(jwbt)
 
+    local jnm = xlib.makeslider { label = "ttt_jester_notify_mode (def. 1)", min = 0, max = 4, repconvar = "rep_ttt_jester_notify_mode", parent = gptrcfglst }
+    gptrcfglst:AddItem(jnm)
+
+    local jns = xlib.makecheckbox { label = "ttt_jester_notify_sound (def. 0)", repconvar = "rep_ttt_jester_notify_sound", parent = gptrcfglst }
+    gptrcfglst:AddItem(jns)
+
+    local jnc = xlib.makecheckbox { label = "ttt_jester_notify_confetti (def. 0)", repconvar = "rep_ttt_jester_notify_confetti", parent = gptrcfglst }
+    gptrcfglst:AddItem(jnc)
+
     local srh = xlib.makeslider { label = "ttt_swapper_respawn_health (def. 100)", min = 25, max = 150, repconvar = "rep_ttt_swapper_respawn_health", parent = gptrcfglst }
     gptrcfglst:AddItem(srh)
+
+    local snm = xlib.makeslider { label = "ttt_swapper_notify_mode (def. 1)", min = 0, max = 4, repconvar = "rep_ttt_swapper_notify_mode", parent = gptrcfglst }
+    gptrcfglst:AddItem(snm)
+
+    local sns = xlib.makecheckbox { label = "ttt_swapper_notify_sound (def. 0)", repconvar = "rep_ttt_swapper_notify_sound", parent = gptrcfglst }
+    gptrcfglst:AddItem(sns)
+
+    local snc = xlib.makecheckbox { label = "ttt_swapper_notify_confetti (def. 0)", repconvar = "rep_ttt_swapper_notify_confetti", parent = gptrcfglst }
+    gptrcfglst:AddItem(snc)
 
     local mshop = xlib.makeslider { label = "ttt_shop_merc_mode (def. 0)", min = 0, max = 4, repconvar = "rep_ttt_shop_merc_mode", parent = gptrcfglst }
     gptrcfglst:AddItem(mshop)
