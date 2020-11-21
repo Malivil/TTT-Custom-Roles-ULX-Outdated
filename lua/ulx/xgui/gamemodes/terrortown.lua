@@ -141,10 +141,7 @@ local function AddRoundStructureModule()
     xgui.addSubModule("Round structure", rspnl, nil, "terrortown_settings")
 end
 
-local function AddGameplayModule()
-    -------------------- Gameplay Module--------------------
-    local gppnl = xlib.makelistlayout { w = 415, h = 318, parent = xgui.null }
-
+local function AddRolesEnabled(gppnl)
     -- Roles Enabled
     local gptreclp = vgui.Create("DCollapsibleCategory", gppnl)
     gptreclp:SetSize(390, 220)
@@ -188,7 +185,9 @@ local function AddGameplayModule()
 
     local askil = xlib.makecheckbox { label = "ttt_killer_enabled (def. 1)", repconvar = "rep_ttt_killer_enabled", parent = gptrelst }
     gptrelst:AddItem(askil)
+end
 
+local function AddRoleCounts(gppnl)
     --Role Counts
     local gptrcclp = vgui.Create("DCollapsibleCategory", gppnl)
     gptrcclp:SetSize(390, 345)
@@ -241,7 +240,9 @@ local function AddGameplayModule()
 
     local kreq = xlib.makeslider { label = "ttt_killer_required_innos (def. 2)", min = 0, max = 50, repconvar = "rep_ttt_killer_required_innos", parent = gptrclst }
     gptrclst:AddItem(kreq)
+end
 
+local function AddRoleDetermination(gppnl)
     --Role Determination
     local gptrdclp = vgui.Create("DCollapsibleCategory", gppnl)
     gptrdclp:SetSize(390, 370)
@@ -297,7 +298,9 @@ local function AddGameplayModule()
 
     local kchance = xlib.makeslider { label = "ttt_killer_chance (def. 0.25)", min = 0.01, max = 1, decimal = 2, repconvar = "rep_ttt_killer_chance", parent = gptrdlst }
     gptrdlst:AddItem(kchance)
+end
 
+local function AddRoleConfigs(gppnl)
     -- Role Configs
     local gptrcfgclp = vgui.Create("DCollapsibleCategory", gppnl)
     gptrcfgclp:SetSize(390, 1050)
@@ -452,7 +455,9 @@ local function AddGameplayModule()
 
     local pkhdc = xlib.makeslider { label = "ttt_phantom_killer_haunt_drop_cost (def. 25)", min = 1, max = 100, repconvar = "rep_ttt_phantom_killer_haunt_drop_cost", parent = gptrcfglst }
     gptrcfglst:AddItem(pkhdc)
+end
 
+local function AddDna(gppnl)
     --DNA
     local gpdnaclp = vgui.Create("DCollapsibleCategory", gppnl)
     gpdnaclp:SetSize(390, 50)
@@ -469,7 +474,9 @@ local function AddGameplayModule()
 
     local dnakbt = xlib.makeslider { label = "ttt_killer_dna_basetime (def. 100)", min = 10, max = 200, repconvar = "rep_ttt_killer_dna_basetime", parent = gpdnalst }
     gpdnalst:AddItem(dnakbt)
+end
 
+local function AddVoiceChat(gppnl)
     --Voice Chat Battery
     local gpvcbclp = vgui.Create("DCollapsibleCategory", gppnl)
     gpvcbclp:SetSize(390, 65)
@@ -492,7 +499,9 @@ local function AddGameplayModule()
 
     local gpvdr = xlib.makeslider { label = "ttt_voice_drain_recharge (def. 0.05)", min = 0.01, max = 1, decimal = 2, repconvar = "rep_ttt_voice_drain_recharge", parent = gpvcblst }
     gpvcblst:AddItem(gpvdr)
+end
 
+local function AddOtherGameplay(gppnl)
     --Other Gameplay Settings
     local gpogsclp = vgui.Create("DCollapsibleCategory", gppnl)
     gpogsclp:SetSize(390, 245)
@@ -539,6 +548,19 @@ local function AddGameplayModule()
 
     local gppsmr = xlib.makecheckbox { label = "ttt_player_set_model_on_respawn (def. 1)", repconvar = "rep_ttt_player_set_model_on_respawn", parent = gpogslst }
     gpogslst:AddItem(gppsmr)
+end
+
+local function AddGameplayModule()
+    -------------------- Gameplay Module--------------------
+    local gppnl = xlib.makelistlayout { w = 415, h = 318, parent = xgui.null }
+
+    AddRolesEnabled(gppnl)
+    AddRoleCounts(gppnl)
+    AddRoleDetermination(gppnl)
+    AddRoleConfigs(gppnl)
+    AddDna(gppnl)
+    AddVoiceChat(gppnl)
+    AddOtherGameplay(gppnl)
 
     xgui.hookEvent("onProcessModules", nil, gppnl.processModules)
     xgui.addSubModule("Gameplay", gppnl, nil, "terrortown_settings")
