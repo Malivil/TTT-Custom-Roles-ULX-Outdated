@@ -471,7 +471,7 @@ local function AddRoleConfigs(gppnl)
     local pkhjc = xlib.makeslider { label = "ttt_phantom_killer_haunt_jump_cost (def. 30)", min = 1, max = 100, repconvar = "rep_ttt_phantom_killer_haunt_jump_cost", parent = gptrcfglst }
     gptrcfglst:AddItem(pkhjc)
 
-    local pkhdc = xlib.makeslider { label = "ttt_phantom_killer_haunt_drop_cost (def. 25)", min = 1, max = 100, repconvar = "rep_ttt_phantom_killer_haunt_drop_cost", parent = gptrcfglst }
+    local pkhdc = xlib.makeslider { label = "ttt_phantom_killer_haunt_drop_cost (def. 35)", min = 1, max = 100, repconvar = "rep_ttt_phantom_killer_haunt_drop_cost", parent = gptrcfglst }
     gptrcfglst:AddItem(pkhdc)
 end
 
