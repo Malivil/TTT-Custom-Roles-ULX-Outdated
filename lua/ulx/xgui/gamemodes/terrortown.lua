@@ -317,13 +317,13 @@ end
 
 local function AddInnocentRoleConfigs(gppnl)
     local category = vgui.Create("DCollapsibleCategory", gppnl)
-    category:SetSize(390, 240)
+    category:SetSize(390, 275)
     category:SetExpanded(0)
     category:SetLabel("Innocent Role Configs")
 
     local panel = vgui.Create("DPanelList", category)
     panel:SetPos(5, 25)
-    panel:SetSize(390, 240)
+    panel:SetSize(390, 275)
     panel:SetSpacing(5)
 
     local dsearch = xlib.makecheckbox { label = "ttt_detective_search_only (def. 1)", repconvar = "rep_ttt_detective_search_only", parent = panel }
@@ -365,13 +365,13 @@ end
 
 local function AddTraitorRoleConfigs(gppnl)
     local category = vgui.Create("DCollapsibleCategory", gppnl)
-    category:SetSize(390, 100)
+    category:SetSize(390, 105)
     category:SetExpanded(0)
     category:SetLabel("Traitor Role Configs")
 
     local panel = vgui.Create("DPanelList", category)
     panel:SetPos(5, 25)
-    panel:SetSize(390, 100)
+    panel:SetSize(390, 105)
     panel:SetSpacing(5)
 
     local tvision = xlib.makecheckbox { label = "ttt_traitor_vision_enable (def. 0)", repconvar = "rep_ttt_traitor_vision_enable", parent = panel }
@@ -392,13 +392,13 @@ end
 
 local function AddMonsterRoleConfigs(gppnl)
     local category = vgui.Create("DCollapsibleCategory", gppnl)
-    category:SetSize(390, 400)
+    category:SetSize(390, 440)
     category:SetExpanded(0)
     category:SetLabel("Monster Role Configs")
 
     local panel = vgui.Create("DPanelList", category)
     panel:SetPos(5, 25)
-    panel:SetSize(390, 400)
+    panel:SetSize(390, 440)
     panel:SetSpacing(5)
 
     local msats = xlib.makecheckbox { label = "ttt_monsters_are_traitors (def. 0)", repconvar = "rep_ttt_monsters_are_traitors", parent = panel }
@@ -464,13 +464,13 @@ end
 
 local function AddIndependentRoleConfigs(gppnl)
     local category = vgui.Create("DCollapsibleCategory", gppnl)
-    category:SetSize(390, 360)
+    category:SetSize(390, 400)
     category:SetExpanded(0)
     category:SetLabel("Independent Role Configs")
 
     local panel = vgui.Create("DPanelList", category)
     panel:SetPos(5, 25)
-    panel:SetSize(390, 360)
+    panel:SetSize(390, 400)
     panel:SetSpacing(5)
 
     local jnc = xlib.makecheckbox { label = "ttt_jester_notify_confetti (def. 0)", repconvar = "rep_ttt_jester_notify_confetti", parent = panel }
