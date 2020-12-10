@@ -17,49 +17,49 @@ terrortown_settings.catList:AddColumn("Terrorist Town Settings")
 terrortown_settings.catList.Columns[1].DoClick = function() end
 
 terrortown_settings.catList.OnRowSelected = function(self, LineID, Line)
-	local nPanel = xgui.modules.submodule[Line:GetValue(2)].panel
-	if nPanel ~= terrortown_settings.curPanel then
-		nPanel:SetZPos(0)
-		xlib.addToAnimQueue("pnlSlide", { panel = nPanel, startx = -435, starty = 0, endx = 0, endy = 0, setvisible = true })
-		if terrortown_settings.curPanel then
-			terrortown_settings.curPanel:SetZPos(-1)
-			xlib.addToAnimQueue(terrortown_settings.curPanel.SetVisible, terrortown_settings.curPanel, false)
-		end
-		xlib.animQueue_start()
-		terrortown_settings.curPanel = nPanel
-	else
-		xlib.addToAnimQueue("pnlSlide", { panel = nPanel, startx = 0, starty = 0, endx = -435, endy = 0, setvisible = false })
-		self:ClearSelection()
-		terrortown_settings.curPanel = nil
-		xlib.animQueue_start()
-	end
-	if nPanel.onOpen then nPanel.onOpen() end --If the panel has it, call a function when it's opened
+    local nPanel = xgui.modules.submodule[Line:GetValue(2)].panel
+    if nPanel ~= terrortown_settings.curPanel then
+        nPanel:SetZPos(0)
+        xlib.addToAnimQueue("pnlSlide", { panel = nPanel, startx = -435, starty = 0, endx = 0, endy = 0, setvisible = true })
+        if terrortown_settings.curPanel then
+            terrortown_settings.curPanel:SetZPos(-1)
+            xlib.addToAnimQueue(terrortown_settings.curPanel.SetVisible, terrortown_settings.curPanel, false)
+        end
+        xlib.animQueue_start()
+        terrortown_settings.curPanel = nPanel
+    else
+        xlib.addToAnimQueue("pnlSlide", { panel = nPanel, startx = 0, starty = 0, endx = -435, endy = 0, setvisible = false })
+        self:ClearSelection()
+        terrortown_settings.curPanel = nil
+        xlib.animQueue_start()
+    end
+    if nPanel.onOpen then nPanel.onOpen() end --If the panel has it, call a function when it's opened
 end
 
 --Process modular settings
 function terrortown_settings.processModules()
-	terrortown_settings.catList:Clear()
-	for i, module in ipairs(xgui.modules.submodule) do
-		if module.mtype == "terrortown_settings" and (not module.access or LocalPlayer():query(module.access)) then
-			local w, h = module.panel:GetSize()
-			if w == h and h == 0 then module.panel:SetSize(275, 322) end
+    terrortown_settings.catList:Clear()
+    for i, module in ipairs(xgui.modules.submodule) do
+        if module.mtype == "terrortown_settings" and (not module.access or LocalPlayer():query(module.access)) then
+            local w, h = module.panel:GetSize()
+            if w == h and h == 0 then module.panel:SetSize(275, 322) end
 
-			if module.panel.scroll then --For DListLayouts
-				module.panel.scroll.panel = module.panel
-				module.panel = module.panel.scroll
-			end
-			module.panel:SetParent(terrortown_settings.panel)
+            if module.panel.scroll then --For DListLayouts
+                module.panel.scroll.panel = module.panel
+                module.panel = module.panel.scroll
+            end
+            module.panel:SetParent(terrortown_settings.panel)
 
-			local line = terrortown_settings.catList:AddLine(module.name, i)
-			if (module.panel == terrortown_settings.curPanel) then
-				terrortown_settings.curPanel = nil
-				terrortown_settings.catList:SelectItem(line)
-			else
-				module.panel:SetVisible(false)
-			end
-		end
-	end
-	terrortown_settings.catList:SortByColumn(1, false)
+            local line = terrortown_settings.catList:AddLine(module.name, i)
+            if (module.panel == terrortown_settings.curPanel) then
+                terrortown_settings.curPanel = nil
+                terrortown_settings.catList:SelectItem(line)
+            else
+                module.panel:SetVisible(false)
+            end
+        end
+    end
+    terrortown_settings.catList:SortByColumn(1, false)
 end
 
 terrortown_settings.processModules()
@@ -300,179 +300,232 @@ local function AddRoleDetermination(gppnl)
     gptrdlst:AddItem(kchance)
 end
 
-local function AddRoleConfigs(gppnl)
-    -- Role Configs
-    local gptrcfgclp = vgui.Create("DCollapsibleCategory", gppnl)
-    gptrcfgclp:SetSize(390, 1200)
-    gptrcfgclp:SetExpanded(0)
-    gptrcfgclp:SetLabel("Role Configs")
+local function AddSharedRoleConfigs(gppnl)
+    local category = vgui.Create("DCollapsibleCategory", gppnl)
+    category:SetSize(390, 20)
+    category:SetExpanded(0)
+    category:SetLabel("Shared Role Configs")
 
-    local gptrcfglst = vgui.Create("DPanelList", gptrcfgclp)
-    gptrcfglst:SetPos(5, 25)
-    gptrcfglst:SetSize(390, 1200)
-    gptrcfglst:SetSpacing(5)
+    local panel = vgui.Create("DPanelList", category)
+    panel:SetPos(5, 25)
+    panel:SetSize(390, 20)
+    panel:SetSpacing(5)
 
-    local dsearch = xlib.makecheckbox { label = "ttt_detective_search_only (def. 1)", repconvar = "rep_ttt_detective_search_only", parent = gptrcfglst }
-    gptrcfglst:AddItem(dsearch)
+    local asearch = xlib.makecheckbox { label = "ttt_all_search_postround (def. 1)", repconvar = "rep_ttt_all_search_postround", parent = panel }
+    panel:AddItem(asearch)
+end
 
-    local asearch = xlib.makecheckbox { label = "ttt_all_search_postround (def. 1)", repconvar = "rep_ttt_all_search_postround", parent = gptrcfglst }
-    gptrcfglst:AddItem(asearch)
+local function AddInnocentRoleConfigs(gppnl)
+    local category = vgui.Create("DCollapsibleCategory", gppnl)
+    category:SetSize(390, 240)
+    category:SetExpanded(0)
+    category:SetLabel("Innocent Role Configs")
 
-    local msats = xlib.makecheckbox { label = "ttt_monsters_are_traitors (def. 0)", repconvar = "rep_ttt_monsters_are_traitors", parent = gptrcfglst }
-    gptrcfglst:AddItem(msats)
+    local panel = vgui.Create("DPanelList", category)
+    panel:SetPos(5, 25)
+    panel:SetSize(390, 240)
+    panel:SetSpacing(5)
 
-    local tvision = xlib.makecheckbox { label = "ttt_traitor_vision_enable (def. 0)", repconvar = "rep_ttt_traitor_vision_enable", parent = gptrcfglst }
-    gptrcfglst:AddItem(tvision)
+    local dsearch = xlib.makecheckbox { label = "ttt_detective_search_only (def. 1)", repconvar = "rep_ttt_detective_search_only", parent = panel }
+    panel:AddItem(dsearch)
 
-    local tkswa = xlib.makeslider { label = "ttt_traitors_jester_id_mode (def. 1)", min = 0, max = 4, repconvar = "rep_ttt_traitors_jester_id_mode", parent = gptrcfglst }
-    gptrcfglst:AddItem(tkswa)
+    local pkft = xlib.makecheckbox { label = "ttt_phantom_killer_footstep_time (def. 10)", repconvar = "rep_ttt_phantom_killer_footstep_time", parent = panel }
+    panel:AddItem(pkft)
 
-    local mkswa = xlib.makeslider { label = "ttt_monsters_jester_id_mode (def. 1)", min = 0, max = 4, repconvar = "rep_ttt_monsters_jester_id_mode", parent = gptrcfglst }
-    gptrcfglst:AddItem(mkswa)
+    local pkh = xlib.makecheckbox { label = "ttt_phantom_killer_haunt (def. 1)", repconvar = "rep_ttt_phantom_killer_haunt", parent = panel }
+    panel:AddItem(pkh)
 
-    local kkswa = xlib.makeslider { label = "ttt_killers_jester_id_mode (def. 1)", min = 0, max = 4, repconvar = "rep_ttt_killers_jester_id_mode", parent = gptrcfglst }
-    gptrcfglst:AddItem(kkswa)
+    local pkhac = xlib.makeslider { label = "ttt_phantom_killer_haunt_attack_cost (def. 75)", min = 1, max = 100, repconvar = "rep_ttt_phantom_killer_haunt_attack_cost", parent = panel }
+    panel:AddItem(pkhac)
 
-    local atarget = xlib.makecheckbox { label = "ttt_assassin_show_target_icon (def. 0)", repconvar = "rep_ttt_assassin_show_target_icon", parent = gptrcfglst }
-    gptrcfglst:AddItem(atarget)
+    local pkhdc = xlib.makeslider { label = "ttt_phantom_killer_haunt_drop_cost (def. 35)", min = 1, max = 100, repconvar = "rep_ttt_phantom_killer_haunt_drop_cost", parent = panel }
+    panel:AddItem(pkhdc)
 
-    local kknife = xlib.makecheckbox { label = "ttt_killer_knife_enabled (def. 1)", repconvar = "rep_ttt_killer_knife_enabled", parent = gptrcfglst }
-    gptrcfglst:AddItem(kknife)
+    local pkhjc = xlib.makeslider { label = "ttt_phantom_killer_haunt_jump_cost (def. 30)", min = 1, max = 100, repconvar = "rep_ttt_phantom_killer_haunt_jump_cost", parent = panel }
+    panel:AddItem(pkhjc)
 
-    local khealth = xlib.makeslider { label = "ttt_killer_max_health (def. 100)", min = 1, max = 200, repconvar = "rep_ttt_killer_max_health", parent = gptrcfglst }
-    gptrcfglst:AddItem(khealth)
+    local pkhmc = xlib.makeslider { label = "ttt_phantom_killer_haunt_move_cost (def. 50)", min = 1, max = 100, repconvar = "rep_ttt_phantom_killer_haunt_move_cost", parent = panel }
+    panel:AddItem(pkhmc)
 
-    local ksmokee = xlib.makecheckbox { label = "ttt_killer_smoke_enabled (def. 1)", repconvar = "rep_ttt_killer_smoke_enabled", parent = gptrcfglst }
-    gptrcfglst:AddItem(ksmokee)
+    local pkhpm = xlib.makeslider { label = "ttt_phantom_killer_haunt_power_max (def. 100)", min = 0, max = 250, repconvar = "rep_ttt_phantom_killer_haunt_power_max", parent = panel }
+    panel:AddItem(pkhpm)
 
-    local ksmoke = xlib.makeslider { label = "ttt_killer_smoke_timer (def. 60)", min = 10, max = 200, repconvar = "rep_ttt_killer_smoke_timer", parent = gptrcfglst }
-    gptrcfglst:AddItem(ksmoke)
+    local pkhpr = xlib.makeslider { label = "ttt_phantom_killer_haunt_power_rate (def. 5)", min = 1, max = 50, repconvar = "rep_ttt_phantom_killer_haunt_power_rate", parent = panel }
+    panel:AddItem(pkhpr)
 
-    local kvision = xlib.makecheckbox { label = "ttt_killer_vision_enable (def. 1)", repconvar = "rep_ttt_killer_vision_enable", parent = gptrcfglst }
-    gptrcfglst:AddItem(kvision)
+    local pks = xlib.makecheckbox { label = "ttt_phantom_killer_smoke (def. 1)", repconvar = "rep_ttt_phantom_killer_smoke", parent = panel }
+    panel:AddItem(pks)
 
-    local ktarget = xlib.makecheckbox { label = "ttt_killer_show_target_icon (def. 1)", repconvar = "rep_ttt_killer_show_target_icon", parent = gptrcfglst }
-    gptrcfglst:AddItem(ktarget)
+    local pwer = xlib.makecheckbox { label = "ttt_phantom_weaker_each_respawn (def. 0)", repconvar = "rep_ttt_phantom_weaker_each_respawn", parent = panel }
+    panel:AddItem(pwer)
 
-    local kdmgscale = xlib.makeslider { label = "ttt_killer_damage_scale (def. 0.25)", min = 0.1, max = 1, decimal = 2, repconvar = "rep_ttt_killer_damage_scale", parent = gptrcfglst }
-    gptrcfglst:AddItem(kdmgscale)
+    local mshop = xlib.makeslider { label = "ttt_shop_merc_mode (def. 0)", min = 0, max = 4, repconvar = "rep_ttt_shop_merc_mode", parent = panel }
+    panel:AddItem(mshop)
+end
 
-    local kdmgreduc = xlib.makeslider { label = "ttt_killer_damage_reduction (def. 0.55)", min = 0.1, max = 1, decimal = 2, repconvar = "rep_ttt_killer_damage_reduction", parent = gptrcfglst }
-    gptrcfglst:AddItem(kdmgreduc)
+local function AddTraitorRoleConfigs(gppnl)
+    local category = vgui.Create("DCollapsibleCategory", gppnl)
+    category:SetSize(390, 100)
+    category:SetExpanded(0)
+    category:SetLabel("Traitor Role Configs")
 
-    local kwarnall = xlib.makecheckbox { label = "ttt_killer_warn_all (def. 0)", repconvar = "rep_ttt_killer_warn_all", parent = gptrcfglst }
-    gptrcfglst:AddItem(kwarnall)
+    local panel = vgui.Create("DPanelList", category)
+    panel:SetPos(5, 25)
+    panel:SetSize(390, 100)
+    panel:SetSpacing(5)
 
-    local zvision = xlib.makecheckbox { label = "ttt_zombie_vision_enable (def. 1)", repconvar = "rep_ttt_zombie_vision_enable", parent = gptrcfglst }
-    gptrcfglst:AddItem(zvision)
+    local tvision = xlib.makecheckbox { label = "ttt_traitor_vision_enable (def. 0)", repconvar = "rep_ttt_traitor_vision_enable", parent = panel }
+    panel:AddItem(tvision)
 
-    local zspit = xlib.makecheckbox { label = "ttt_zombie_spit_enable (def. 1)", repconvar = "rep_ttt_zombie_spit_enable", parent = gptrcfglst }
-    gptrcfglst:AddItem(zspit)
+    local tkswa = xlib.makeslider { label = "ttt_traitors_jester_id_mode (def. 1)", min = 0, max = 4, repconvar = "rep_ttt_traitors_jester_id_mode", parent = panel }
+    panel:AddItem(tkswa)
 
-    local zleap = xlib.makecheckbox { label = "ttt_zombie_leap_enable (def. 1)", repconvar = "rep_ttt_zombie_leap_enable", parent = gptrcfglst }
-    gptrcfglst:AddItem(zleap)
+    local atarget = xlib.makecheckbox { label = "ttt_assassin_show_target_icon (def. 0)", repconvar = "rep_ttt_assassin_show_target_icon", parent = panel }
+    panel:AddItem(atarget)
 
-    local ztarget = xlib.makecheckbox { label = "ttt_zombie_show_target_icon (def. 1)", repconvar = "rep_ttt_zombie_show_target_icon", parent = gptrcfglst }
-    gptrcfglst:AddItem(ztarget)
+    local ashop = xlib.makecheckbox { label = "ttt_shop_assassin_sync (def. 0)", repconvar = "rep_ttt_shop_assassin_sync", parent = panel }
+    panel:AddItem(ashop)
 
-    local zdmgscale = xlib.makeslider { label = "ttt_zombie_damage_scale (def. 0.2)", min = 0.1, max = 1, decimal = 2, repconvar = "rep_ttt_zombie_damage_scale", parent = gptrcfglst }
-    gptrcfglst:AddItem(zdmgscale)
+    local hshop = xlib.makecheckbox { label = "ttt_shop_hypnotist_sync (def. 0)", repconvar = "rep_ttt_shop_hypnotist_sync", parent = panel }
+    panel:AddItem(hshop)
+end
 
-    local zdmgreduc = xlib.makeslider { label = "ttt_zombie_damage_reduction (def. 0.8)", min = 0.1, max = 1, decimal = 2, repconvar = "rep_ttt_zombie_damage_reduction", parent = gptrcfglst }
-    gptrcfglst:AddItem(zdmgreduc)
+local function AddMonsterRoleConfigs(gppnl)
+    local category = vgui.Create("DCollapsibleCategory", gppnl)
+    category:SetSize(390, 400)
+    category:SetExpanded(0)
+    category:SetLabel("Monster Role Configs")
 
-    local zpoweap = xlib.makecheckbox { label = "ttt_zombie_prime_only_weapons (def. 1)", repconvar = "rep_ttt_zombie_prime_only_weapons", parent = gptrcfglst }
-    gptrcfglst:AddItem(zpoweap)
+    local panel = vgui.Create("DPanelList", category)
+    panel:SetPos(5, 25)
+    panel:SetSize(390, 400)
+    panel:SetSpacing(5)
 
-    local vvision = xlib.makecheckbox { label = "ttt_vampire_vision_enable (def. 1)", repconvar = "rep_ttt_vampire_vision_enable", parent = gptrcfglst }
-    gptrcfglst:AddItem(vvision)
+    local msats = xlib.makecheckbox { label = "ttt_monsters_are_traitors (def. 0)", repconvar = "rep_ttt_monsters_are_traitors", parent = panel }
+    panel:AddItem(msats)
 
-    local vconvert = xlib.makecheckbox { label = "ttt_vampire_convert_enable (def. 1)", repconvar = "rep_ttt_vampire_convert_enable", parent = gptrcfglst }
-    gptrcfglst:AddItem(vconvert)
+    local mkswa = xlib.makeslider { label = "ttt_monsters_jester_id_mode (def. 1)", min = 0, max = 4, repconvar = "rep_ttt_monsters_jester_id_mode", parent = panel }
+    panel:AddItem(mkswa)
 
-    local vtarget = xlib.makecheckbox { label = "ttt_vampire_show_target_icon (def. 1)", repconvar = "rep_ttt_vampire_show_target_icon", parent = gptrcfglst }
-    gptrcfglst:AddItem(vtarget)
+    local vsats = xlib.makecheckbox { label = "ttt_vampires_are_traitors (def. 0)", repconvar = "rep_ttt_vampires_are_traitors", parent = panel }
+    panel:AddItem(vsats)
 
-    local vdmgreduc = xlib.makeslider { label = "ttt_vampire_damage_reduction (def. 0.8)", min = 0.1, max = 1, decimal = 2, repconvar = "rep_ttt_vampire_damage_reduction", parent = gptrcfglst }
-    gptrcfglst:AddItem(vdmgreduc)
+    local vconvert = xlib.makecheckbox { label = "ttt_vampire_convert_enable (def. 1)", repconvar = "rep_ttt_vampire_convert_enable", parent = panel }
+    panel:AddItem(vconvert)
 
-    local vfangtim = xlib.makeslider { label = "ttt_vampire_fang_timer (def. 5)", min = 1, max = 10, repconvar = "rep_ttt_vampire_fang_timer", parent = gptrcfglst }
-    gptrcfglst:AddItem(vfangtim)
+    local vdmgreduc = xlib.makeslider { label = "ttt_vampire_damage_reduction (def. 0.8)", min = 0.1, max = 1, decimal = 2, repconvar = "rep_ttt_vampire_damage_reduction", parent = panel }
+    panel:AddItem(vdmgreduc)
 
-    local vfangheal = xlib.makeslider { label = "ttt_vampire_fang_heal (def. 50)", min = 10, max = 100, repconvar = "rep_ttt_vampire_fang_heal", parent = gptrcfglst }
-    gptrcfglst:AddItem(vfangheal)
+    local vfangheal = xlib.makeslider { label = "ttt_vampire_fang_heal (def. 50)", min = 10, max = 100, repconvar = "rep_ttt_vampire_fang_heal", parent = panel }
+    panel:AddItem(vfangheal)
 
-    local vfangoheal = xlib.makeslider { label = "ttt_vampire_fang_overheal (def. 25)", min = 5, max = 50, repconvar = "rep_ttt_vampire_fang_overheal", parent = gptrcfglst }
-    gptrcfglst:AddItem(vfangoheal)
+    local vfangtim = xlib.makeslider { label = "ttt_vampire_fang_timer (def. 5)", min = 1, max = 10, repconvar = "rep_ttt_vampire_fang_timer", parent = panel }
+    panel:AddItem(vfangtim)
 
-    local vpdm = xlib.makeslider { label = "ttt_vampire_prime_death_mode (def. 0)", min = 0, max = 2, repconvar = "rep_ttt_vampire_prime_death_mode", parent = gptrcfglst }
-    gptrcfglst:AddItem(vpdm)
+    local vfangoheal = xlib.makeslider { label = "ttt_vampire_fang_overheal (def. 25)", min = 5, max = 50, repconvar = "rep_ttt_vampire_fang_overheal", parent = panel }
+    panel:AddItem(vfangoheal)
 
-    local vpoc = xlib.makecheckbox { label = "ttt_vampire_prime_only_convert (def. 1)", repconvar = "rep_ttt_vampire_prime_only_convert", parent = gptrcfglst }
-    gptrcfglst:AddItem(vpoc)
+    local vpdm = xlib.makeslider { label = "ttt_vampire_prime_death_mode (def. 0)", min = 0, max = 2, repconvar = "rep_ttt_vampire_prime_death_mode", parent = panel }
+    panel:AddItem(vpdm)
 
-    local jwbt = xlib.makecheckbox { label = "ttt_jester_win_by_traitors (def. 1)", repconvar = "rep_ttt_jester_win_by_traitors", parent = gptrcfglst }
-    gptrcfglst:AddItem(jwbt)
+    local vpoc = xlib.makecheckbox { label = "ttt_vampire_prime_only_convert (def. 1)", repconvar = "rep_ttt_vampire_prime_only_convert", parent = panel }
+    panel:AddItem(vpoc)
 
-    local jnm = xlib.makeslider { label = "ttt_jester_notify_mode (def. 1)", min = 0, max = 4, repconvar = "rep_ttt_jester_notify_mode", parent = gptrcfglst }
-    gptrcfglst:AddItem(jnm)
+    local vtarget = xlib.makecheckbox { label = "ttt_vampire_show_target_icon (def. 1)", repconvar = "rep_ttt_vampire_show_target_icon", parent = panel }
+    panel:AddItem(vtarget)
 
-    local jns = xlib.makecheckbox { label = "ttt_jester_notify_sound (def. 0)", repconvar = "rep_ttt_jester_notify_sound", parent = gptrcfglst }
-    gptrcfglst:AddItem(jns)
+    local vvision = xlib.makecheckbox { label = "ttt_vampire_vision_enable (def. 1)", repconvar = "rep_ttt_vampire_vision_enable", parent = panel }
+    panel:AddItem(vvision)
 
-    local jnc = xlib.makecheckbox { label = "ttt_jester_notify_confetti (def. 0)", repconvar = "rep_ttt_jester_notify_confetti", parent = gptrcfglst }
-    gptrcfglst:AddItem(jnc)
+    local zsats = xlib.makecheckbox { label = "ttt_zombies_are_traitors (def. 0)", repconvar = "rep_ttt_zombies_are_traitors", parent = panel }
+    panel:AddItem(zsats)
 
-    local srh = xlib.makeslider { label = "ttt_swapper_respawn_health (def. 100)", min = 25, max = 150, repconvar = "rep_ttt_swapper_respawn_health", parent = gptrcfglst }
-    gptrcfglst:AddItem(srh)
+    local zdmgreduc = xlib.makeslider { label = "ttt_zombie_damage_reduction (def. 0.8)", min = 0.1, max = 1, decimal = 2, repconvar = "rep_ttt_zombie_damage_reduction", parent = panel }
+    panel:AddItem(zdmgreduc)
 
-    local snm = xlib.makeslider { label = "ttt_swapper_notify_mode (def. 1)", min = 0, max = 4, repconvar = "rep_ttt_swapper_notify_mode", parent = gptrcfglst }
-    gptrcfglst:AddItem(snm)
+    local zdmgscale = xlib.makeslider { label = "ttt_zombie_damage_scale (def. 0.2)", min = 0.1, max = 1, decimal = 2, repconvar = "rep_ttt_zombie_damage_scale", parent = panel }
+    panel:AddItem(zdmgscale)
 
-    local sns = xlib.makecheckbox { label = "ttt_swapper_notify_sound (def. 0)", repconvar = "rep_ttt_swapper_notify_sound", parent = gptrcfglst }
-    gptrcfglst:AddItem(sns)
+    local zleap = xlib.makecheckbox { label = "ttt_zombie_leap_enable (def. 1)", repconvar = "rep_ttt_zombie_leap_enable", parent = panel }
+    panel:AddItem(zleap)
 
-    local snc = xlib.makecheckbox { label = "ttt_swapper_notify_confetti (def. 0)", repconvar = "rep_ttt_swapper_notify_confetti", parent = gptrcfglst }
-    gptrcfglst:AddItem(snc)
+    local zpoweap = xlib.makecheckbox { label = "ttt_zombie_prime_only_weapons (def. 1)", repconvar = "rep_ttt_zombie_prime_only_weapons", parent = panel }
+    panel:AddItem(zpoweap)
 
-    local mshop = xlib.makeslider { label = "ttt_shop_merc_mode (def. 0)", min = 0, max = 4, repconvar = "rep_ttt_shop_merc_mode", parent = gptrcfglst }
-    gptrcfglst:AddItem(mshop)
+    local ztarget = xlib.makecheckbox { label = "ttt_zombie_show_target_icon (def. 1)", repconvar = "rep_ttt_zombie_show_target_icon", parent = panel }
+    panel:AddItem(ztarget)
 
-    local ashop = xlib.makecheckbox { label = "ttt_shop_assassin_sync (def. 0)", repconvar = "rep_ttt_shop_assassin_sync", parent = gptrcfglst }
-    gptrcfglst:AddItem(ashop)
+    local zspit = xlib.makecheckbox { label = "ttt_zombie_spit_enable (def. 1)", repconvar = "rep_ttt_zombie_spit_enable", parent = panel }
+    panel:AddItem(zspit)
 
-    local hshop = xlib.makecheckbox { label = "ttt_shop_hypnotist_sync (def. 0)", repconvar = "rep_ttt_shop_hypnotist_sync", parent = gptrcfglst }
-    gptrcfglst:AddItem(hshop)
+    local zvision = xlib.makecheckbox { label = "ttt_zombie_vision_enable (def. 1)", repconvar = "rep_ttt_zombie_vision_enable", parent = panel }
+    panel:AddItem(zvision)
+end
 
-    local pwer = xlib.makecheckbox { label = "ttt_phantom_weaker_each_respawn (def. 0)", repconvar = "rep_ttt_phantom_weaker_each_respawn", parent = gptrcfglst }
-    gptrcfglst:AddItem(pwer)
+local function AddIndependentRoleConfigs(gppnl)
+    local category = vgui.Create("DCollapsibleCategory", gppnl)
+    category:SetSize(390, 360)
+    category:SetExpanded(0)
+    category:SetLabel("Independent Role Configs")
 
-    local pkft = xlib.makecheckbox { label = "ttt_phantom_killer_footstep_time (def. 10)", repconvar = "rep_ttt_phantom_killer_footstep_time", parent = gptrcfglst }
-    gptrcfglst:AddItem(pkft)
+    local panel = vgui.Create("DPanelList", category)
+    panel:SetPos(5, 25)
+    panel:SetSize(390, 360)
+    panel:SetSpacing(5)
 
-    local pks = xlib.makecheckbox { label = "ttt_phantom_killer_smoke (def. 1)", repconvar = "rep_ttt_phantom_killer_smoke", parent = gptrcfglst }
-    gptrcfglst:AddItem(pks)
+    local jnc = xlib.makecheckbox { label = "ttt_jester_notify_confetti (def. 0)", repconvar = "rep_ttt_jester_notify_confetti", parent = panel }
+    panel:AddItem(jnc)
 
-    local pkh = xlib.makecheckbox { label = "ttt_phantom_killer_haunt (def. 1)", repconvar = "rep_ttt_phantom_killer_haunt", parent = gptrcfglst }
-    gptrcfglst:AddItem(pkh)
+    local jnm = xlib.makeslider { label = "ttt_jester_notify_mode (def. 1)", min = 0, max = 4, repconvar = "rep_ttt_jester_notify_mode", parent = panel }
+    panel:AddItem(jnm)
 
-    local pkhpm = xlib.makeslider { label = "ttt_phantom_killer_haunt_power_max (def. 100)", min = 0, max = 250, repconvar = "rep_ttt_phantom_killer_haunt_power_max", parent = gptrcfglst }
-    gptrcfglst:AddItem(pkhpm)
+    local jns = xlib.makecheckbox { label = "ttt_jester_notify_sound (def. 0)", repconvar = "rep_ttt_jester_notify_sound", parent = panel }
+    panel:AddItem(jns)
 
-    local pkhpr = xlib.makeslider { label = "ttt_phantom_killer_haunt_power_rate (def. 5)", min = 1, max = 50, repconvar = "rep_ttt_phantom_killer_haunt_power_rate", parent = gptrcfglst }
-    gptrcfglst:AddItem(pkhpr)
+    local jwbt = xlib.makecheckbox { label = "ttt_jester_win_by_traitors (def. 1)", repconvar = "rep_ttt_jester_win_by_traitors", parent = panel }
+    panel:AddItem(jwbt)
 
-    local pkhmc = xlib.makeslider { label = "ttt_phantom_killer_haunt_move_cost (def. 50)", min = 1, max = 100, repconvar = "rep_ttt_phantom_killer_haunt_move_cost", parent = gptrcfglst }
-    gptrcfglst:AddItem(pkhmc)
+    local snc = xlib.makecheckbox { label = "ttt_swapper_notify_confetti (def. 0)", repconvar = "rep_ttt_swapper_notify_confetti", parent = panel }
+    panel:AddItem(snc)
 
-    local pkhac = xlib.makeslider { label = "ttt_phantom_killer_haunt_attack_cost (def. 75)", min = 1, max = 100, repconvar = "rep_ttt_phantom_killer_haunt_attack_cost", parent = gptrcfglst }
-    gptrcfglst:AddItem(pkhac)
+    local snm = xlib.makeslider { label = "ttt_swapper_notify_mode (def. 1)", min = 0, max = 4, repconvar = "rep_ttt_swapper_notify_mode", parent = panel }
+    panel:AddItem(snm)
 
-    local pkhjc = xlib.makeslider { label = "ttt_phantom_killer_haunt_jump_cost (def. 30)", min = 1, max = 100, repconvar = "rep_ttt_phantom_killer_haunt_jump_cost", parent = gptrcfglst }
-    gptrcfglst:AddItem(pkhjc)
+    local sns = xlib.makecheckbox { label = "ttt_swapper_notify_sound (def. 0)", repconvar = "rep_ttt_swapper_notify_sound", parent = panel }
+    panel:AddItem(sns)
 
-    local pkhdc = xlib.makeslider { label = "ttt_phantom_killer_haunt_drop_cost (def. 35)", min = 1, max = 100, repconvar = "rep_ttt_phantom_killer_haunt_drop_cost", parent = gptrcfglst }
-    gptrcfglst:AddItem(pkhdc)
+    local srh = xlib.makeslider { label = "ttt_swapper_respawn_health (def. 100)", min = 25, max = 150, repconvar = "rep_ttt_swapper_respawn_health", parent = panel }
+    panel:AddItem(srh)
+
+    local kkswa = xlib.makeslider { label = "ttt_killers_jester_id_mode (def. 1)", min = 0, max = 4, repconvar = "rep_ttt_killers_jester_id_mode", parent = panel }
+    panel:AddItem(kkswa)
+
+    local kdmgreduc = xlib.makeslider { label = "ttt_killer_damage_reduction (def. 0.55)", min = 0.1, max = 1, decimal = 2, repconvar = "rep_ttt_killer_damage_reduction", parent = panel }
+    panel:AddItem(kdmgreduc)
+
+    local kdmgscale = xlib.makeslider { label = "ttt_killer_damage_scale (def. 0.25)", min = 0.1, max = 1, decimal = 2, repconvar = "rep_ttt_killer_damage_scale", parent = panel }
+    panel:AddItem(kdmgscale)
+
+    local kknife = xlib.makecheckbox { label = "ttt_killer_knife_enabled (def. 1)", repconvar = "rep_ttt_killer_knife_enabled", parent = panel }
+    panel:AddItem(kknife)
+
+    local khealth = xlib.makeslider { label = "ttt_killer_max_health (def. 100)", min = 1, max = 200, repconvar = "rep_ttt_killer_max_health", parent = panel }
+    panel:AddItem(khealth)
+
+    local ktarget = xlib.makecheckbox { label = "ttt_killer_show_target_icon (def. 1)", repconvar = "rep_ttt_killer_show_target_icon", parent = panel }
+    panel:AddItem(ktarget)
+
+    local ksmokee = xlib.makecheckbox { label = "ttt_killer_smoke_enabled (def. 1)", repconvar = "rep_ttt_killer_smoke_enabled", parent = panel }
+    panel:AddItem(ksmokee)
+
+    local ksmoke = xlib.makeslider { label = "ttt_killer_smoke_timer (def. 60)", min = 10, max = 200, repconvar = "rep_ttt_killer_smoke_timer", parent = panel }
+    panel:AddItem(ksmoke)
+
+    local kvision = xlib.makecheckbox { label = "ttt_killer_vision_enable (def. 1)", repconvar = "rep_ttt_killer_vision_enable", parent = panel }
+    panel:AddItem(kvision)
+
+    local kwarnall = xlib.makecheckbox { label = "ttt_killer_warn_all (def. 0)", repconvar = "rep_ttt_killer_warn_all", parent = panel }
+    panel:AddItem(kwarnall)
 end
 
 local function AddDna(gppnl)
@@ -575,7 +628,11 @@ local function AddGameplayModule()
     AddRolesEnabled(gppnl)
     AddRoleCounts(gppnl)
     AddRoleDetermination(gppnl)
-    AddRoleConfigs(gppnl)
+    AddSharedRoleConfigs(gppnl)
+    AddInnocentRoleConfigs(gppnl)
+    AddTraitorRoleConfigs(gppnl)
+    AddMonsterRoleConfigs(gppnl)
+    AddIndependentRoleConfigs(gppnl)
     AddDna(gppnl)
     AddVoiceChat(gppnl)
     AddOtherGameplay(gppnl)
