@@ -923,13 +923,13 @@ local function AddMiscModule()
     local miscpnl = xlib.makelistlayout { w = 415, h = 318, parent = xgui.null }
 
     local miscclp = vgui.Create("DCollapsibleCategory", miscpnl)
-    miscclp:SetSize(390, 160)
+    miscclp:SetSize(390, 250)
     miscclp:SetExpanded(1)
     miscclp:SetLabel("Miscellaneous")
 
     local misclst = vgui.Create("DPanelList", miscclp)
     misclst:SetPos(5, 25)
-    misclst:SetSize(390, 160)
+    misclst:SetSize(390, 250)
     misclst:SetSpacing(5)
 
     local miscdh = xlib.makecheckbox { label = "ttt_detective_hats (def. 0)", repconvar = "rep_ttt_detective_hats", parent = misclst }
@@ -961,6 +961,12 @@ local function AddMiscModule()
 
     local miscswi = xlib.makeslider { label = "ttt_spawn_wave_interval (def. 0)", min = 0, max = 30, repconvar = "rep_ttt_spawn_wave_interval", parent = misclst }
     misclst:AddItem(miscswi)
+
+    local misccu = xlib.makecheckbox { label = "ttt_crowbar_unlocks (def. 1)", repconvar = "rep_ttt_crowbar_unlocks", parent = misclst }
+    misclst:AddItem(misccu)
+
+    local misccp = xlib.makeslider { label = "ttt_crowbar_pushforce (def. 395)", min = 0, max = 10000, repconvar = "rep_ttt_crowbar_pushforce", parent = misclst }
+    misclst:AddItem(misccp)
 
     xgui.hookEvent("onProcessModules", nil, miscpnl.processModules)
     xgui.addSubModule("Miscellaneous", miscpnl, nil, "terrortown_settings")

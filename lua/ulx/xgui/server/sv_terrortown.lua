@@ -235,6 +235,8 @@ local function init()
         ULib.replicatedWritableCvar("ttt_locational_voice", "rep_ttt_locational_voice", GetConVarNumber("ttt_locational_voice"), false, false, "xgui_gmsettings")
         ULib.replicatedWritableCvar("ttt_allow_discomb_jump", "rep_ttt_allow_discomb_jump", GetConVarNumber("ttt_allow_discomb_jump"), false, false, "xgui_gmsettings")
         ULib.replicatedWritableCvar("ttt_spawn_wave_interval", "rep_ttt_spawn_wave_interval", GetConVarNumber("ttt_spawn_wave_interval"), false, false, "xgui_gmsettings")
+        ULib.replicatedWritableCvar("ttt_crowbar_unlocks", "rep_ttt_crowbar_unlocks", GetConVarNumber("ttt_crowbar_unlocks"), false, false, "xgui_gmsettings")
+        ULib.replicatedWritableCvar("ttt_crowbar_pushforce", "rep_ttt_crowbar_pushforce", GetConVarNumber("ttt_crowbar_pushforce"), false, false, "xgui_gmsettings")
     end
 end
 
