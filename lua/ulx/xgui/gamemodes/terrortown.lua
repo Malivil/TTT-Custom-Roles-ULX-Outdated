@@ -315,15 +315,66 @@ local function AddSharedRoleConfigs(gppnl)
     panel:AddItem(asearch)
 end
 
-local function AddInnocentRoleConfigs(gppnl)
+local function AddShopConfigs(gppnl)
     local category = vgui.Create("DCollapsibleCategory", gppnl)
     category:SetSize(390, 275)
+    category:SetExpanded(0)
+    category:SetLabel("Shop Configs")
+
+    local panel = vgui.Create("DPanelList", category)
+    panel:SetPos(5, 25)
+    panel:SetSize(390, 275)
+    panel:SetSpacing(5)
+
+    local mshop = xlib.makeslider { label = "ttt_shop_merc_mode (def. 0)", min = 0, max = 4, repconvar = "rep_ttt_shop_merc_mode", parent = panel }
+    panel:AddItem(mshop)
+
+    local ashop = xlib.makecheckbox { label = "ttt_shop_assassin_sync (def. 0)", repconvar = "rep_ttt_shop_assassin_sync", parent = panel }
+    panel:AddItem(ashop)
+
+    local hshop = xlib.makecheckbox { label = "ttt_shop_hypnotist_sync (def. 0)", repconvar = "rep_ttt_shop_hypnotist_sync", parent = panel }
+    panel:AddItem(hshop)
+
+    local rpct = xlib.makeslider { label = "ttt_shop_random_percent (def. 50)", min = 0, max = 100, repconvar = "rep_ttt_shop_random_percent", parent = panel }
+    panel:AddItem(rpct)
+
+    local trand = xlib.makecheckbox { label = "ttt_shop_random_tra_enabled (def. 0)", repconvar = "rep_ttt_shop_random_tra_enabled", parent = panel }
+    panel:AddItem(trand)
+
+    local arand = xlib.makecheckbox { label = "ttt_shop_random_asn_enabled (def. 0)", repconvar = "rep_ttt_shop_random_asn_enabled", parent = panel }
+    panel:AddItem(arand)
+
+    local hrand = xlib.makecheckbox { label = "ttt_shop_random_hyp_enabled (def. 0)", repconvar = "rep_ttt_shop_random_hyp_enabled", parent = panel }
+    panel:AddItem(hrand)
+
+    local drrand = xlib.makecheckbox { label = "ttt_shop_random_der_enabled (def. 0)", repconvar = "rep_ttt_shop_random_der_enabled", parent = panel }
+    panel:AddItem(drrand)
+
+    local dtrand = xlib.makecheckbox { label = "ttt_shop_random_det_enabled (def. 0)", repconvar = "rep_ttt_shop_random_det_enabled", parent = panel }
+    panel:AddItem(dtrand)
+
+    local mrand = xlib.makecheckbox { label = "ttt_shop_random_mer_enabled (def. 0)", repconvar = "rep_ttt_shop_random_mer_enabled", parent = panel }
+    panel:AddItem(mrand)
+
+    local vrand = xlib.makecheckbox { label = "ttt_shop_random_vam_enabled (def. 0)", repconvar = "rep_ttt_shop_random_vam_enabled", parent = panel }
+    panel:AddItem(vrand)
+
+    local zrand = xlib.makecheckbox { label = "ttt_shop_random_zom_enabled (def. 0)", repconvar = "rep_ttt_shop_random_zom_enabled", parent = panel }
+    panel:AddItem(zrand)
+
+    local krand = xlib.makecheckbox { label = "ttt_shop_random_kil_enabled (def. 0)", repconvar = "rep_ttt_shop_random_kil_enabled", parent = panel }
+    panel:AddItem(krand)
+end
+
+local function AddInnocentRoleConfigs(gppnl)
+    local category = vgui.Create("DCollapsibleCategory", gppnl)
+    category:SetSize(390, 255)
     category:SetExpanded(0)
     category:SetLabel("Innocent Role Configs")
 
     local panel = vgui.Create("DPanelList", category)
     panel:SetPos(5, 25)
-    panel:SetSize(390, 275)
+    panel:SetSize(390, 255)
     panel:SetSpacing(5)
 
     local dsearch = xlib.makecheckbox { label = "ttt_detective_search_only (def. 1)", repconvar = "rep_ttt_detective_search_only", parent = panel }
@@ -358,14 +409,11 @@ local function AddInnocentRoleConfigs(gppnl)
 
     local pwer = xlib.makecheckbox { label = "ttt_phantom_weaker_each_respawn (def. 0)", repconvar = "rep_ttt_phantom_weaker_each_respawn", parent = panel }
     panel:AddItem(pwer)
-
-    local mshop = xlib.makeslider { label = "ttt_shop_merc_mode (def. 0)", min = 0, max = 4, repconvar = "rep_ttt_shop_merc_mode", parent = panel }
-    panel:AddItem(mshop)
 end
 
 local function AddTraitorRoleConfigs(gppnl)
     local category = vgui.Create("DCollapsibleCategory", gppnl)
-    category:SetSize(390, 105)
+    category:SetSize(390, 65)
     category:SetExpanded(0)
     category:SetLabel("Traitor Role Configs")
 
@@ -382,12 +430,6 @@ local function AddTraitorRoleConfigs(gppnl)
 
     local atarget = xlib.makecheckbox { label = "ttt_assassin_show_target_icon (def. 0)", repconvar = "rep_ttt_assassin_show_target_icon", parent = panel }
     panel:AddItem(atarget)
-
-    local ashop = xlib.makecheckbox { label = "ttt_shop_assassin_sync (def. 0)", repconvar = "rep_ttt_shop_assassin_sync", parent = panel }
-    panel:AddItem(ashop)
-
-    local hshop = xlib.makecheckbox { label = "ttt_shop_hypnotist_sync (def. 0)", repconvar = "rep_ttt_shop_hypnotist_sync", parent = panel }
-    panel:AddItem(hshop)
 end
 
 local function AddMonsterRoleConfigs(gppnl)
@@ -629,6 +671,7 @@ local function AddGameplayModule()
     AddRoleCounts(gppnl)
     AddRoleDetermination(gppnl)
     AddSharedRoleConfigs(gppnl)
+    AddShopConfigs(gppnl)
     AddInnocentRoleConfigs(gppnl)
     AddTraitorRoleConfigs(gppnl)
     AddMonsterRoleConfigs(gppnl)

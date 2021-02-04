@@ -69,6 +69,21 @@ local function init()
         -- Shared role configs
         ULib.replicatedWritableCvar("ttt_all_search_postround", "rep_ttt_all_search_postround", GetConVarNumber("ttt_all_search_postround"), false, false, "xgui_gmsettings")
 
+        -- Shop configs
+        ULib.replicatedWritableCvar("ttt_shop_merc_mode", "rep_ttt_shop_merc_mode", GetConVarNumber("ttt_shop_merc_mode"), false, false, "xgui_gmsettings")
+        ULib.replicatedWritableCvar("ttt_shop_assassin_sync", "rep_ttt_shop_assassin_sync", GetConVarNumber("ttt_shop_assassin_sync"), false, false, "xgui_gmsettings")
+        ULib.replicatedWritableCvar("ttt_shop_hypnotist_sync", "rep_ttt_shop_hypnotist_sync", GetConVarNumber("ttt_shop_hypnotist_sync"), false, false, "xgui_gmsettings")
+        ULib.replicatedWritableCvar("ttt_shop_random_percent", "rep_ttt_shop_random_percent", GetConVarNumber("ttt_shop_random_percent"), false, false, "xgui_gmsettings")
+        ULib.replicatedWritableCvar("ttt_shop_random_tra_enabled", "rep_ttt_shop_random_tra_enabled", GetConVarNumber("ttt_shop_random_tra_enabled"), false, false, "xgui_gmsettings")
+        ULib.replicatedWritableCvar("ttt_shop_random_asn_enabled", "rep_ttt_shop_random_asn_enabled", GetConVarNumber("ttt_shop_random_asn_enabled"), false, false, "xgui_gmsettings")
+        ULib.replicatedWritableCvar("ttt_shop_random_hyp_enabled", "rep_ttt_shop_random_hyp_enabled", GetConVarNumber("ttt_shop_random_hyp_enabled"), false, false, "xgui_gmsettings")
+        ULib.replicatedWritableCvar("ttt_shop_random_der_enabled", "rep_ttt_shop_random_der_enabled", GetConVarNumber("ttt_shop_random_der_enabled"), false, false, "xgui_gmsettings")
+        ULib.replicatedWritableCvar("ttt_shop_random_det_enabled", "rep_ttt_shop_random_det_enabled", GetConVarNumber("ttt_shop_random_det_enabled"), false, false, "xgui_gmsettings")
+        ULib.replicatedWritableCvar("ttt_shop_random_mer_enabled", "rep_ttt_shop_random_mer_enabled", GetConVarNumber("ttt_shop_random_mer_enabled"), false, false, "xgui_gmsettings")
+        ULib.replicatedWritableCvar("ttt_shop_random_vam_enabled", "rep_ttt_shop_random_vam_enabled", GetConVarNumber("ttt_shop_random_vam_enabled"), false, false, "xgui_gmsettings")
+        ULib.replicatedWritableCvar("ttt_shop_random_zom_enabled", "rep_ttt_shop_random_zom_enabled", GetConVarNumber("ttt_shop_random_zom_enabled"), false, false, "xgui_gmsettings")
+        ULib.replicatedWritableCvar("ttt_shop_random_kil_enabled", "rep_ttt_shop_random_kil_enabled", GetConVarNumber("ttt_shop_random_kil_enabled"), false, false, "xgui_gmsettings")
+
         -- Innocent role configs
         ULib.replicatedWritableCvar("ttt_detective_search_only", "rep_ttt_detective_search_only", GetConVarNumber("ttt_detective_search_only"), false, false, "xgui_gmsettings")
         ULib.replicatedWritableCvar("ttt_phantom_killer_footstep_time", "rep_ttt_phantom_killer_footstep_time", GetConVarNumber("ttt_phantom_killer_footstep_time"), false, false, "xgui_gmsettings")
@@ -81,14 +96,11 @@ local function init()
         ULib.replicatedWritableCvar("ttt_phantom_killer_haunt_power_rate", "rep_ttt_phantom_killer_haunt_power_rate", GetConVarNumber("ttt_phantom_killer_haunt_power_rate"), false, false, "xgui_gmsettings")
         ULib.replicatedWritableCvar("ttt_phantom_killer_smoke", "rep_ttt_phantom_killer_smoke", GetConVarNumber("ttt_phantom_killer_smoke"), false, false, "xgui_gmsettings")
         ULib.replicatedWritableCvar("ttt_phantom_weaker_each_respawn", "rep_ttt_phantom_weaker_each_respawn", GetConVarNumber("ttt_phantom_weaker_each_respawn"), false, false, "xgui_gmsettings")
-        ULib.replicatedWritableCvar("ttt_shop_merc_mode", "rep_ttt_shop_merc_mode", GetConVarNumber("ttt_shop_merc_mode"), false, false, "xgui_gmsettings")
 
         -- Traitor role configs
         ULib.replicatedWritableCvar("ttt_traitor_vision_enable", "rep_ttt_traitor_vision_enable", GetConVarNumber("ttt_traitor_vision_enable"), false, false, "xgui_gmsettings")
         ULib.replicatedWritableCvar("ttt_traitors_jester_id_mode", "rep_ttt_traitors_jester_id_mode", GetConVarNumber("ttt_traitors_jester_id_mode"), false, false, "xgui_gmsettings")
         ULib.replicatedWritableCvar("ttt_assassin_show_target_icon", "rep_ttt_assassin_show_target_icon", GetConVarNumber("ttt_assassin_show_target_icon"), false, false, "xgui_gmsettings")
-        ULib.replicatedWritableCvar("ttt_shop_assassin_sync", "rep_ttt_shop_assassin_sync", GetConVarNumber("ttt_shop_assassin_sync"), false, false, "xgui_gmsettings")
-        ULib.replicatedWritableCvar("ttt_shop_hypnotist_sync", "rep_ttt_shop_hypnotist_sync", GetConVarNumber("ttt_shop_hypnotist_sync"), false, false, "xgui_gmsettings")
 
         -- Monster role configs
         ULib.replicatedWritableCvar("ttt_monsters_are_traitors", "rep_ttt_monsters_are_traitors", GetConVarNumber("ttt_monsters_are_traitors"), false, false, "xgui_gmsettings")
