@@ -51,7 +51,7 @@ function SetRole(ply, role)
 
     if SERVER then
         net.Start("TTT_RoleChanged")
-        net.WriteString(ply:UniqueID())
+        net.WriteString(ply:SteamID64())
         net.WriteUInt(role, 8)
         net.Broadcast()
     end
@@ -91,7 +91,7 @@ end
 --]]
 function CorpseFind(v)
     for _, ent in pairs(ents.FindByClass("prop_ragdoll")) do
-        if ent.uqid == v:UniqueID() and IsValid(ent) then
+        if ent.sid == v:SteamID64() and IsValid(ent) then
             return ent or false
         end
     end
@@ -103,11 +103,11 @@ end
 function CorpseRemove(corpse)
     CORPSE.SetFound(corpse, false)
     if string.find(corpse:GetModel(), "zm_", 6, true) then
-        player.GetByUniqueID(corpse.uqid):SetNWBool("body_found", false)
+        player.GetBySteamID64(corpse.sid):SetNWBool("body_found", false)
         corpse:Remove()
         SendFullStateUpdate()
     elseif corpse.player_ragdoll then
-        player.GetByUniqueID(corpse.uqid):SetNWBool("body_found", false)
+        player.GetBySteamID64(corpse.sid):SetNWBool("body_found", false)
         corpse:Remove()
         SendFullStateUpdate()
     end
@@ -118,7 +118,7 @@ end
 --]]
 function CorpseIdentify(corpse)
     if corpse then
-        local ply = player.GetByUniqueID(corpse.uqid)
+        local ply = player.GetBySteamID64(corpse.sid)
         ply:SetNWBool("body_found", true)
         CORPSE.SetFound(corpse, true)
     end
@@ -336,7 +336,7 @@ hook.Add("TTTBeginRound", "SlayPlayersNextRound", function()
 
             table.insert(affected_plys, v)
 
-            timer.Create("check" .. v:SteamID(), 0.1, 0, function() --workaround for issue with tommys damage log
+            timer.Create("check" .. v:SteamID64(), 0.1, 0, function() --workaround for issue with tommys damage log
 
                 v:Kill()
 
@@ -355,10 +355,10 @@ hook.Add("TTTBeginRound", "SlayPlayersNextRound", function()
                 end
 
                 v:SetTeam(TEAM_SPEC)
-                if v:IsSpec() then timer.Destroy("check" .. v:SteamID()) return end
+                if v:IsSpec() then timer.Remove("check" .. v:SteamID64()) return end
             end)
 
-            timer.Create("traitorcheck" .. v:SteamID(), 1, 0, function() --have to wait for gamemode before doing this
+            timer.Create("traitorcheck" .. v:SteamID64(), 1, 0, function() --have to wait for gamemode before doing this
                 if v:GetRole() == ROLE_TRAITOR then
                     SendConfirmedTraitors(GetInnocentFilter(false)) -- Update innocent's list of traitors.
                     SCORE:HandleBodyFound(v, v)
@@ -625,7 +625,7 @@ function ulx.respawn(calling_ply, target_plys, should_silent)
                 ULib.tsayError(calling_ply, "Waiting for players!", true)
 
             elseif v:Alive() and v:IsSpec() then -- players arent really dead when they are spectating, we need to handle that correctly
-                timer.Destroy("traitorcheck" .. v:SteamID())
+                timer.Remove("traitorcheck" .. v:SteamID64())
                 v:ConCommand("ttt_spectator_mode 0") -- just incase they are in spectator mode take them out of it
                 timer.Create("respawndelay", 0.1, 0, function() --seems to be a slight delay from when you leave spec and when you can spawn this should get us around that
                     local corpse = CorpseFind(v) -- run the normal respawn code now
@@ -639,13 +639,13 @@ function ulx.respawn(calling_ply, target_plys, should_silent)
                     ulx.fancyLogAdmin(calling_ply, should_silent, "#A respawned #T!", affected_plys)
                     SendMessages(affected_plys, "You have been respawned.")
 
-                    if v:Alive() then timer.Destroy("respawndelay") return end
+                    if v:Alive() then timer.Remove("respawndelay") return end
                 end)
 
             elseif v:Alive() then
                 ULib.tsayError(calling_ply, v:Nick() .. " is already alive!", true)
             else
-                timer.Destroy("traitorcheck" .. v:SteamID())
+                timer.Remove("traitorcheck" .. v:SteamID64())
                 local corpse = CorpseFind(v)
                 if corpse then CorpseRemove(corpse) end
 
@@ -689,7 +689,7 @@ function ulx.respawntp(calling_ply, target_ply, should_silent)
             ULib.tsayError(calling_ply, "Waiting for players!", true)
 
         elseif target_ply:Alive() and target_ply:IsSpec() then
-            timer.Destroy("traitorcheck" .. target_ply:SteamID())
+            timer.Remove("traitorcheck" .. target_ply:SteamID64())
             target_ply:ConCommand("ttt_spectator_mode 0")
             timer.Create("respawntpdelay", 0.1, 0, function() --have to wait for gamemode before doing this
                 local t = {}
@@ -715,13 +715,13 @@ function ulx.respawntp(calling_ply, target_ply, should_silent)
                 ulx.fancyLogAdmin(calling_ply, should_silent, "#A respawned and teleported #T!", affected_ply)
                 SendMessages(target_ply, "You have been respawned and teleported.")
 
-                if target_ply:Alive() then timer.Destroy("respawntpdelay") return end
+                if target_ply:Alive() then timer.Remove("respawntpdelay") return end
             end)
 
         elseif target_ply:Alive() then
             ULib.tsayError(calling_ply, target_ply:Nick() .. " is already alive!", true)
         else
-            timer.Destroy("traitorcheck" .. target_ply:SteamID())
+            timer.Remove("traitorcheck" .. target_ply:SteamID64())
             local t = {}
             t.start = calling_ply:GetPos() + Vector(0, 0, 32) -- Move them up a bit so they can travel across the ground
             t.endpos = calling_ply:GetPos() + calling_ply:EyeAngles():Forward() * 16384
@@ -890,7 +890,7 @@ function ulx.nextround(calling_ply, target_plys, next_round)
         local affected_plys = {}
         for i = 1, #target_plys do
             local v = target_plys[i]
-            local ID = v:UniqueID()
+            local ID = v:SteamID64()
 
             if next_round == "traitor" then
                 if PlysMarkedForTraitor[ID] == true or PlysMarkedForDetective[ID] == true or PlysMarkedForDetraitor[ID] == true or PlysMarkedForMercenary[ID] == true or PlysMarkedForHypnotist[ID] == true or PlysMarkedForGlitch[ID] == true or PlysMarkedForJester[ID] == true or PlysMarkedForPhantom[ID] == true or PlysMarkedForZombie[ID] == true or PlysMarkedForVampire[ID] == true or PlysMarkedForSwapper[ID] == true or PlysMarkedForAssassin[ID] == true or PlysMarkedForKiller[ID] == true or PlysMarkedForInnocent[ID] == true then
@@ -1081,7 +1081,7 @@ nxtr:help("Forces the target to be a role in the following round.")
 local function TraitorMarkedPlayers()
     for k, v in pairs(PlysMarkedForTraitor) do
         if v then
-            local ply = player.GetByUniqueID(k)
+            local ply = player.GetBySteamID64(k)
             ply:SetMaxHealth(100)
             ply:SetHealth(100)
             ply:SetRole(ROLE_TRAITOR)
@@ -1108,7 +1108,7 @@ hook.Add("TTTSelectRoles", "Admin_Round_Traitor", TraitorMarkedPlayers)
 local function DetectiveMarkedPlayers()
     for k, v in pairs(PlysMarkedForDetective) do
         if v then
-            local ply = player.GetByUniqueID(k)
+            local ply = player.GetBySteamID64(k)
             ply:SetMaxHealth(100)
             ply:SetHealth(100)
             ply:SetRole(ROLE_DETECTIVE)
@@ -1135,7 +1135,7 @@ hook.Add("TTTSelectRoles", "Admin_Round_Detective", DetectiveMarkedPlayers)
 local function DetraitorMarkedPlayers()
     for k, v in pairs(PlysMarkedForDetraitor) do
         if v then
-            local ply = player.GetByUniqueID(k)
+            local ply = player.GetBySteamID64(k)
             ply:SetMaxHealth(100)
             ply:SetHealth(100)
             ply:SetRole(ROLE_DETRAITOR)
@@ -1162,7 +1162,7 @@ hook.Add("TTTSelectRoles", "Admin_Round_Detraitor", DetraitorMarkedPlayers)
 local function MercenaryMarkedPlayers()
     for k, v in pairs(PlysMarkedForMercenary) do
         if v then
-            local ply = player.GetByUniqueID(k)
+            local ply = player.GetBySteamID64(k)
             ply:SetMaxHealth(100)
             ply:SetHealth(100)
             ply:SetRole(ROLE_MERCENARY)
@@ -1189,7 +1189,7 @@ hook.Add("TTTSelectRoles", "Admin_Round_Mercenary", MercenaryMarkedPlayers)
 local function HypnotistMarkedPlayers()
     for k, v in pairs(PlysMarkedForHypnotist) do
         if v then
-            local ply = player.GetByUniqueID(k)
+            local ply = player.GetBySteamID64(k)
             ply:SetMaxHealth(100)
             ply:SetHealth(100)
             ply:SetRole(ROLE_HYPNOTIST)
@@ -1217,7 +1217,7 @@ hook.Add("TTTSelectRoles", "Admin_Round_Hypnotist", HypnotistMarkedPlayers)
 local function GlitchMarkedPlayers()
     for k, v in pairs(PlysMarkedForGlitch) do
         if v then
-            local ply = player.GetByUniqueID(k)
+            local ply = player.GetBySteamID64(k)
             ply:SetMaxHealth(100)
             ply:SetHealth(100)
             ply:SetRole(ROLE_GLITCH)
@@ -1244,7 +1244,7 @@ hook.Add("TTTSelectRoles", "Admin_Round_Glitch", GlitchMarkedPlayers)
 local function JesterMarkedPlayers()
     for k, v in pairs(PlysMarkedForJester) do
         if v then
-            local ply = player.GetByUniqueID(k)
+            local ply = player.GetBySteamID64(k)
             ply:SetMaxHealth(100)
             ply:SetHealth(100)
             ply:SetRole(ROLE_JESTER)
@@ -1271,7 +1271,7 @@ hook.Add("TTTSelectRoles", "Admin_Round_Jester", JesterMarkedPlayers)
 local function PhantomMarkedPlayers()
     for k, v in pairs(PlysMarkedForPhantom) do
         if v then
-            local ply = player.GetByUniqueID(k)
+            local ply = player.GetBySteamID64(k)
             ply:SetMaxHealth(100)
             ply:SetHealth(100)
             ply:SetRole(ROLE_PHANTOM)
@@ -1298,7 +1298,7 @@ hook.Add("TTTSelectRoles", "Admin_Round_Phantom", PhantomMarkedPlayers)
 local function ZombieMarkedPlayers()
     for k, v in pairs(PlysMarkedForZombie) do
         if v then
-            local ply = player.GetByUniqueID(k)
+            local ply = player.GetBySteamID64(k)
             ply:SetMaxHealth(100)
             ply:SetHealth(100)
             ply:SetRole(ROLE_ZOMBIE)
@@ -1326,7 +1326,7 @@ hook.Add("TTTSelectRoles", "Admin_Round_Zombie", ZombieMarkedPlayers)
 local function VampireMarkedPlayers()
     for k, v in pairs(PlysMarkedForVampire) do
         if v then
-            local ply = player.GetByUniqueID(k)
+            local ply = player.GetBySteamID64(k)
             ply:SetMaxHealth(100)
             ply:SetHealth(100)
             ply:SetRole(ROLE_VAMPIRE)
@@ -1354,7 +1354,7 @@ hook.Add("TTTSelectRoles", "Admin_Round_Vampire", VampireMarkedPlayers)
 local function SwapperMarkedPlayers()
     for k, v in pairs(PlysMarkedForSwapper) do
         if v then
-            local ply = player.GetByUniqueID(k)
+            local ply = player.GetBySteamID64(k)
             ply:SetMaxHealth(100)
             ply:SetHealth(100)
             ply:SetRole(ROLE_SWAPPER)
@@ -1381,7 +1381,7 @@ hook.Add("TTTSelectRoles", "Admin_Round_Swapper", SwapperMarkedPlayers)
 local function AssassinMarkedPlayers()
     for k, v in pairs(PlysMarkedForAssassin) do
         if v then
-            local ply = player.GetByUniqueID(k)
+            local ply = player.GetBySteamID64(k)
             ply:SetMaxHealth(100)
             ply:SetHealth(100)
             ply:SetRole(ROLE_ASSASSIN)
@@ -1408,7 +1408,7 @@ hook.Add("TTTSelectRoles", "Admin_Round_Assassin", AssassinMarkedPlayers)
 local function KillerMarkedPlayers()
     for k, v in pairs(PlysMarkedForKiller) do
         if v then
-            local ply = player.GetByUniqueID(k)
+            local ply = player.GetBySteamID64(k)
             ply:SetMaxHealth(GetConVar("ttt_killer_max_health"):GetInt())
             ply:SetHealth(GetConVar("ttt_killer_max_health"):GetInt())
             ply:SetRole(ROLE_KILLER)
@@ -1436,7 +1436,7 @@ hook.Add("TTTSelectRoles", "Admin_Round_Killer", KillerMarkedPlayers)
 local function InnocentMarkedPlayers()
     for k, v in pairs(PlysMarkedForInnocent) do
         if v then
-            local ply = player.GetByUniqueID(k)
+            local ply = player.GetBySteamID64(k)
             ply:SetMaxHealth(100)
             ply:SetHealth(100)
             ply:SetRole(ROLE_INNOCENT)

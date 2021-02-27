@@ -48,5 +48,8 @@
         "Msg",
         "_",
         "ROLE_DETRAITOR"
+    ],
+    "Lua.diagnostics.disable": [
+        "undefined-field"
     ]
 }
