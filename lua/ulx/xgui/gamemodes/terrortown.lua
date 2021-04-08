@@ -317,13 +317,13 @@ end
 
 local function AddShopConfigs(gppnl)
     local category = vgui.Create("DCollapsibleCategory", gppnl)
-    category:SetSize(390, 275)
+    category:SetSize(390, 495)
     category:SetExpanded(0)
     category:SetLabel("Shop Configs")
 
     local panel = vgui.Create("DPanelList", category)
     panel:SetPos(5, 25)
-    panel:SetSize(390, 275)
+    panel:SetSize(390, 495)
     panel:SetSpacing(5)
 
     local mshop = xlib.makeslider { label = "ttt_shop_merc_mode (def. 0)", min = 0, max = 4, repconvar = "rep_ttt_shop_merc_mode", parent = panel }
@@ -337,6 +337,33 @@ local function AddShopConfigs(gppnl)
 
     local rpct = xlib.makeslider { label = "ttt_shop_random_percent (def. 50)", min = 0, max = 100, repconvar = "rep_ttt_shop_random_percent", parent = panel }
     panel:AddItem(rpct)
+
+    local tpct = xlib.makeslider { label = "ttt_shop_random_tra_percent (def. 0)", min = 0, max = 100, repconvar = "rep_ttt_shop_random_tra_percent", parent = panel }
+    panel:AddItem(tpct)
+
+    local apct = xlib.makeslider { label = "ttt_shop_random_asn_percent (def. 0)", min = 0, max = 100, repconvar = "rep_ttt_shop_random_asn_percent", parent = panel }
+    panel:AddItem(apct)
+
+    local hpct = xlib.makeslider { label = "ttt_shop_random_hyp_percent (def. 0)", min = 0, max = 100, repconvar = "rep_ttt_shop_random_hyp_percent", parent = panel }
+    panel:AddItem(hpct)
+
+    local drpct = xlib.makeslider { label = "ttt_shop_random_der_percent (def. 0)", min = 0, max = 100, repconvar = "rep_ttt_shop_random_der_percent", parent = panel }
+    panel:AddItem(drpct)
+
+    local dtpct = xlib.makeslider { label = "ttt_shop_random_det_percent (def. 0)", min = 0, max = 100, repconvar = "rep_ttt_shop_random_det_percent", parent = panel }
+    panel:AddItem(dtpct)
+
+    local mpct = xlib.makeslider { label = "ttt_shop_random_mer_percent (def. 0)", min = 0, max = 100, repconvar = "rep_ttt_shop_random_mer_percent", parent = panel }
+    panel:AddItem(mpct)
+
+    local vpct = xlib.makeslider { label = "ttt_shop_random_vam_percent (def. 0)", min = 0, max = 100, repconvar = "rep_ttt_shop_random_vam_percent", parent = panel }
+    panel:AddItem(vpct)
+
+    local zpct = xlib.makeslider { label = "ttt_shop_random_zom_percent (def. 0)", min = 0, max = 100, repconvar = "rep_ttt_shop_random_zom_percent", parent = panel }
+    panel:AddItem(zpct)
+
+    local kpct = xlib.makeslider { label = "ttt_shop_random_kil_percent (def. 0)", min = 0, max = 100, repconvar = "rep_ttt_shop_random_kil_percent", parent = panel }
+    panel:AddItem(kpct)
 
     local trand = xlib.makecheckbox { label = "ttt_shop_random_tra_enabled (def. 0)", repconvar = "rep_ttt_shop_random_tra_enabled", parent = panel }
     panel:AddItem(trand)
@@ -368,13 +395,13 @@ end
 
 local function AddInnocentRoleConfigs(gppnl)
     local category = vgui.Create("DCollapsibleCategory", gppnl)
-    category:SetSize(390, 255)
+    category:SetSize(390, 250)
     category:SetExpanded(0)
     category:SetLabel("Innocent Role Configs")
 
     local panel = vgui.Create("DPanelList", category)
     panel:SetPos(5, 25)
-    panel:SetSize(390, 255)
+    panel:SetSize(390, 250)
     panel:SetSpacing(5)
 
     local dsearch = xlib.makecheckbox { label = "ttt_detective_search_only (def. 1)", repconvar = "rep_ttt_detective_search_only", parent = panel }
@@ -419,7 +446,7 @@ local function AddTraitorRoleConfigs(gppnl)
 
     local panel = vgui.Create("DPanelList", category)
     panel:SetPos(5, 25)
-    panel:SetSize(390, 105)
+    panel:SetSize(390, 65)
     panel:SetSpacing(5)
 
     local tvision = xlib.makecheckbox { label = "ttt_traitor_vision_enable (def. 0)", repconvar = "rep_ttt_traitor_vision_enable", parent = panel }
