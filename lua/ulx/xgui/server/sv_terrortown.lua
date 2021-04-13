@@ -83,6 +83,8 @@ local function init()
         ULib.replicatedWritableCvar("ttt_shop_random_vam_percent", "rep_ttt_shop_random_vam_percent", GetConVarNumber("ttt_shop_random_vam_percent"), false, false, "xgui_gmsettings")
         ULib.replicatedWritableCvar("ttt_shop_random_zom_percent", "rep_ttt_shop_random_zom_percent", GetConVarNumber("ttt_shop_random_zom_percent"), false, false, "xgui_gmsettings")
         ULib.replicatedWritableCvar("ttt_shop_random_kil_percent", "rep_ttt_shop_random_kil_percent", GetConVarNumber("ttt_shop_random_kil_percent"), false, false, "xgui_gmsettings")
+        ULib.replicatedWritableCvar("ttt_shop_random_jes_percent", "rep_ttt_shop_random_jes_percent", GetConVarNumber("ttt_shop_random_jes_percent"), false, false, "xgui_gmsettings")
+        ULib.replicatedWritableCvar("ttt_shop_random_swa_percent", "rep_ttt_shop_random_swa_percent", GetConVarNumber("ttt_shop_random_swa_percent"), false, false, "xgui_gmsettings")
         ULib.replicatedWritableCvar("ttt_shop_random_tra_enabled", "rep_ttt_shop_random_tra_enabled", GetConVarNumber("ttt_shop_random_tra_enabled"), false, false, "xgui_gmsettings")
         ULib.replicatedWritableCvar("ttt_shop_random_asn_enabled", "rep_ttt_shop_random_asn_enabled", GetConVarNumber("ttt_shop_random_asn_enabled"), false, false, "xgui_gmsettings")
         ULib.replicatedWritableCvar("ttt_shop_random_hyp_enabled", "rep_ttt_shop_random_hyp_enabled", GetConVarNumber("ttt_shop_random_hyp_enabled"), false, false, "xgui_gmsettings")
@@ -92,6 +94,8 @@ local function init()
         ULib.replicatedWritableCvar("ttt_shop_random_vam_enabled", "rep_ttt_shop_random_vam_enabled", GetConVarNumber("ttt_shop_random_vam_enabled"), false, false, "xgui_gmsettings")
         ULib.replicatedWritableCvar("ttt_shop_random_zom_enabled", "rep_ttt_shop_random_zom_enabled", GetConVarNumber("ttt_shop_random_zom_enabled"), false, false, "xgui_gmsettings")
         ULib.replicatedWritableCvar("ttt_shop_random_kil_enabled", "rep_ttt_shop_random_kil_enabled", GetConVarNumber("ttt_shop_random_kil_enabled"), false, false, "xgui_gmsettings")
+        ULib.replicatedWritableCvar("ttt_shop_random_jes_enabled", "rep_ttt_shop_random_jes_enabled", GetConVarNumber("ttt_shop_random_jes_enabled"), false, false, "xgui_gmsettings")
+        ULib.replicatedWritableCvar("ttt_shop_random_swa_enabled", "rep_ttt_shop_random_swa_enabled", GetConVarNumber("ttt_shop_random_swa_enabled"), false, false, "xgui_gmsettings")
 
         -- Innocent role configs
         ULib.replicatedWritableCvar("ttt_detective_search_only", "rep_ttt_detective_search_only", GetConVarNumber("ttt_detective_search_only"), false, false, "xgui_gmsettings")
@@ -217,6 +221,10 @@ local function init()
         ULib.replicatedWritableCvar("ttt_mer_credits_starting", "rep_ttt_mer_credits_starting", GetConVarNumber("ttt_mer_credits_starting"), false, false, "xgui_gmsettings")
         ULib.replicatedWritableCvar("ttt_det_credits_traitorkill", "rep_ttt_det_credits_traitorkill", GetConVarNumber("ttt_det_credits_traitorkill"), false, false, "xgui_gmsettings")
         ULib.replicatedWritableCvar("ttt_det_credits_traitordead", "rep_ttt_det_credits_traitordead", GetConVarNumber("ttt_det_credits_traitordead"), false, false, "xgui_gmsettings")
+
+        --jester/swapper credits
+        ULib.replicatedWritableCvar("ttt_jes_credits_starting", "rep_ttt_jes_credits_starting", GetConVarNumber("ttt_jes_credits_starting"), false, false, "xgui_gmsettings")
+        ULib.replicatedWritableCvar("ttt_swa_credits_starting", "rep_ttt_swa_credits_starting", GetConVarNumber("ttt_swa_credits_starting"), false, false, "xgui_gmsettings")
 
         --sprint
         ULib.replicatedWritableCvar("ttt_sprint_enabled", "rep_ttt_sprint_enabled", GetConVarNumber("ttt_sprint_enabled"), false, false, "xgui_gmsettings")

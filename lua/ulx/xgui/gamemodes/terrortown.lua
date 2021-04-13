@@ -317,13 +317,13 @@ end
 
 local function AddShopConfigs(gppnl)
     local category = vgui.Create("DCollapsibleCategory", gppnl)
-    category:SetSize(390, 495)
+    category:SetSize(390, 590)
     category:SetExpanded(0)
     category:SetLabel("Shop Configs")
 
     local panel = vgui.Create("DPanelList", category)
     panel:SetPos(5, 25)
-    panel:SetSize(390, 495)
+    panel:SetSize(390, 590)
     panel:SetSpacing(5)
 
     local mshop = xlib.makeslider { label = "ttt_shop_merc_mode (def. 0)", min = 0, max = 4, repconvar = "rep_ttt_shop_merc_mode", parent = panel }
@@ -365,6 +365,12 @@ local function AddShopConfigs(gppnl)
     local kpct = xlib.makeslider { label = "ttt_shop_random_kil_percent (def. 0)", min = 0, max = 100, repconvar = "rep_ttt_shop_random_kil_percent", parent = panel }
     panel:AddItem(kpct)
 
+    local jpct = xlib.makeslider { label = "ttt_shop_random_jes_percent (def. 0)", min = 0, max = 100, repconvar = "rep_ttt_shop_random_jes_percent", parent = panel }
+    panel:AddItem(jpct)
+
+    local swpct = xlib.makeslider { label = "ttt_shop_random_swa_percent (def. 0)", min = 0, max = 100, repconvar = "rep_ttt_shop_random_swa_percent", parent = panel }
+    panel:AddItem(swpct)
+
     local trand = xlib.makecheckbox { label = "ttt_shop_random_tra_enabled (def. 0)", repconvar = "rep_ttt_shop_random_tra_enabled", parent = panel }
     panel:AddItem(trand)
 
@@ -391,6 +397,12 @@ local function AddShopConfigs(gppnl)
 
     local krand = xlib.makecheckbox { label = "ttt_shop_random_kil_enabled (def. 0)", repconvar = "rep_ttt_shop_random_kil_enabled", parent = panel }
     panel:AddItem(krand)
+
+    local jrand = xlib.makecheckbox { label = "ttt_shop_random_jes_enabled (def. 0)", repconvar = "rep_ttt_shop_random_jes_enabled", parent = panel }
+    panel:AddItem(jrand)
+
+    local swrand = xlib.makecheckbox { label = "ttt_shop_random_swa_enabled (def. 0)", repconvar = "rep_ttt_shop_random_swa_enabled", parent = panel }
+    panel:AddItem(swrand)
 end
 
 local function AddInnocentRoleConfigs(gppnl)
@@ -795,71 +807,88 @@ local function AddEquipmentCreditsModule()
     local ecpnl = xlib.makelistlayout { w = 415, h = 318, parent = xgui.null }
 
     --Traitor/Monster/Killer Credits
-    local ectcclp = vgui.Create("DCollapsibleCategory", ecpnl)
-    ectcclp:SetSize(390, 270)
-    ectcclp:SetExpanded(1)
-    ectcclp:SetLabel("Traitor/Monster/Killer Credits")
+    local tmkpnl = vgui.Create("DCollapsibleCategory", ecpnl)
+    tmkpnl:SetSize(390, 270)
+    tmkpnl:SetExpanded(1)
+    tmkpnl:SetLabel("Traitor/Monster/Killer Credits")
 
-    local ectclst = vgui.Create("DPanelList", ectcclp)
-    ectclst:SetPos(5, 25)
-    ectclst:SetSize(390, 270)
-    ectclst:SetSpacing(5)
+    local tmklst = vgui.Create("DPanelList", tmkpnl)
+    tmklst:SetPos(5, 25)
+    tmklst:SetSize(390, 270)
+    tmklst:SetSpacing(5)
 
-    local ectccs = xlib.makeslider { label = "ttt_credits_starting (def. 2)", min = 0, max = 10, repconvar = "rep_ttt_credits_starting", parent = ectclst }
-    ectclst:AddItem(ectccs)
+    local cs = xlib.makeslider { label = "ttt_credits_starting (def. 2)", min = 0, max = 10, repconvar = "rep_ttt_credits_starting", parent = tmklst }
+    tmklst:AddItem(cs)
 
-    local ectcdcs = xlib.makeslider { label = "ttt_der_credits_starting (def. 2)", min = 0, max = 10, repconvar = "rep_ttt_der_credits_starting", parent = ectclst }
-    ectclst:AddItem(ectcdcs)
+    local drcs = xlib.makeslider { label = "ttt_der_credits_starting (def. 2)", min = 0, max = 10, repconvar = "rep_ttt_der_credits_starting", parent = tmklst }
+    tmklst:AddItem(drcs)
 
-    local ectckcs = xlib.makeslider { label = "ttt_kil_credits_starting (def. 2)", min = 0, max = 10, repconvar = "rep_ttt_kil_credits_starting", parent = ectclst }
-    ectclst:AddItem(ectckcs)
+    local kcs = xlib.makeslider { label = "ttt_kil_credits_starting (def. 2)", min = 0, max = 10, repconvar = "rep_ttt_kil_credits_starting", parent = tmklst }
+    tmklst:AddItem(kcs)
 
-    local ectcacs = xlib.makeslider { label = "ttt_asn_credits_starting (def. 0)", min = 0, max = 10, repconvar = "rep_ttt_asn_credits_starting", parent = ectclst }
-    ectclst:AddItem(ectcacs)
+    local acs = xlib.makeslider { label = "ttt_asn_credits_starting (def. 0)", min = 0, max = 10, repconvar = "rep_ttt_asn_credits_starting", parent = tmklst }
+    tmklst:AddItem(acs)
 
-    local ectchcs = xlib.makeslider { label = "ttt_hyp_credits_starting (def. 0)", min = 0, max = 10, repconvar = "rep_ttt_hyp_credits_starting", parent = ectclst }
-    ectclst:AddItem(ectchcs)
+    local hcs = xlib.makeslider { label = "ttt_hyp_credits_starting (def. 0)", min = 0, max = 10, repconvar = "rep_ttt_hyp_credits_starting", parent = tmklst }
+    tmklst:AddItem(hcs)
 
-    local ectczcs = xlib.makeslider { label = "ttt_zom_credits_starting (def. 0)", min = 0, max = 10, repconvar = "rep_ttt_zom_credits_starting", parent = ectclst }
-    ectclst:AddItem(ectczcs)
+    local zcs = xlib.makeslider { label = "ttt_zom_credits_starting (def. 0)", min = 0, max = 10, repconvar = "rep_ttt_zom_credits_starting", parent = tmklst }
+    tmklst:AddItem(zcs)
 
-    local ectcvcs = xlib.makeslider { label = "ttt_vam_credits_starting (def. 0)", min = 0, max = 10, repconvar = "rep_ttt_vam_credits_starting", parent = ectclst }
-    ectclst:AddItem(ectcvcs)
+    local vcs = xlib.makeslider { label = "ttt_vam_credits_starting (def. 0)", min = 0, max = 10, repconvar = "rep_ttt_vam_credits_starting", parent = tmklst }
+    tmklst:AddItem(vcs)
 
-    local ectcap = xlib.makeslider { label = "ttt_credits_award_pct (def. 0.35)", min = 0.01, max = 0.9, decimal = 2, repconvar = "rep_ttt_credits_award_pct", parent = ectclst }
-    ectclst:AddItem(ectcap)
+    local cap = xlib.makeslider { label = "ttt_credits_award_pct (def. 0.35)", min = 0.01, max = 0.9, decimal = 2, repconvar = "rep_ttt_credits_award_pct", parent = tmklst }
+    tmklst:AddItem(cap)
 
-    local ectcas = xlib.makeslider { label = "ttt_credits_award_size (def. 1)", min = 0, max = 5, repconvar = "rep_ttt_credits_award_size", parent = ectclst }
-    ectclst:AddItem(ectcas)
+    local cas = xlib.makeslider { label = "ttt_credits_award_size (def. 1)", min = 0, max = 5, repconvar = "rep_ttt_credits_award_size", parent = tmklst }
+    tmklst:AddItem(cas)
 
-    local ectcar = xlib.makeslider { label = "ttt_credits_award_repeat (def. 1)", min = 0, max = 5, repconvar = "rep_ttt_credits_award_repeat", parent = ectclst }
-    ectclst:AddItem(ectcar)
+    local car = xlib.makeslider { label = "ttt_credits_award_repeat (def. 1)", min = 0, max = 5, repconvar = "rep_ttt_credits_award_repeat", parent = tmklst }
+    tmklst:AddItem(car)
 
-    local ectcdk = xlib.makeslider { label = "ttt_credits_detectivekill (def. 1)", min = 0, max = 5, repconvar = "rep_ttt_credits_detectivekill", parent = ectclst }
-    ectclst:AddItem(ectcdk)
+    local dk = xlib.makeslider { label = "ttt_credits_detectivekill (def. 1)", min = 0, max = 5, repconvar = "rep_ttt_credits_detectivekill", parent = tmklst }
+    tmklst:AddItem(dk)
 
     --Innocent Credits
-    local ecdcclp = vgui.Create("DCollapsibleCategory", ecpnl)
-    ecdcclp:SetSize(390, 110)
-    ecdcclp:SetExpanded(0)
-    ecdcclp:SetLabel("Innocent Credits")
+    local ipnl = vgui.Create("DCollapsibleCategory", ecpnl)
+    ipnl:SetSize(390, 100)
+    ipnl:SetExpanded(0)
+    ipnl:SetLabel("Innocent Credits")
 
-    local ecdclst = vgui.Create("DPanelList", ecdcclp)
-    ecdclst:SetPos(5, 25)
-    ecdclst:SetSize(390, 110)
-    ecdclst:SetSpacing(5)
+    local ilst = vgui.Create("DPanelList", ipnl)
+    ilst:SetPos(5, 25)
+    ilst:SetSize(390, 100)
+    ilst:SetSpacing(5)
 
-    local ecdccs = xlib.makeslider { label = "ttt_det_credits_starting (def. 1)", min = 0, max = 10, repconvar = "rep_ttt_det_credits_starting", parent = ecdclst }
-    ecdclst:AddItem(ecdccs)
+    local dtcs = xlib.makeslider { label = "ttt_det_credits_starting (def. 1)", min = 0, max = 10, repconvar = "rep_ttt_det_credits_starting", parent = ilst }
+    ilst:AddItem(dtcs)
 
-    local ecmccs = xlib.makeslider { label = "ttt_mer_credits_starting (def. 1)", min = 0, max = 10, repconvar = "rep_ttt_mer_credits_starting", parent = ecdclst }
-    ecdclst:AddItem(ecmccs)
+    local mcs = xlib.makeslider { label = "ttt_mer_credits_starting (def. 1)", min = 0, max = 10, repconvar = "rep_ttt_mer_credits_starting", parent = ilst }
+    ilst:AddItem(mcs)
 
-    local ecdctk = xlib.makeslider { label = "ttt_det_credits_traitorkill (def. 0)", min = 0, max = 10, repconvar = "rep_ttt_det_credits_traitorkill", parent = ecdclst }
-    ecdclst:AddItem(ecdctk)
+    local dttk = xlib.makeslider { label = "ttt_det_credits_traitorkill (def. 0)", min = 0, max = 10, repconvar = "rep_ttt_det_credits_traitorkill", parent = ilst }
+    ilst:AddItem(dttk)
 
-    local ecdctd = xlib.makeslider { label = "ttt_det_credits_traitordead (def. 1)", min = 0, max = 10, repconvar = "rep_ttt_det_credits_traitordead", parent = ecdclst }
-    ecdclst:AddItem(ecdctd)
+    local dttd = xlib.makeslider { label = "ttt_det_credits_traitordead (def. 1)", min = 0, max = 10, repconvar = "rep_ttt_det_credits_traitordead", parent = ilst }
+    ilst:AddItem(dttd)
+
+    --Jester/Swapper Credits
+    local jspnl = vgui.Create("DCollapsibleCategory", ecpnl)
+    jspnl:SetSize(390, 50)
+    jspnl:SetExpanded(0)
+    jspnl:SetLabel("Jester/Swapper Credits")
+
+    local jslst = vgui.Create("DPanelList", jspnl)
+    jslst:SetPos(5, 25)
+    jslst:SetSize(390, 50)
+    jslst:SetSpacing(5)
+
+    local jcs = xlib.makeslider { label = "ttt_jes_credits_starting (def. 0)", min = 0, max = 10, repconvar = "rep_ttt_jes_credits_starting", parent = jslst }
+    jslst:AddItem(jcs)
+
+    local swcs = xlib.makeslider { label = "ttt_swa_credits_starting (def. 0)", min = 0, max = 10, repconvar = "rep_ttt_swa_credits_starting", parent = jslst }
+    jslst:AddItem(swcs)
 
     xgui.hookEvent("onProcessModules", nil, ecpnl.processModules)
     xgui.addSubModule("Equipment credits", ecpnl, nil, "terrortown_settings")
