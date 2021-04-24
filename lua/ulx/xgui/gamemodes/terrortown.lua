@@ -473,13 +473,13 @@ end
 
 local function AddMonsterRoleConfigs(gppnl)
     local category = vgui.Create("DCollapsibleCategory", gppnl)
-    category:SetSize(390, 440)
+    category:SetSize(390, 460)
     category:SetExpanded(0)
     category:SetLabel("Monster Role Configs")
 
     local panel = vgui.Create("DPanelList", category)
     panel:SetPos(5, 25)
-    panel:SetSize(390, 440)
+    panel:SetSize(390, 460)
     panel:SetSpacing(5)
 
     local msats = xlib.makecheckbox { label = "ttt_monsters_are_traitors (def. 0)", repconvar = "rep_ttt_monsters_are_traitors", parent = panel }
@@ -505,6 +505,9 @@ local function AddMonsterRoleConfigs(gppnl)
 
     local vfangoheal = xlib.makeslider { label = "ttt_vampire_fang_overheal (def. 25)", min = 5, max = 50, repconvar = "rep_ttt_vampire_fang_overheal", parent = panel }
     panel:AddItem(vfangoheal)
+
+    local vfangufdelay = xlib.makeslider { label = "ttt_vampire_fang_unfreeze_delay (def. 1)", min = 0, max = 5, decimal = 1, repconvar = "rep_ttt_vampire_fang_unfreeze_delay", parent = panel }
+    panel:AddItem(vfangufdelay)
 
     local vpdm = xlib.makeslider { label = "ttt_vampire_prime_death_mode (def. 0)", min = 0, max = 2, repconvar = "rep_ttt_vampire_prime_death_mode", parent = panel }
     panel:AddItem(vpdm)
